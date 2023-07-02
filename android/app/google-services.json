@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:236973427812:android:3290936028ddc862046371",
+        "mobilesdk_app_id": "1:236973427812:android:ef010fe2bbccabb4046371",
         "android_client_info": {
-          "package_name": "com.example.tinder_clone"
+          "package_name": "ru.levprav.tinder"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "236973427812-dbq271ua5u3pthp8dlv1tnvb1dagjb7l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.levprav.tinder",
+            "certificate_hash": "6796724fec0c7b0283b5fe467cd82aa30e5b85d7"
+          }
+        },
         {
           "client_id": "236973427812-cugbbik2a4duissc6gg17ujvfqq1vnr5.apps.googleusercontent.com",
           "client_type": 3
@@ -29,6 +37,13 @@
             {
               "client_id": "236973427812-cugbbik2a4duissc6gg17ujvfqq1vnr5.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "236973427812-4cfr1gpofupp520jncf7allvpt10gucc.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tinderClone"
+              }
             }
           ]
         }
