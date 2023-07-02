@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBVUJy4gOiwV4WsGdTvukchdSc6VK4_hlw',
-    appId: '1:236973427812:android:3290936028ddc862046371',
+    appId: '1:236973427812:android:ef010fe2bbccabb4046371',
     messagingSenderId: '236973427812',
     projectId: 'tinder-clone-314b9',
     storageBucket: 'tinder-clone-314b9.appspot.com',
@@ -59,7 +59,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCovryMfzcCDUvIs6oSttjEW2nmy_UCiQU',
-    appId: '1:236973427812:ios:b523dde34ee3007d046371',
+    appId: '1:236973427812:ios:25e4df963e49db15046371',
     messagingSenderId: '236973427812',
     projectId: 'tinder-clone-314b9',
     storageBucket: 'tinder-clone-314b9.appspot.com',
