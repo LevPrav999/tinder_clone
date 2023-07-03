@@ -13,7 +13,15 @@ class Routes {
       case PhoneAuthScreen.routeName:
         return MaterialPageRoute(builder: (context) => const PhoneAuthScreen());
       case UserInfoScreen.routeName:
-        return MaterialPageRoute(builder: (context) => const UserInfoScreen());
+        final data = settings.arguments as Map<String, String?>?;
+        return MaterialPageRoute(builder: (context) => UserInfoScreen(
+          name: data?['name'] ?? "Your Name",
+          age: data?['age'] ?? "01.01.2001",
+          sex: data?['sex'] ?? "",
+          city: data?['city'] ?? "Moscow",
+          bio: data?['bio'] ?? "Hi! I am using Tinder!",
+          sexFind: data?['sexFind'] ?? "",
+        ));
       case CodeScreen.routeName:
         final verificationId = settings.arguments as String;
         return MaterialPageRoute(
