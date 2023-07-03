@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
 
 class CodeScreen extends ConsumerWidget {
@@ -20,7 +21,7 @@ class CodeScreen extends ConsumerWidget {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Theme.of(context).primaryColor),
+            icon: const Icon(Icons.arrow_back, color: Coloors.primaryColor),
             onPressed: () {
               Navigator.pop(context);
             }),
