@@ -1,16 +1,334 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class UserInfoScreen extends StatefulWidget {
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
+import 'package:tinder_clone/common/utils/utils.dart';
+import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
+
+import '../../../common/utils/coloors.dart';
+import '../../../common/utils/decorations.dart';
+
+class UserInfoScreen extends ConsumerStatefulWidget {
   static const routeName = '/user-information';
-  const UserInfoScreen({super.key});
+
+  final String name;
+  final String age;
+  final String sex;
+  final String city;
+  final String bio;
+  final String sexFind;
+
+  const UserInfoScreen(
+      {super.key,
+      required this.name,
+      required this.age,
+      required this.sex,
+      required this.city,
+      required this.bio,
+      required this.sexFind});
 
   @override
-  State<UserInfoScreen> createState() => _UserInfoScreenState();
+  ConsumerState<UserInfoScreen> createState() => _UserInfoScreenState();
 }
 
-class _UserInfoScreenState extends State<UserInfoScreen> {
+class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
+  late TextEditingController nameController;
+  late TextEditingController ageController;
+  late TextEditingController cityController;
+  late TextEditingController bioController;
+
+  late String sex;
+  late String sexFind;
+
+  File? image;
+
+  bool isDateValid(String dateStr) {
+    final parts = dateStr.split('.');
+
+    if (parts.length != 3) {
+      return false;
+    }
+
+    final day = int.tryParse(parts[0]);
+    final month = int.tryParse(parts[1]);
+    final year = int.tryParse(parts[2]);
+
+    if (day == null || month == null || year == null) {
+      return false;
+    }
+
+    if (day <= 0 || day > 31 || month <= 0 || month > 12) {
+      return false;
+    }
+
+    final currentDate = DateTime.now();
+    final inputDate = DateTime(year, month, day);
+
+    if (inputDate.isAfter(currentDate)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  void selectImage() async {
+    image = await pickImageFromGallery(context);
+    setState(() {});
+  }
+
+  void storeUserData() async{
+    if(nameController.text.replaceAll(" ", "").length < 3){
+      showAlertDialog(context: context, message: "Your name is too short!");
+    } else if(ageController.text.replaceAll(" ", "").length < 10){
+      showAlertDialog(context: context, message: "Birthday invalid format!");
+    }else if(!isDateValid(ageController.text)){
+      showAlertDialog(context: context, message: "Birthday invalid format!");
+    }else if(cityController.text.replaceAll(" ", "").length < 3){
+      showAlertDialog(context: context, message: "Your town name is too short!");
+    }else if(bioController.text.trim().length < 3){
+      showAlertDialog(context: context, message: "Your bio is too short!");
+    }else if(sex==""){
+        showAlertDialog(context: context, message: "Your sex isn't set!");
+    }else if(sexFind==""){
+        showAlertDialog(context: context, message: "Sex of person you want to find isn't set!");
+    }else{
+      ref.read(authControllerProvider).saveDataToFirestore(
+        nameController.text.replaceAll(" ", ""),
+        ageController.text.replaceAll(" ", ""),
+        sex,
+        cityController.text.toLowerCase(),
+        bioController.text.trim(),
+        sexFind,
+        image,
+        context
+      );
+    }
+  }
+
+
+  @override
+  void initState() {
+    nameController = TextEditingController(text: widget.name);
+    ageController = TextEditingController(text: widget.age);
+    cityController = TextEditingController(text: widget.city);
+    bioController = TextEditingController(text: widget.bio);
+    sex = widget.sex;
+    sexFind = widget.sexFind;
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    ageController.dispose();
+    cityController.dispose();
+    bioController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+        body: SafeArea(
+            child: SingleChildScrollView(
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.only(top: 10.h),
+        color: Colors.grey.shade100,
+        child: Column(children: [
+          const Text(
+            "Edit account data",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+            textAlign: TextAlign.center,
+          ),
+          image == null ? Container(
+              margin: EdgeInsets.only(top: 22.h),
+              child: GestureDetector(
+                  onTap: () => selectImage(),
+                  child: const CircleAvatar(
+                    foregroundImage: NetworkImage("https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"),
+                    radius: 70,
+                  ))) : Container(
+              margin: EdgeInsets.only(top: 22.h),
+              child: GestureDetector(
+                  onTap: () => selectImage(),
+                  child: CircleAvatar(
+                    foregroundImage: FileImage(image!),
+                    radius: 70,
+                  ))),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+            child: Column(children: [
+              const Text("Your real name",
+                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+              const SizedBox(
+                height: 2,
+              ),
+              TextFormField(
+                maxLength: 10,
+                controller: nameController,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 22.0, color: Colors.black),
+                decoration:
+                    Decorations.kTextFieldDecoration.copyWith(hintText: "Name"),
+              ),
+            ]),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+            child: Column(children: [
+              const Text("Your birthday | Example 31.12.2020",
+                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+              const SizedBox(
+                height: 2,
+              ),
+              TextFormField(
+                maxLength: 10,
+                controller: ageController,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 22.0, color: Colors.black),
+                decoration: Decorations.kTextFieldDecoration
+                    .copyWith(hintText: "Birthday"),
+              ),
+            ]),
+          ),
+          Padding(
+              padding:
+                  const EdgeInsets.only(top: 14.0, left: 16.0, right: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        sex = "male";
+                      });
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            sex == "female"
+                                ? Colors.grey
+                                : Coloors.accentColor)),
+                    child: const Text("Male"),
+                  ),
+                  ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          sex = "female";
+                        });
+                      },
+                      style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              sex == "male"
+                                  ? Colors.grey
+                                  : Coloors.accentColor)),
+                      child: const Text("Female")),
+                ],
+              )),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+            child: Column(children: [
+              const Text("Your town",
+                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+              const SizedBox(
+                height: 2,
+              ),
+              TextFormField(
+                maxLength: 10,
+                controller: cityController,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 22.0, color: Colors.black),
+                decoration:
+                    Decorations.kTextFieldDecoration.copyWith(hintText: "Town"),
+              ),
+            ]),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+            child: Column(children: [
+              const Text("Your bio",
+                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+              const SizedBox(
+                height: 2,
+              ),
+              TextFormField(
+                maxLength: 22,
+                controller: bioController,
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 22.0, color: Colors.black),
+                decoration:
+                    Decorations.kTextFieldDecoration.copyWith(hintText: "Bio"),
+              ),
+            ]),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(top: 14.0, left: 16.0, right: 16.0),
+            child: Column(children: [
+              const Text("You want to find",
+                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+              const SizedBox(
+                height: 2,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        sexFind = "male";
+                      });
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            sexFind == "female"
+                                ? Colors.grey
+                                : Coloors.accentColor)),
+                    child: const Text(
+                      "Male",
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        sexFind = "female";
+                      });
+                    },
+                    style: ButtonStyle(
+                        backgroundColor: MaterialStateProperty.all(
+                            sexFind == "male"
+                                ? Colors.grey
+                                : Coloors.accentColor)),
+                    child: const Text("Female"),
+                  ),
+                ],
+              )
+            ]),
+          ),
+          Padding(
+              padding: const EdgeInsets.only(top: 10.0, right: 16.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  CircleAvatar(
+                    radius: 30,
+                    backgroundColor: Coloors.primaryColor,
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.check,
+                        color: Colors.white,
+                      ),
+                      onPressed: () => storeUserData(),
+                    ),
+                  ),
+                ],
+              )),
+        ]),
+      ),
+    )));
   }
 }
