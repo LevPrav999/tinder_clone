@@ -2,7 +2,7 @@ class UserModel {
   final String uid;
   final String name;
   final String avatar;
-  final Map<String, int> age;
+  final Map<String, dynamic> age;
   final String sex;
   final String city;
   final String bio;
@@ -50,7 +50,7 @@ class UserModel {
         uid: map['uid'] ?? '',
         name: map['name'] ?? '',
         avatar: map['avatar'] ?? '',
-        age: map['age'] ?? Map<String, int>,
+        age: map['age'] ?? Map<String, dynamic>,
         sex: map['sex'] ?? '',
         city: map['city'] ?? '',
         bio: map['bio'] ?? '',
