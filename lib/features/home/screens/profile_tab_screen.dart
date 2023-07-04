@@ -4,9 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:tinder_clone/common/utils/coloors.dart';
-import 'package:tinder_clone/common/widgets/error.dart';
-import 'package:tinder_clone/common/widgets/loader.dart';
-import 'package:tinder_clone/features/home/controller/user_controller.dart';
+import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
+import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
 
 class ProfileTabScreen extends ConsumerStatefulWidget {
   const ProfileTabScreen({super.key});
@@ -16,11 +15,11 @@ class ProfileTabScreen extends ConsumerStatefulWidget {
 }
 
 class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
+
   @override
   Widget build(BuildContext context) {
-
-    return ref.watch(userDataProvider).when(data: (data) {
-      return Stack(
+    var data = ref.watch(userProvider);
+    return Stack(
             children: <Widget>[
               Container(
                 height: double.infinity,
@@ -49,7 +48,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                               CircleAvatar(
                                 radius: 60.0,
                                 foregroundImage:
-                                    NetworkImage(data.avatar),
+                                    NetworkImage(data!.avatar),
                               ),
                               SizedBox(height: 5.h),
                               Text(
@@ -171,7 +170,16 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                   Expanded(
                                       child: GestureDetector(
                                     onTap: () {
-                                      // to edit
+                                      Navigator.pushReplacementNamed(context, UserInfoScreen.routeName, arguments: {
+                                        'name': data.name,
+                                        'age': "${data.age['day']}.${data.age['month']}.${data.age['year']}",
+                                        'sex': data.sex,
+                                        'city': data.city,
+                                        'bio': data.bio,
+                                        'sexFind': data.sexFind, 
+                                        'avatar' : data.avatar,
+                                        'fromProfile': true
+                                      });
                                     },
                                     child: Column(
                                       mainAxisAlignment:
@@ -287,10 +295,6 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                   ))
             ],
           );
-
-    }, error: (error, stackTrace) => ErrorScreen(error: error.toString()), loading: () => const LoaderWidget());
-
-    
   }
 }
 
