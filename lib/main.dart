@@ -1,6 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tinder_clone/common/models/user_model.dart';
+import 'package:tinder_clone/common/widgets/error.dart';
+import 'package:tinder_clone/common/widgets/loader.dart';
+import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
+import 'package:tinder_clone/features/home/screens/home_screen.dart';
 import 'package:tinder_clone/features/login/screens/login_screen.dart';
 import 'package:tinder_clone/firebase_options.dart';
 import 'package:tinder_clone/routes.dart';
@@ -13,20 +20,43 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  ConsumerState<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp> {
+  UserModel? userModel;
+
+  void getData(WidgetRef ref, User data) async {
+    userModel =
+        await ref.watch(authControllerProvider).getUserData(data.uid).first.onError((error, stackTrace) {
+          userModel = null;
+        });
+    ref.read(userProvider.notifier).update((state) => userModel);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: false,
-      ),
-      onGenerateRoute: Routes.generateRoute,
-      home: LoginScreen(),
-    );
+    ScreenUtil.init(context);
+
+    return ref.watch(authStateChangeProvider).when(
+        data: (data) {
+          getData(ref, data!);
+          return MaterialApp(
+            title: 'Flutter Demo',
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              useMaterial3: false,
+            ),
+            onGenerateRoute: Routes.generateRoute,
+            home: userModel != null ? const HomeScreen() : const LoginScreen(),
+          );
+        },
+        error: (error, trace) => ErrorScreen(error: error.toString()),
+        loading: () => const LoaderWidget());
   }
 }
