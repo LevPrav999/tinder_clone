@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/common/utils/tinder_icons.dart';
 import 'package:tinder_clone/features/home/controller/home_controller.dart';
 import 'package:tinder_clone/features/home/screens/profile_tab_screen.dart';
@@ -32,9 +33,9 @@ class HomeScreen extends ConsumerWidget {
                       child: Icon(
                         TinderIcons.iconfinder_icons_user2_1564535,
                         color: index == 0
-                            ? Theme.of(context).primaryColor
+                            ? Coloors.primaryColor
                             : Colors.grey,
-                        size: ScreenUtil().setSp(35.0),
+                        size: 35.sp,
                       ),
                     ),
                   ),
@@ -42,14 +43,14 @@ class HomeScreen extends ConsumerWidget {
                 SafeArea(
                   child: Container(
                     padding:
-                        EdgeInsets.only(bottom: ScreenUtil().setWidth(37.0)),
+                        EdgeInsets.only(bottom: 37.w),
                     child: Center(
                       child: Icon(
                         TinderIcons.iconfinder_338_tinder_logo_4375488__1_,
                         color: index == 1
-                            ? Theme.of(context).primaryColor
+                            ? Coloors.primaryColor
                             : Colors.grey,
-                        size: ScreenUtil().setSp(40.0),
+                        size: 40.sp,
                       ),
                     ),
                   ),
@@ -57,14 +58,14 @@ class HomeScreen extends ConsumerWidget {
                 SafeArea(
                   child: Container(
                     padding:
-                        EdgeInsets.only(bottom: ScreenUtil().setWidth(37.0)),
+                        EdgeInsets.only(bottom: 37.w),
                     child: Center(
                       child: Icon(
                         TinderIcons.iconfinder_message_01_186393,
                         color: index == 2
-                            ? Theme.of(context).primaryColor
+                            ? Coloors.primaryColor
                             : Colors.grey,
-                        size: ScreenUtil().setSp(40.0),
+                        size: 40.sp,
                       ),
                     ),
                   ),
