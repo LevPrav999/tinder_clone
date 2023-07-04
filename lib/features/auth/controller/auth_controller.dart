@@ -1,12 +1,26 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/features/auth/repositories/auth_repository.dart';
 
 final authControllerProvider = Provider((ref) {
   final authRepository = ref.watch(authRepositoryProvider);
   return AuthController(ref: ref, authRepository: authRepository);
+});
+
+final userProvider = StateProvider<UserModel?>((ref) => null);
+
+final authStateChangeProvider = StreamProvider((ref) {
+  final authController = ref.watch(authControllerProvider);
+  return authController.authStateChange;
+});
+
+final getUserDataProvider = StreamProvider.family((ref, String uid) {
+  final authController = ref.watch(authControllerProvider);
+  return authController.getUserData(uid);
 });
 
 class AuthController {
@@ -31,6 +45,7 @@ class AuthController {
       String bio,
       String sexFind,
       File? profilePicture,
+      bool changeImage,
       BuildContext context) {
 
     authRepository.saveUserDataToFirebase(
@@ -41,7 +56,14 @@ class AuthController {
         bio: bio,
         sexFind: sexFind,
         profilePicture: profilePicture,
+        changeImage: changeImage,
         ref: ref,
         context: context);
+  }
+
+  Stream<User?> get authStateChange => authRepository.authStateChange;
+
+  Stream<UserModel?> getUserData(String uid){
+    return authRepository.getUserData(uid);
   }
 }
