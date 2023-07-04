@@ -54,11 +54,15 @@ class AuthRepository {
       await auth.signInWithCredential(credential);
 
       Navigator.pushNamedAndRemoveUntil(
-          context, UserInfoScreen.routeName, (route) => false);
+          context, UserInfoScreen.routeName,arguments: {
+            'fromProfile': false
+          }, (route) => false);
     } on FirebaseAuthException catch (e) {
       showAlertDialog(context: context, message: e.toString());
     }
   }
+
+  Stream<User?> get authStateChange => auth.authStateChanges();
 
   void saveUserDataToFirebase(
       {required String name,
@@ -68,26 +72,65 @@ class AuthRepository {
       required String bio,
       required String sexFind,
       required File? profilePicture,
+      required bool changeImage,
       required ProviderRef ref,
       required BuildContext context}) async {
     try {
       String uid = auth.currentUser!.uid;
-      String photoUrl =
-          "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png";
+      DocumentSnapshot userSnap =
+          await firestore.collection('users').doc(uid).get();
 
-      if (profilePicture != null) {
-        photoUrl = await ref
-            .read(commonFirebaseStorageRepositoryProvider)
-            .storeFileToFirebase('profilePictures/$uid', profilePicture);
+      String photoUrl = "";
+
+      if (changeImage == true) {
+
+        if (profilePicture != null) {
+          photoUrl = await ref
+              .read(commonFirebaseStorageRepositoryProvider)
+              .storeFileToFirebase('profilePictures/$uid', profilePicture);
+        }
+      }else if(userSnap.exists){
+        var data = userSnap.data() as Map<String, dynamic>;
+        photoUrl = data['avatar'];
+      }else{
+        photoUrl =
+            "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png";
+
+        if (profilePicture != null) {
+          photoUrl = await ref
+              .read(commonFirebaseStorageRepositoryProvider)
+              .storeFileToFirebase('profilePictures/$uid', profilePicture);
+        }
       }
 
-      var user = UserModel(uid: uid, name: name, avatar: photoUrl, age: convertBirthday(age), sex: sex, city: city, bio: bio, sexFind: sexFind, isOnline: true, blocked: [], liked: [], pending: []);
+      var user = UserModel(
+          uid: uid,
+          name: name,
+          avatar: photoUrl,
+          age: convertBirthday(age),
+          sex: sex,
+          city: city,
+          bio: bio,
+          sexFind: sexFind,
+          isOnline: true,
+          blocked: [],
+          liked: [],
+          pending: []);
 
-      await firestore.collection('users').doc(uid).set(user.toMap());
-      
-      Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
+      if (userSnap.exists) {
+        await firestore.collection('users').doc(uid).update(user.toMap());
+      } else {
+        await firestore.collection('users').doc(uid).set(user.toMap());
+      }
+
+      Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.routeName, (route) => false);
     } catch (e) {
       showAlertDialog(context: context, message: e.toString());
     }
+  }
+
+  Stream<UserModel?> getUserData(String uid){
+    return firestore.collection('users').doc(uid).snapshots().map((event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
   }
 }
