@@ -19,6 +19,8 @@ class UserInfoScreen extends ConsumerStatefulWidget {
   final String city;
   final String bio;
   final String sexFind;
+  final String avatar;
+  final bool fromProfile;
 
   const UserInfoScreen(
       {super.key,
@@ -27,7 +29,10 @@ class UserInfoScreen extends ConsumerStatefulWidget {
       required this.sex,
       required this.city,
       required this.bio,
-      required this.sexFind});
+      required this.sexFind,
+      required this.avatar,
+      required this.fromProfile
+      });
 
   @override
   ConsumerState<UserInfoScreen> createState() => _UserInfoScreenState();
@@ -43,6 +48,8 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
   late String sexFind;
 
   File? image;
+
+  late String avatarUrl;
 
   bool isDateValid(String dateStr) {
     final parts = dateStr.split('.');
@@ -78,44 +85,76 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
     setState(() {});
   }
 
-  void storeUserData() async{
-    if(nameController.text.replaceAll(" ", "").length < 3){
+  void storeUserData() async {
+    if (nameController.text.replaceAll(" ", "").length < 3) {
       showAlertDialog(context: context, message: "Your name is too short!");
-    } else if(ageController.text.replaceAll(" ", "").length < 10){
+    } else if (ageController.text.replaceAll(" ", "").length < 10) {
       showAlertDialog(context: context, message: "Birthday invalid format!");
-    }else if(!isDateValid(ageController.text)){
+    } else if (!isDateValid(ageController.text)) {
       showAlertDialog(context: context, message: "Birthday invalid format!");
-    }else if(cityController.text.replaceAll(" ", "").length < 3){
-      showAlertDialog(context: context, message: "Your town name is too short!");
-    }else if(bioController.text.trim().length < 3){
+    } else if (cityController.text.replaceAll(" ", "").length < 3) {
+      showAlertDialog(
+          context: context, message: "Your town name is too short!");
+    } else if (bioController.text.trim().length < 3) {
       showAlertDialog(context: context, message: "Your bio is too short!");
-    }else if(sex==""){
-        showAlertDialog(context: context, message: "Your sex isn't set!");
-    }else if(sexFind==""){
-        showAlertDialog(context: context, message: "Sex of person you want to find isn't set!");
-    }else{
+    } else if (sex == "") {
+      showAlertDialog(context: context, message: "Your sex isn't set!");
+    } else if (sexFind == "") {
+      showAlertDialog(
+          context: context,
+          message: "Sex of person you want to find isn't set!");
+    } else {
       ref.read(authControllerProvider).saveDataToFirestore(
-        nameController.text.replaceAll(" ", ""),
-        ageController.text.replaceAll(" ", ""),
-        sex,
-        cityController.text.toLowerCase(),
-        bioController.text.trim(),
-        sexFind,
-        image,
-        context
-      );
+          nameController.text.replaceAll(" ", ""),
+          ageController.text.replaceAll(" ", ""),
+          sex,
+          cityController.text.toLowerCase(),
+          bioController.text.trim(),
+          sexFind,
+          image,
+          image != null && widget.fromProfile == true,
+          context);
     }
   }
 
+  String capitalizeWords(String input) {
+  List<String> words = input.split(' ');
+
+  for (int i = 0; i < words.length; i++) {
+    String word = words[i];
+    if (word.isNotEmpty) {
+      words[i] = word[0].toUpperCase() + word.substring(1);
+    }
+  }
+
+  return words.join(' ');
+}
+
+String addLeadingZero(String input) {
+  List<String> parts = input.split('.');
+  List<String> formattedParts = [];
+
+  for (String part in parts) {
+    if (part.length == 1) {
+      formattedParts.add('0$part');
+    } else {
+      formattedParts.add(part);
+    }
+  }
+
+  return formattedParts.join('.');
+}
 
   @override
   void initState() {
     nameController = TextEditingController(text: widget.name);
-    ageController = TextEditingController(text: widget.age);
-    cityController = TextEditingController(text: widget.city);
+    ageController = TextEditingController(text: addLeadingZero(widget.age));
+    cityController = TextEditingController(text: capitalizeWords(widget.city));
     bioController = TextEditingController(text: widget.bio);
     sex = widget.sex;
     sexFind = widget.sexFind;
+    avatarUrl = widget.avatar;
+
     super.initState();
   }
 
@@ -143,21 +182,33 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             textAlign: TextAlign.center,
           ),
-          image == null ? Container(
-              margin: EdgeInsets.only(top: 22.h),
-              child: GestureDetector(
-                  onTap: () => selectImage(),
-                  child: const CircleAvatar(
-                    foregroundImage: NetworkImage("https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"),
-                    radius: 70,
-                  ))) : Container(
-              margin: EdgeInsets.only(top: 22.h),
-              child: GestureDetector(
-                  onTap: () => selectImage(),
-                  child: CircleAvatar(
-                    foregroundImage: FileImage(image!),
-                    radius: 70,
-                  ))),
+          image == null && avatarUrl == ""
+              ? Container(
+                  margin: EdgeInsets.only(top: 22.h),
+                  child: GestureDetector(
+                      onTap: () => selectImage(),
+                      child: const CircleAvatar(
+                        foregroundImage: NetworkImage(
+                            "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png"),
+                        radius: 70,
+                      )))
+              : image != null
+                  ? Container(
+                      margin: EdgeInsets.only(top: 22.h),
+                      child: GestureDetector(
+                          onTap: () => selectImage(),
+                          child: CircleAvatar(
+                            foregroundImage: FileImage(image!),
+                            radius: 70,
+                          )))
+                  : Container(
+                      margin: EdgeInsets.only(top: 22.h),
+                      child: GestureDetector(
+                          onTap: () => selectImage(),
+                          child: CircleAvatar(
+                            foregroundImage: NetworkImage(avatarUrl),
+                            radius: 70,
+                          ))),
           Padding(
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
