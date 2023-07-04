@@ -3,6 +3,7 @@ import 'package:tinder_clone/common/widgets/error.dart';
 import 'package:tinder_clone/features/auth/screens/phone_auth_screen.dart';
 import 'package:tinder_clone/features/auth/screens/code_screen.dart';
 import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
+import 'package:tinder_clone/features/home/screens/home_screen.dart';
 import 'package:tinder_clone/features/login/screens/login_screen.dart';
 
 class Routes {
@@ -12,6 +13,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const LoginScreen());
       case PhoneAuthScreen.routeName:
         return MaterialPageRoute(builder: (context) => const PhoneAuthScreen());
+      case HomeScreen.routeName:
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
       case UserInfoScreen.routeName:
         final data = settings.arguments as Map<String, String?>?;
         return MaterialPageRoute(builder: (context) => UserInfoScreen(
