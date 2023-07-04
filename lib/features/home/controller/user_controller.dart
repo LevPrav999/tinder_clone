@@ -17,8 +17,7 @@ class UserController{
 
   UserController({required this.userRepository});
 
-
-  Future<UserModel> getUser() async{
+  Future<UserModel> getUser() async {
     return await userRepository.getUserDataFromFirestore();
   }
 }
