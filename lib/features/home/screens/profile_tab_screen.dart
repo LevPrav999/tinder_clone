@@ -18,7 +18,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var data = ref.watch(userProvider);
+    var data = ref.watch(userStateProvider);
     return Stack(
             children: <Widget>[
               Container(
