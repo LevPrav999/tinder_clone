@@ -12,6 +12,8 @@ final userDataProvider = FutureProvider((ref) {
   return userController.getUser();
 });
 
+final userStateProvider = StateProvider<UserModel?>((ref) => null);
+
 class UserController{
   final UserRepository userRepository;
 
