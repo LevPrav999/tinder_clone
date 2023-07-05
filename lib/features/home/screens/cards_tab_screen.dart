@@ -24,7 +24,6 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: fix saving card after change screen
 
     List<MatchCard> data = ref.watch(cardsControllerProvider);
     if (data.length < 2) {
@@ -205,7 +204,8 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
                   }
 
                   if (previousIndex == data.length - 1) {
-                    // not found
+                    ref.read(cardsControllerProvider.notifier).setState();
+                    setState(() {});
                   }
                   return true;
                 })),
