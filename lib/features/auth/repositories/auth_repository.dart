@@ -53,10 +53,19 @@ class AuthRepository {
           verificationId: verificationId, smsCode: smsCode);
       await auth.signInWithCredential(credential);
 
-      Navigator.pushNamedAndRemoveUntil(
+      String uid = auth.currentUser!.uid;
+      DocumentSnapshot userSnap =
+          await firestore.collection('users').doc(uid).get();
+
+      if(userSnap.exists){
+        Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.routeName, (route) => false);
+      }else{
+        Navigator.pushNamedAndRemoveUntil(
           context, UserInfoScreen.routeName,arguments: {
             'fromProfile': false
           }, (route) => false);
+      }
     } on FirebaseAuthException catch (e) {
       showAlertDialog(context: context, message: e.toString());
     }
