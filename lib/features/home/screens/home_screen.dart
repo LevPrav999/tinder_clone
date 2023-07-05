@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/common/utils/tinder_icons.dart';
 import 'package:tinder_clone/features/home/controller/home_controller.dart';
+import 'package:tinder_clone/features/home/screens/cards_tab_screen.dart';
 import 'package:tinder_clone/features/home/screens/profile_tab_screen.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -80,7 +81,7 @@ class HomeScreen extends ConsumerWidget {
             physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
               ProfileTabScreen(),
-              ProfileTabScreen(),
+              CardsTabScreen(),
               ProfileTabScreen(),
             ],
           )),
