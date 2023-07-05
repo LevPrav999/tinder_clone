@@ -36,7 +36,7 @@ class _MyAppState extends ConsumerState<MyApp> {
           userModel = null;
           return null;
         });
-    ref.read(userProvider.notifier).update((state) => userModel);
+    ref.read(userStateProvider.notifier).update((state) => userModel);
     setState(() {});
   }
 
@@ -46,7 +46,8 @@ class _MyAppState extends ConsumerState<MyApp> {
 
     return ref.watch(authStateChangeProvider).when(
         data: (data) {
-          getData(ref, data!);
+          if(data != null)
+            getData(ref, data);
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
