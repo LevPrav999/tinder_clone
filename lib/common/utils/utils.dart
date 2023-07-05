@@ -4,25 +4,39 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
 
-Future<File?> pickImageFromGallery(BuildContext context) async{
+Future<File?> pickImageFromGallery(BuildContext context) async {
   File? image;
-  try{
-    final pickedImage = await ImagePicker().pickImage(source: ImageSource.gallery);
+  try {
+    final pickedImage =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if(pickedImage != null){
+    if (pickedImage != null) {
       image = File(pickedImage.path);
     }
-  }catch (e){
+  } catch (e) {
     showAlertDialog(context: context, message: e.toString());
   }
 
   return image;
 }
 
-Map<String, int> convertBirthday(String date){
+Map<String, int> convertBirthday(String date) {
   return {
     'day': int.parse(date.split('.')[0]),
     'month': int.parse(date.split('.')[1]),
     'year': int.parse(date.split('.')[2]),
   };
+}
+
+String getAge(int birthYear) {
+  int currentYear = DateTime.now().year;
+  int age = currentYear - birthYear;
+  
+  DateTime currentDate = DateTime.now();
+  DateTime birthDate = DateTime(birthYear);
+  if (currentDate.isBefore(DateTime(currentYear, birthDate.month, birthDate.day))) {
+    age--;
+  }
+  
+  return age.toString();
 }
