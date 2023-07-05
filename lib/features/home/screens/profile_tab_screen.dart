@@ -4,8 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:tinder_clone/common/utils/coloors.dart';
-import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
+import 'package:tinder_clone/common/utils/utils.dart';
 import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
+import 'package:tinder_clone/features/home/controller/user_controller.dart';
 
 class ProfileTabScreen extends ConsumerStatefulWidget {
   const ProfileTabScreen({super.key});
@@ -52,7 +53,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                               ),
                               SizedBox(height: 5.h),
                               Text(
-                                "${data.name}, ${data.age['year'].toString()}",
+                                "${data.name}, ${getAge(data.age['year'])}",
                                 style: TextStyle(
                                     letterSpacing: 1.1,
                                     fontSize: 20.sp,
