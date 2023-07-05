@@ -11,7 +11,6 @@ final authControllerProvider = Provider((ref) {
   return AuthController(ref: ref, authRepository: authRepository);
 });
 
-final userStateProvider = StateProvider<UserModel?>((ref) => null);
 
 final authStateChangeProvider = StreamProvider((ref) {
   final authController = ref.watch(authControllerProvider);
