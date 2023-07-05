@@ -7,6 +7,7 @@ import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/common/widgets/error.dart';
 import 'package:tinder_clone/common/widgets/loader.dart';
 import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
+import 'package:tinder_clone/features/home/controller/user_controller.dart';
 import 'package:tinder_clone/features/home/screens/home_screen.dart';
 import 'package:tinder_clone/features/login/screens/login_screen.dart';
 import 'package:tinder_clone/firebase_options.dart';
