@@ -104,7 +104,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                             color: Colors.black54),
                       ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     Row(
@@ -115,7 +115,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                             controller: countryCodeController,
                             keyboardType: TextInputType.number,
                             cursorColor: Coloors.primaryColor,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.add,
                                   color: Colors.black,
@@ -137,7 +137,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                             )),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     Text(
@@ -155,7 +155,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                       child: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(90.0),
-                            gradient: LinearGradient(
+                            gradient: const LinearGradient(
                                 colors: [
                                   Coloors.accentColor,
                                   Coloors.secondaryHeaderColor,
