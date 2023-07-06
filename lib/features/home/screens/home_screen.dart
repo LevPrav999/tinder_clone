@@ -77,7 +77,7 @@ class HomeScreen extends ConsumerWidget {
               },
             ),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             physics: NeverScrollableScrollPhysics(),
             children: <Widget>[
               ProfileTabScreen(),
