@@ -13,7 +13,7 @@ showAlertDialog({
         content: Text(
           message,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.black54,
             fontSize: 15,
           ),
@@ -24,7 +24,7 @@ showAlertDialog({
             onPressed: () => Navigator.pop(context),
             child: Text(
               btnText ?? "OK",
-              style: TextStyle(
+              style: const TextStyle(
                 color: Coloors.primaryColor,
               ),
             ),
