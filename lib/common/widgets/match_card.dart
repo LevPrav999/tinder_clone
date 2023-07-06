@@ -23,7 +23,7 @@ class _MatchCardState extends State<MatchCard> {
         boxShadow: [
           BoxShadow(
               color: Colors.grey.shade700,
-              offset: Offset(0.0, 5.0),
+              offset: const Offset(0.0, 5.0),
               blurRadius: 20.0)
         ],
         borderRadius: BorderRadius.circular(100.0),
@@ -35,7 +35,7 @@ class _MatchCardState extends State<MatchCard> {
               boxShadow: [
                 BoxShadow(
                     color: Colors.grey.shade700,
-                    offset: Offset(0.0, 5.0),
+                    offset: const Offset(0.0, 5.0),
                     blurRadius: 15.0)
               ],
               borderRadius: BorderRadius.circular(100.0),
@@ -117,7 +117,7 @@ class _MatchCardState extends State<MatchCard> {
               height: MediaQuery.of(context).size.height * 0.15,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10.0),
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                       colors: [Colors.transparent, Colors.black26],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
