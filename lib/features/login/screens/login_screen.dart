@@ -57,9 +57,9 @@ class LoginScreen extends StatelessWidget {
                   Expanded(
                     flex: 3,
                     child: Column(children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: const Text(
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
                           'By clicking "Log in",you agree with our Terms.\n Learn how we process your data in our Privacy  Policy and Cookies Policy',
                           textAlign: TextAlign.center,
                           style: TextStyle(
