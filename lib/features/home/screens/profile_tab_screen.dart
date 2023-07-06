@@ -32,7 +32,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                 clipper: MyClipper(),
                 child: Container(
                   height: MediaQuery.of(context).size.height * 0.825,
-                  decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                  decoration: const BoxDecoration(color: Colors.white, boxShadow: [
                     BoxShadow(
                         color: Colors.grey,
                         offset: Offset(1.0, 10.0),
@@ -231,8 +231,8 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                         aspectRatio: 16 / 2,
                         viewportFraction: 0.8,
                         enableInfiniteScroll: true,
-                        autoPlayAnimationDuration: Duration(milliseconds: 800),
-                        autoPlayInterval: Duration(seconds: 2),
+                        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+                        autoPlayInterval: const Duration(seconds: 2),
                         autoPlayCurve: Curves.fastOutSlowIn,
                         autoPlay: true,
                         enlargeCenterPage: true,
@@ -303,7 +303,7 @@ final Shader linearGradient = LinearGradient(
     colors: [Colors.amber.shade800, Colors.amber.shade600],
     begin: Alignment.topRight,
     end: Alignment.bottomLeft,
-    stops: [0.0, 1.0]).createShader(Rect.fromLTWH(0.0, 0.0, 15.w, 10.h));
+    stops: const [0.0, 1.0]).createShader(Rect.fromLTWH(0.0, 0.0, 15.w, 10.h));
 
 class MyClipper extends CustomClipper<Path> {
   @override
