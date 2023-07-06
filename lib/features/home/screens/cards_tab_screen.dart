@@ -73,7 +73,7 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
                       height: 55.h,
                       width: 55.w,
                       decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                                 offset: Offset(0.0, 0.0), color: Colors.grey),
                             BoxShadow(
@@ -110,7 +110,7 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
                       height: 40.h,
                       width: 40.h,
                       decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                                 offset: Offset(0.0, 0.0), color: Colors.grey),
                             BoxShadow(
@@ -146,7 +146,7 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
                       height: 55.h,
                       width: 55.h,
                       decoration: BoxDecoration(
-                          boxShadow: [
+                          boxShadow: const [
                             BoxShadow(
                                 offset: Offset(0.0, 0.0), color: Colors.grey),
                             BoxShadow(
@@ -184,7 +184,7 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
         Align(
             alignment: Alignment.topCenter,
             child: CardSwiper(
-                duration: Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 200),
                 cardsCount: data.length,
                 isLoop: false,
                 allowedSwipeDirection:
