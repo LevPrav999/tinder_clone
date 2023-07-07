@@ -192,6 +192,13 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
                 cardBuilder: (context, index, i, i2) {
                   return data[index];
                 },
+                
+                onUndo: (previousIndex, currentIndex, direction) {
+                  ref.read(cardsControllerProvider.notifier).removeFromBlocked(data[currentIndex].uid);
+                  ref.read(cardsControllerProvider.notifier).removeFromLiked(data[currentIndex].uid);
+
+                  return true;
+                },
                 controller: cardController,
                 onSwipe: (previousIndex, currentIndex,
                     CardSwiperDirection direction) {
