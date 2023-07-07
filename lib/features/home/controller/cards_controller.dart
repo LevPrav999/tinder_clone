@@ -25,4 +25,12 @@ class CardsController extends StateNotifier<List<MatchCard>>{
   void addToBlocked(String uidToAdd){
     cardsRepository.addToBlocked(uidToAdd);
   }
+
+  void removeFromLiked(String uidToRemove){
+    cardsRepository.removeFromLiked(uidToRemove);
+  }
+
+  void removeFromBlocked(String uidToRemove){
+    cardsRepository.removeFromBlocked(uidToRemove);
+  }
 }
