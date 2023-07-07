@@ -3,7 +3,6 @@ import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
-import 'package:tinder_clone/common/widgets/match_card.dart';
 import 'package:tinder_clone/features/home/controller/cards_controller.dart';
 
 class CardsTabScreen extends ConsumerStatefulWidget {
@@ -25,9 +24,9 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
   @override
   Widget build(BuildContext context) {
 
-    List<MatchCard> data = ref.watch(cardsControllerProvider);
-    if (data.length < 2) {
-      ref.read(cardsControllerProvider.notifier).setState();
+    CardsState data = ref.watch(cardsControllerProvider);
+    if (data.cards.length <= 1) {
+      ref.read(cardsControllerProvider.notifier).setCards();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -184,36 +183,43 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
         Align(
             alignment: Alignment.topCenter,
             child: CardSwiper(
+              initialIndex: data.index,
+              numberOfCardsDisplayed: 1,
                 duration: const Duration(milliseconds: 200),
-                cardsCount: data.length,
+                cardsCount: data.cards.length,
                 isLoop: false,
                 allowedSwipeDirection:
                     AllowedSwipeDirection.only(left: true, right: true),
                 cardBuilder: (context, index, i, i2) {
-                  return data[index];
+                  return data.cards[index];
                 },
-                
+
                 onUndo: (previousIndex, currentIndex, direction) {
-                  ref.read(cardsControllerProvider.notifier).removeFromBlocked(data[currentIndex].uid);
-                  ref.read(cardsControllerProvider.notifier).removeFromLiked(data[currentIndex].uid);
+                  ref.read(cardsControllerProvider.notifier).removeFromBlocked(data.cards[currentIndex].uid);
+                  ref.read(cardsControllerProvider.notifier).removeFromLiked(data.cards[currentIndex].uid);
 
                   return true;
                 },
                 controller: cardController,
                 onSwipe: (previousIndex, currentIndex,
                     CardSwiperDirection direction) {
+                  
+
                   if (direction.name == "left") {
                     print("LEFT");
-                    ref.read(cardsControllerProvider.notifier).addToBlocked(data[previousIndex].uid);
+                    ref.read(cardsControllerProvider.notifier).addToBlocked(data.cards[previousIndex].uid);
+                    ref.read(cardsControllerProvider.notifier).setIndex(currentIndex ?? data.cards.length - 1);
                   } else if (direction.name == "right") {
                     print("RIGHT");
-                    ref.read(cardsControllerProvider.notifier).addToLiked(data[previousIndex].uid);
+                    ref.read(cardsControllerProvider.notifier).addToLiked(data.cards[previousIndex].uid);
+                    ref.read(cardsControllerProvider.notifier).setIndex(currentIndex ?? data.cards.length - 1);
                   }
 
-                  if (previousIndex == data.length - 1) {
-                    ref.read(cardsControllerProvider.notifier).setState();
+                  if (previousIndex == data.cards.length - 1) {
+                    ref.read(cardsControllerProvider.notifier).setCards();
                     setState(() {});
                   }
+
                   return true;
                 })),
       ],
