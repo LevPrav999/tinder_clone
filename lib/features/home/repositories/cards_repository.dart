@@ -72,6 +72,10 @@ class CardsRepository{
     await firestore.collection('users').doc(uid).update({
       'liked': FieldValue.arrayUnion([uidToAdd])
     });
+
+    await firestore.collection('users').doc(uidToAdd).update({
+      'pending': FieldValue.arrayUnion([uid])
+    });
   }
 
   void addToBlocked(String uidToAdd) async {
@@ -89,6 +93,10 @@ class CardsRepository{
       'liked': FieldValue.arrayRemove([uidToRemove])
     });
     }
+
+    await firestore.collection('users').doc(uidToRemove).update({
+      'pending': FieldValue.arrayUnion([uid])
+    });
   }
 
   void removeFromBlocked(String uidToRemove) async {
