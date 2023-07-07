@@ -81,5 +81,25 @@ class CardsRepository{
     });
   }
 
+  void removeFromLiked(String uidToRemove) async {
+    String uid = auth.currentUser!.uid;
+    var user = await firestore.collection('users').doc(uid).get();
+    if(UserModel.fromMap(user.data()!).liked.contains(uidToRemove)){
+      await firestore.collection('users').doc(uid).update({
+      'liked': FieldValue.arrayRemove([uidToRemove])
+    });
+    }
+  }
+
+  void removeFromBlocked(String uidToRemove) async {
+    String uid = auth.currentUser!.uid;
+    var user = await firestore.collection('users').doc(uid).get();
+    if(UserModel.fromMap(user.data()!).blocked.contains(uidToRemove)){
+      await firestore.collection('users').doc(uid).update({
+        'blocked': FieldValue.arrayRemove([uidToRemove])
+      });
+    }
+  }
+
 
 }
