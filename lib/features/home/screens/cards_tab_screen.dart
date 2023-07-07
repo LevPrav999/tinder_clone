@@ -25,7 +25,7 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
   Widget build(BuildContext context) {
 
     CardsState data = ref.watch(cardsControllerProvider);
-    if (data.cards.length <= 1) {
+    if (data.cards.isEmpty) {
       ref.read(cardsControllerProvider.notifier).setCards();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
