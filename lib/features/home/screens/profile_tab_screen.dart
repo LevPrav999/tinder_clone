@@ -7,6 +7,7 @@ import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/common/utils/utils.dart';
 import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
 import 'package:tinder_clone/features/home/controller/user_controller.dart';
+import 'package:tinder_clone/features/matchers/screens/match_screen.dart';
 
 class ProfileTabScreen extends ConsumerStatefulWidget {
   const ProfileTabScreen({super.key});
@@ -91,7 +92,11 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                     ),
                                   ),
                                   Expanded(
-                                      child: Stack(
+                                      child:GestureDetector(
+                                        onTap: (){
+                                          Navigator.pushNamed(context, MatchScreen.routeName);
+                                        },
+                                        child: Stack(
                                     children: <Widget>[
                                       Container(
                                         color: Colors.white,
@@ -167,7 +172,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                         ),
                                       )
                                     ],
-                                  )),
+                                  ))),
                                   Expanded(
                                       child: GestureDetector(
                                     onTap: () {
