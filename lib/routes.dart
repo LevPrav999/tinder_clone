@@ -15,7 +15,7 @@ class Routes {
       case PhoneAuthScreen.routeName:
         return MaterialPageRoute(builder: (context) => const PhoneAuthScreen());
       case MatchScreen.routeName:
-        return MaterialPageRoute(builder: (context) => const MatchScreen());
+        return MaterialPageRoute(builder: (context) => const MatchScreen(), maintainState: false);
       case HomeScreen.routeName:
         return MaterialPageRoute(builder: (context) => const HomeScreen(), maintainState: false);
       case UserInfoScreen.routeName:
