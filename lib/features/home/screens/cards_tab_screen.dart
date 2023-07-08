@@ -216,6 +216,7 @@ class _CardsTabScreenState extends ConsumerState<CardsTabScreen> {
                   }
 
                   if (previousIndex == data.cards.length - 1) {
+                    ref.read(cardsControllerProvider.notifier).setIndex(0);
                     ref.read(cardsControllerProvider.notifier).setCards();
                     setState(() {});
                   }
