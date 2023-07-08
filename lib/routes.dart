@@ -5,6 +5,7 @@ import 'package:tinder_clone/features/auth/screens/code_screen.dart';
 import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
 import 'package:tinder_clone/features/home/screens/home_screen.dart';
 import 'package:tinder_clone/features/login/screens/login_screen.dart';
+import 'package:tinder_clone/features/matchers/screens/match_screen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -13,6 +14,8 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const LoginScreen());
       case PhoneAuthScreen.routeName:
         return MaterialPageRoute(builder: (context) => const PhoneAuthScreen());
+      case MatchScreen.routeName:
+        return MaterialPageRoute(builder: (context) => const MatchScreen());
       case HomeScreen.routeName:
         return MaterialPageRoute(builder: (context) => const HomeScreen(), maintainState: false);
       case UserInfoScreen.routeName:
