@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/features/matchers/controller/match_controller.dart';
 
-
 class MatchScreen extends ConsumerStatefulWidget {
   static const String routeName = '/match-screen';
   const MatchScreen({super.key});
@@ -25,7 +24,6 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     CardsState data = ref.watch(matchControllerProvider);
 
     if (data.cards.isEmpty) {
@@ -47,8 +45,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                 height: ScreenUtil().setHeight(20.0),
               ),
               Padding(
-                padding:
-                    EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(30.0)),
+                padding: EdgeInsets.symmetric(
+                    horizontal: ScreenUtil().setWidth(30.0)),
                 child: Text("There is no one around you ...",
                     textAlign: TextAlign.center,
                     style: TextStyle(
@@ -83,7 +81,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                           decoration: BoxDecoration(
                               boxShadow: const [
                                 BoxShadow(
-                                    offset: Offset(0.0, 0.0), color: Colors.grey),
+                                    offset: Offset(0.0, 0.0),
+                                    color: Colors.grey),
                                 BoxShadow(
                                     offset: Offset(1.0, 1.0),
                                     color: Colors.grey,
@@ -97,7 +96,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                               borderRadius: BorderRadius.circular(60.0)),
                           child: ShaderMask(
                               child: Image(
-                                image: AssetImage('assets/images/closeRounded.png'),
+                                image: AssetImage(
+                                    'assets/images/closeRounded.png'),
                               ),
                               blendMode: BlendMode.srcATop,
                               shaderCallback: (Rect bounds) {
@@ -120,7 +120,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                           decoration: BoxDecoration(
                               boxShadow: const [
                                 BoxShadow(
-                                    offset: Offset(0.0, 0.0), color: Colors.grey),
+                                    offset: Offset(0.0, 0.0),
+                                    color: Colors.grey),
                                 BoxShadow(
                                     offset: Offset(1.0, 1.0),
                                     color: Colors.grey,
@@ -156,7 +157,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                           decoration: BoxDecoration(
                               boxShadow: const [
                                 BoxShadow(
-                                    offset: Offset(0.0, 0.0), color: Colors.grey),
+                                    offset: Offset(0.0, 0.0),
+                                    color: Colors.grey),
                                 BoxShadow(
                                     offset: Offset(1.0, 1.0),
                                     color: Colors.grey,
@@ -192,8 +194,8 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
             Align(
                 alignment: Alignment.topCenter,
                 child: CardSwiper(
-                  initialIndex: data.index,
-                  numberOfCardsDisplayed: 1,
+                    initialIndex: data.index,
+                    numberOfCardsDisplayed: 1,
                     duration: const Duration(milliseconds: 200),
                     cardsCount: data.cards.length,
                     isLoop: false,
@@ -202,34 +204,41 @@ class _MatchScreenState extends ConsumerState<MatchScreen> {
                     cardBuilder: (context, index, i, i2) {
                       return data.cards[index];
                     },
-          
                     onUndo: (previousIndex, currentIndex, direction) {
-                      ref.read(matchControllerProvider.notifier).removeFromBlocked(data.cards[currentIndex].uid);
-                      ref.read(matchControllerProvider.notifier).addToPending(data.cards[currentIndex].uid);
-          
+                      ref
+                          .read(matchControllerProvider.notifier)
+                          .removeFromBlocked(data.cards[currentIndex].uid);
+                      ref
+                          .read(matchControllerProvider.notifier)
+                          .addToPending(data.cards[currentIndex].uid);
+
                       return true;
                     },
                     controller: cardController,
                     onSwipe: (previousIndex, currentIndex,
                         CardSwiperDirection direction) {
-                      
-          
                       if (direction.name == "left") {
                         print("LEFT");
-                        ref.read(matchControllerProvider.notifier).deletePending(data.cards[previousIndex].uid);
-                        ref.read(matchControllerProvider.notifier).setIndex(currentIndex ?? data.cards.length - 1);
+                        ref
+                            .read(matchControllerProvider.notifier)
+                            .deletePending(data.cards[previousIndex].uid);
+                        ref
+                            .read(matchControllerProvider.notifier)
+                            .setIndex(currentIndex ?? data.cards.length - 1);
                       } else if (direction.name == "right") {
                         print("RIGHT");
                         // create chat
-                        ref.read(matchControllerProvider.notifier).setIndex(currentIndex ?? data.cards.length - 1);
+                        ref
+                            .read(matchControllerProvider.notifier)
+                            .setIndex(currentIndex ?? data.cards.length - 1);
                       }
-          
+
                       if (previousIndex == data.cards.length - 1) {
                         ref.read(matchControllerProvider.notifier).setIndex(0);
                         ref.read(matchControllerProvider.notifier).setCards();
                         setState(() {});
                       }
-          
+
                       return true;
                     })),
           ],
