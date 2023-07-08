@@ -8,40 +8,67 @@ import 'package:tinder_clone/common/widgets/match_card.dart';
 final matchRepositoryProvider = Provider((ref) => MatchRepository(
     auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance));
 
-
-
-
-class MatchRepository{
+class MatchRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
 
   MatchRepository({required this.auth, required this.firestore});
 
-
-  Future<List<MatchCard>> getMatchers() async{
+  Future<List<MatchCard>> getMatchers() async {
     String uid = auth.currentUser!.uid;
-    List<MatchCard> matchCards = [];
+    List<MatchCard> pendingMatches = [];
 
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('users').get();
+    DocumentSnapshot userSnapshot =
+        await FirebaseFirestore.instance.collection('users').doc(uid).get();
 
-    for (QueryDocumentSnapshot documentSnapshot in querySnapshot.docs) {
-      UserModel data = UserModel.fromMap(documentSnapshot.data() as Map<String, dynamic>);
+    List<dynamic> pendingData = userSnapshot.get('pending');
 
-      if (data.liked.contains(uid)) {
-        String age = getAge(data.age['year']);
+    for (String pendingUserId in pendingData) {
+      DocumentSnapshot pendingUserSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(pendingUserId)
+          .get();
+      var data =
+          UserModel.fromMap(pendingUserSnapshot.data() as Map<String, dynamic>);
+      String age = getAge(data.age['year']);
 
-        MatchCard matchCard = MatchCard(
-          uid: documentSnapshot.id,
-          name: data.name,
-          imageURL: data.avatar,
-          age: age,
-          bio: data.bio,
-        );
-
-        matchCards.add(matchCard);
-      }
+      MatchCard matchCard = MatchCard(
+        uid: pendingUserSnapshot.id,
+        name: data.name,
+        imageURL: data.avatar,
+        age: age,
+        bio: data.bio,
+      );
+      pendingMatches.add(matchCard);
     }
 
-    return matchCards;
+    return pendingMatches;
+  }
+
+  void deletePendingUser(String uidUser) async{
+    String uid = auth.currentUser!.uid;
+    await firestore.collection('users').doc(uid).update({
+      'pending': FieldValue.arrayRemove([uidUser])
+    });
+
+    await firestore.collection('users').doc(uid).update({
+      'blocked': FieldValue.arrayUnion([uidUser])
+    });
+  }
+
+  void removeFromBlocked(String uidToRemove) async {
+    String uid = auth.currentUser!.uid;
+
+     await firestore.collection('users').doc(uid).update({
+        'blocked': FieldValue.arrayRemove([uidToRemove])
+      });
+  }
+
+  void addToPending(String uidToAdd) async {
+    String uid = auth.currentUser!.uid;
+
+    await firestore.collection('users').doc(uid).update({
+        'pending': FieldValue.arrayUnion([uidToAdd])
+      });
   }
 }
