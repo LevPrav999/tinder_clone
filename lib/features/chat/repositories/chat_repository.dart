@@ -17,6 +17,33 @@ class ChatRepository {
 
   ChatRepository({required this.firestore, required this.auth});
 
+
+  Stream<List<ChatConversation>> getAllLastMessageList() {
+    return firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .collection('chats')
+        .snapshots()
+        .asyncMap((event) async {
+      List<ChatConversation> contacts = [];
+      for (var document in event.docs) {
+        final lastMessage = ChatConversation.fromMap(document.data());
+        final userData = await firestore.collection('users').doc(lastMessage.contactId).get();
+        final user = UserModel.fromMap(userData.data()!);
+        contacts.add(
+          ChatConversation(
+            name: user.name,
+            profilePic: user.avatar,
+            contactId: lastMessage.contactId,
+            timeSent: lastMessage.timeSent,
+            lastMessage: lastMessage.lastMessage
+          )
+        );
+      }
+      return contacts;
+    });
+  }
+
   void sendTextMessage(
       {required BuildContext context,
       required String text,
