@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/common/states/cards_state.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
+import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 import 'package:tinder_clone/features/home/controller/cards_controller.dart';
 import 'package:tinder_clone/features/matchers/controller/match_controller.dart';
 
@@ -26,6 +27,9 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
     super.initState();
   }
 
+  void sendTextMessage(BuildContext context, String uid) async {
+      ref.read(chatControllerProvider).sendTextMessage(context, "👋", uid);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,11 +215,9 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
               },
               onUndo: (previousIndex, currentIndex, direction) {
                 if (widget.matchScreen) {
-                  ref
-                      .read(matchControllerProvider.notifier)
+                  provider
                       .removeFromBlocked(data.cards[currentIndex].uid);
-                  ref
-                      .read(matchControllerProvider.notifier)
+                  provider
                       .addToPending(data.cards[currentIndex].uid);
                 } else {
                   provider
@@ -228,11 +230,11 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
               },
               controller: cardController,
               onSwipe:
-                  (previousIndex, currentIndex, CardSwiperDirection direction) {
+                  (previousIndex, currentIndex, CardSwiperDirection direction) async {
                 if (direction.name == "left") {
                   if (widget.matchScreen) {
                     provider
-                        .deletePending(data.cards[previousIndex].uid);
+                        .deletePendingAndBlock(data.cards[previousIndex].uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                   } else {
@@ -243,9 +245,11 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                   }
                 } else if (direction.name == "right") {
                   if (widget.matchScreen) {
-                    // create chat
+                    provider
+                        .deletePendingAndLike(data.cards[previousIndex].uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
+                    sendTextMessage(context, data.cards[previousIndex].uid);
                   } else {
                     provider
                         .addToLiked(data.cards[previousIndex].uid);
