@@ -111,20 +111,24 @@ class AuthRepository {
               .storeFileToFirebase('profilePictures/$uid', profilePicture);
         }
       }
+      late UserModel userFromDb;
+      if(userSnap.exists)
+        userFromDb = UserModel.fromMap(userSnap.data() as Map<String, dynamic>);
 
       var user = UserModel(
-          uid: uid,
-          name: name,
-          avatar: photoUrl,
-          age: convertBirthday(age),
-          sex: sex,
-          city: city,
-          bio: bio,
-          sexFind: sexFind,
-          isOnline: true,
-          blocked: [],
-          liked: [],
-          pending: []);
+        uid: uid,
+        name: name,
+        avatar: photoUrl,
+        age: convertBirthday(age),
+        sex: sex,
+        city: city,
+        bio: bio,
+        sexFind: sexFind,
+        isOnline: true,
+        blocked: userSnap.exists ? userFromDb.blocked : [],
+        liked: userSnap.exists ? userFromDb.liked : [],
+        pending: userSnap.exists ? userFromDb.pending : [],
+      );
 
       if (userSnap.exists) {
         await firestore.collection('users').doc(uid).update(user.toMap());
