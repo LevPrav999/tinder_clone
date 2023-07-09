@@ -64,7 +64,7 @@ class ChatsTabScreen extends ConsumerWidget {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(lastMessageData.name),
+                    Text(lastMessageData.name, style: TextStyle(fontSize: 16.w),),
                     Text(
                       DateFormat.Hm().format(lastMessageData.timeSent),
                       style: const TextStyle(
@@ -75,7 +75,7 @@ class ChatsTabScreen extends ConsumerWidget {
                   ],
                 ),
                 subtitle: Padding(
-                  padding: const EdgeInsets.only(top: 3),
+                  padding: const EdgeInsets.only(top: 10),
                   child: Text(
                     lastMessageData.lastMessage,
                     maxLines: 1,
@@ -87,7 +87,7 @@ class ChatsTabScreen extends ConsumerWidget {
                   backgroundImage: CachedNetworkImageProvider(
                     lastMessageData.profilePic,
                   ),
-                  radius: 24,
+                  radius: 32,
                 ),
               );
             },
