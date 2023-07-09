@@ -142,4 +142,14 @@ class AuthRepository {
   Stream<UserModel?> getUserData(String uid){
     return firestore.collection('users').doc(uid).snapshots().map((event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
   }
+
+    Future<UserModel?> getCurrentUserInfo() async {
+    UserModel? user;
+    final userInfo =
+        await firestore.collection('users').doc(auth.currentUser?.uid).get();
+
+    if (userInfo.data() == null) return user;
+    user = UserModel.fromMap(userInfo.data()!);
+    return user;
+  }
 }
