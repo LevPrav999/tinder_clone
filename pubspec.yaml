@@ -47,6 +47,7 @@ dependencies:
   flutter_card_swiper: ^6.0.0
   intl: ^0.18.1
   uuid: ^3.0.7
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:
