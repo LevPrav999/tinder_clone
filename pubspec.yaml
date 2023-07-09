@@ -46,6 +46,7 @@ dependencies:
   carousel_slider: ^4.2.1
   flutter_card_swiper: ^6.0.0
   intl: ^0.18.1
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:
