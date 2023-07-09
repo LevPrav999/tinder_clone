@@ -30,8 +30,8 @@ class ChatsTabScreen extends ConsumerWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(100.0),
             child: Image(
-                width: 200.w,
-                height: 200.h,
+                width: 300.w,
+                height: 150.h,
                 fit: BoxFit.cover,
                 image: AssetImage('assets/images/sorry.png')),
           ),

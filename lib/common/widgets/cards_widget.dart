@@ -52,8 +52,8 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
           ClipRRect(
             borderRadius: BorderRadius.circular(100.0),
             child: Image(
-                width: 200.w,
-                height: 200.h,
+                width: 300.w,
+                height: 150.h,
                 fit: BoxFit.cover,
                 image: AssetImage('assets/images/sorry.png')),
           ),
@@ -63,7 +63,7 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
           Padding(
             padding:
                 EdgeInsets.symmetric(horizontal: 30.w),
-            child: Text("There is no one around you ...",
+            child: Text("There is no one around you...",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     wordSpacing: 1.2,
