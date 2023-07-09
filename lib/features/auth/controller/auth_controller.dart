@@ -22,6 +22,13 @@ final getUserDataProvider = StreamProvider.family((ref, String uid) {
   return authController.getUserData(uid);
 });
 
+final userInfoAuthProvider = FutureProvider(
+  (ref) {
+    final authController = ref.watch(authControllerProvider);
+    return authController.getCurrentUserInfo();
+  },
+);
+
 class AuthController {
   final AuthRepository authRepository;
   final ProviderRef ref;
@@ -64,5 +71,10 @@ class AuthController {
 
   Stream<UserModel?> getUserData(String uid){
     return authRepository.getUserData(uid);
+  }
+
+  Future<UserModel?> getCurrentUserInfo() async {
+    UserModel? user = await authRepository.getCurrentUserInfo();
+    return user;
   }
 }
