@@ -30,22 +30,22 @@ class ChatsTabScreen extends ConsumerWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(100.0),
             child: Image(
-                width: ScreenUtil().setWidth(200),
-                height: ScreenUtil().setWidth(200),
+                width: 200.w,
+                height: 200.h,
                 fit: BoxFit.cover,
                 image: AssetImage('assets/images/sorry.png')),
           ),
           SizedBox(
-            height: ScreenUtil().setHeight(20.0),
+            height: 20.h,
           ),
           Padding(
             padding:
-                EdgeInsets.symmetric(horizontal: ScreenUtil().setWidth(30.0)),
+                EdgeInsets.symmetric(horizontal: 30.w),
             child: Text("You don't have any chats yet...",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     wordSpacing: 1.2,
-                    fontSize: ScreenUtil().setSp(26.0),
+                    fontSize: 26.sp,
                     fontWeight: FontWeight.w300,
                     color: Colors.grey.shade600)),
           )

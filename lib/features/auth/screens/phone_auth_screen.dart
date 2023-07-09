@@ -148,7 +148,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                           color: Colors.black54),
                     ),
                     SizedBox(
-                      height: ScreenUtil().setHeight(20.0),
+                      height: 20.h,
                     ),
                     GestureDetector(
                       onTap: () => sendCodeToPhone(),
