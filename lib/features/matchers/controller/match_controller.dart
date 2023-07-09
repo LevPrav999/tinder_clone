@@ -31,8 +31,12 @@ class MatchController extends StateNotifier<CardsState>{
     Future.delayed(const Duration(seconds: 3)).then((value) => Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false));
   }
 
-  void deletePending(String uidUser) async{
-    matchRepository.deletePendingUser(uidUser);
+  void deletePendingAndBlock(String uidUser) async{
+    matchRepository.deletePendingUserAndBlock(uidUser);
+  }
+
+  void deletePendingAndLike(String uidUser) async{
+    matchRepository.deletePendingUserAndLike(uidUser);
   }
 
 
