@@ -45,7 +45,7 @@ class MatchRepository {
     return pendingMatches;
   }
 
-  void deletePendingUser(String uidUser) async{
+  void deletePendingUserAndBlock(String uidUser) async{
     String uid = auth.currentUser!.uid;
     await firestore.collection('users').doc(uid).update({
       'pending': FieldValue.arrayRemove([uidUser])
@@ -53,6 +53,17 @@ class MatchRepository {
 
     await firestore.collection('users').doc(uid).update({
       'blocked': FieldValue.arrayUnion([uidUser])
+    });
+  }
+
+  void deletePendingUserAndLike(String uidUser) async{
+    String uid = auth.currentUser!.uid;
+    await firestore.collection('users').doc(uid).update({
+      'pending': FieldValue.arrayRemove([uidUser])
+    });
+
+    await firestore.collection('users').doc(uid).update({
+      'liked': FieldValue.arrayUnion([uidUser])
     });
   }
 
