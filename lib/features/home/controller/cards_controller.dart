@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/common/widgets/match_card.dart';
+import 'package:tinder_clone/common/states/cards_state.dart';
 import 'package:tinder_clone/features/home/repositories/cards_repository.dart';
 
 final cardsControllerProvider = StateNotifierProvider<CardsController, CardsState>((ref) {
@@ -7,16 +7,6 @@ final cardsControllerProvider = StateNotifierProvider<CardsController, CardsStat
   return CardsController(cardsRepository: cardsRepository);
 });
 
-class CardsState{
-  final List<MatchCard> cards;
-  final int index;
-
-  CardsState({required this.cards, required this.index});
-
-  CardsState copyWith({List<MatchCard>? cards, int? index}){
-      return CardsState(cards: cards ?? this.cards, index: index ?? this.index);
-  }
-}
 
 class CardsController extends StateNotifier<CardsState>{
   final CardsRepository cardsRepository;
