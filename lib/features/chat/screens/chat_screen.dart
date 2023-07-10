@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
-import 'package:tinder_clone/features/chat/screens/chat_list.dart';
-import 'package:tinder_clone/features/chat/screens/chat_text_field.dart';
+import 'package:tinder_clone/features/chat/screens/widgets/chat_list.dart';
+import 'package:tinder_clone/features/chat/screens/widgets/chat_text_field.dart';
 
 class ChatScreen extends ConsumerWidget {
   static const String routeName = '/chat-screen';
