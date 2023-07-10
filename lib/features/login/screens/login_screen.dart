@@ -33,7 +33,7 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   Expanded(
-                      flex: 5,
+                      flex: 6,
                       child: Center(
                           child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -55,7 +55,7 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ))),
                   Expanded(
-                    flex: 3,
+                    flex: 2,
                     child: Column(children: [
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
@@ -66,7 +66,7 @@ class LoginScreen extends StatelessWidget {
                               color: Colors.white, fontWeight: FontWeight.w500),
                         ),
                       ),
-                      const SizedBox(height: 50),
+                      const SizedBox(height: 40),
                       Container(
                             width: double.infinity,
                             height: 45.h,
@@ -93,34 +93,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ),
                             )),
-                      const SizedBox(height: 10),
-                      Container(
-                            width: double.infinity,
-                            height: 45.h,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(45.0),
-                                  ),
-                                  backgroundColor: Colors.white,
-                                  elevation: 0.0,
-                                ),
-                                onPressed: () {
-                                },
-                                child: const Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "LOG IN WITH GOOGLE",
-                                      style: TextStyle(
-                                          color: Colors.grey, wordSpacing: 1.2),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            )),
+                      
                     ]),
                   )
                 ],
