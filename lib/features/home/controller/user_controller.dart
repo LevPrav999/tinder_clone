@@ -7,19 +7,13 @@ final userControllerProvider = Provider((ref) {
   return UserController(userRepository: userRepository);
 });
 
-final userDataProvider = FutureProvider((ref) {
-  final userController = ref.watch(userControllerProvider);
-  return userController.getUser();
-});
-
 final userStateProvider = StateProvider<UserModel?>((ref) => null);
+
 
 class UserController{
   final UserRepository userRepository;
 
   UserController({required this.userRepository});
 
-  Future<UserModel> getUser() async {
-    return await userRepository.getUserDataFromFirestore();
-  }
+
 }
