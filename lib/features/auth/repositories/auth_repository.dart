@@ -57,14 +57,15 @@ class AuthRepository {
       DocumentSnapshot userSnap =
           await firestore.collection('users').doc(uid).get();
 
-      if(userSnap.exists){
+      if (userSnap.exists) {
         Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.routeName, (route) => false);
-      }else{
+            context, HomeScreen.routeName, (route) => false);
+      } else {
         Navigator.pushNamedAndRemoveUntil(
-          context, UserInfoScreen.routeName,arguments: {
-            'fromProfile': false
-          }, (route) => false);
+            context,
+            UserInfoScreen.routeName,
+            arguments: {'fromProfile': false},
+            (route) => false);
       }
     } on FirebaseAuthException catch (e) {
       showAlertDialog(context: context, message: e.toString());
@@ -92,16 +93,15 @@ class AuthRepository {
       String photoUrl = "";
 
       if (changeImage == true) {
-
         if (profilePicture != null) {
           photoUrl = await ref
               .read(commonFirebaseStorageRepositoryProvider)
               .storeFileToFirebase('profilePictures/$uid', profilePicture);
         }
-      }else if(userSnap.exists){
+      } else if (userSnap.exists) {
         var data = userSnap.data() as Map<String, dynamic>;
         photoUrl = data['avatar'];
-      }else{
+      } else {
         photoUrl =
             "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png";
 
@@ -112,7 +112,7 @@ class AuthRepository {
         }
       }
       late UserModel userFromDb;
-      if(userSnap.exists)
+      if (userSnap.exists)
         userFromDb = UserModel.fromMap(userSnap.data() as Map<String, dynamic>);
 
       var user = UserModel(
@@ -143,11 +143,12 @@ class AuthRepository {
     }
   }
 
-  Stream<UserModel?> getUserData(String uid){
-    return firestore.collection('users').doc(uid).snapshots().map((event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
+  Stream<UserModel?> getUserData(String uid) {
+    return firestore.collection('users').doc(uid).snapshots().map(
+        (event) => UserModel.fromMap(event.data() as Map<String, dynamic>));
   }
 
-    Future<UserModel?> getCurrentUserInfo() async {
+  Future<UserModel?> getCurrentUserInfo() async {
     UserModel? user;
     final userInfo =
         await firestore.collection('users').doc(auth.currentUser?.uid).get();
@@ -155,5 +156,19 @@ class AuthRepository {
     if (userInfo.data() == null) return user;
     user = UserModel.fromMap(userInfo.data()!);
     return user;
+  }
+
+  void setUserStatus(bool isOnline) async{
+    await firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'isOnline': isOnline
+    });
+  }
+
+  Stream<UserModel> getUserPresenceStatus({required String uid}) {
+    return firestore
+        .collection('users')
+        .doc(uid)
+        .snapshots()
+        .map((event) => UserModel.fromMap(event.data()!));
   }
 }
