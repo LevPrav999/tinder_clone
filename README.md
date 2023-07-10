@@ -1,6 +1,6 @@
 # Tinder Clone
 
-[Russian Version](https://github.com/LevPrav999/tinder_clone/README_RUS.md)
+[Russian Version](https://github.com/LevPrav999/tinder_clone/blob/main/README_RUS.md)
 
 Tinder Clone is a mobile application that replicates the popular dating app Tinder. It allows users to create an account, edit their profile, search for other users, and interact with them through swipe and chat features. The app offers features such as phone number registration, profile customization, user search based on location and age, swipe left/right to block or like users, viewing users who liked you, and a chat interface with messages organized by dates.
 
