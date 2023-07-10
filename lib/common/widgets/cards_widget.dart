@@ -55,7 +55,7 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                 width: 300.w,
                 height: 150.h,
                 fit: BoxFit.cover,
-                image: AssetImage('assets/images/sorry.png')),
+                image: const AssetImage('assets/images/sorry.png')),
           ),
           SizedBox(
             height: 20.h,
@@ -107,12 +107,9 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(60.0)),
                     child: ShaderMask(
-                        child: Image(
-                          image: AssetImage('assets/images/closeRounded.png'),
-                        ),
                         blendMode: BlendMode.srcATop,
                         shaderCallback: (Rect bounds) {
-                          return LinearGradient(
+                          return const LinearGradient(
                               colors: [
                                 Coloors.accentColor,
                                 Coloors.primaryColor
@@ -120,7 +117,10 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                               begin: Alignment.topRight,
                               end: Alignment.bottomLeft,
                               stops: [0.0, 1.0]).createShader(bounds);
-                        }),
+                        },
+                        child: const Image(
+                          image: AssetImage('assets/images/closeRounded.png'),
+                        )),
                   )),
               GestureDetector(
                   onTap: () => cardController.undo(),
@@ -144,8 +144,6 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(60.0)),
                     child: ShaderMask(
-                        child:
-                            Image(image: AssetImage('assets/images/round.png')),
                         blendMode: BlendMode.srcATop,
                         shaderCallback: (Rect bounds) {
                           return LinearGradient(
@@ -155,8 +153,10 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                               ],
                               begin: Alignment.topRight,
                               end: Alignment.bottomLeft,
-                              stops: [0.0, 1.0]).createShader(bounds);
-                        }),
+                              stops: const [0.0, 1.0]).createShader(bounds);
+                        },
+                        child:
+                            const Image(image: AssetImage('assets/images/round.png'))),
                   )),
               GestureDetector(
                   onTap: () => cardController.swipeRight(),
@@ -180,10 +180,6 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(60.0)),
                     child: ShaderMask(
-                        child: Icon(
-                          Icons.favorite,
-                          size: 32.h,
-                        ),
                         blendMode: BlendMode.srcATop,
                         shaderCallback: (Rect bounds) {
                           return LinearGradient(
@@ -193,8 +189,12 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                               ],
                               begin: Alignment.topRight,
                               end: Alignment.bottomLeft,
-                              stops: [0.0, 1.0]).createShader(bounds);
-                        }),
+                              stops: const [0.0, 1.0]).createShader(bounds);
+                        },
+                        child: Icon(
+                          Icons.favorite,
+                          size: 32.h,
+                        )),
                   )),
             ],
           ),

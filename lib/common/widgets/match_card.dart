@@ -8,7 +8,7 @@ class MatchCard extends StatefulWidget {
   final String age;
   final String bio;
 
-  MatchCard({required this.uid, required this.name, required this.imageURL,
+  const MatchCard({super.key, required this.uid, required this.name, required this.imageURL,
       required this.age, required this.bio});
 
   @override
@@ -62,7 +62,7 @@ class _MatchCardState extends State<MatchCard> {
                     Text(
                       widget.name,
                       style: TextStyle(
-                          shadows: [
+                          shadows: const [
                             Shadow(
                                 color: Colors.black54,
                                 offset: Offset(1.0, 2.0),
@@ -78,7 +78,7 @@ class _MatchCardState extends State<MatchCard> {
                     Text(
                       widget.age.toString(),
                       style: TextStyle(
-                          shadows: [
+                          shadows: const [
                             Shadow(
                                 color: Colors.black54,
                                 offset: Offset(1.0, 2.0),
@@ -97,7 +97,7 @@ class _MatchCardState extends State<MatchCard> {
                   widget.bio,
                   style: TextStyle(
                       color: Colors.white,
-                      shadows: [
+                      shadows: const [
                         Shadow(
                             color: Colors.black54,
                             offset: Offset(1.0, 2.0),

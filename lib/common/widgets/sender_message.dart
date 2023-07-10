@@ -46,7 +46,7 @@ class MessageCard extends StatelessWidget {
           children: [
             Container(
               decoration: BoxDecoration(
-                color: isSender ? Color.fromARGB(255, 244, 90, 100) : Color.fromARGB(255, 225, 84, 138),
+                color: isSender ? const Color.fromARGB(255, 244, 90, 100) : const Color.fromARGB(255, 225, 84, 138),
                 borderRadius: haveNip ? null : BorderRadius.circular(12),
                 boxShadow: const [
                   BoxShadow(color: Colors.black38),

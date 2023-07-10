@@ -15,7 +15,7 @@ class DateMessageCard extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 255, 133, 88),
+        color: const Color.fromARGB(255, 255, 133, 88),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
