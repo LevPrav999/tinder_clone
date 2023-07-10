@@ -17,25 +17,28 @@ class Routes {
       case PhoneAuthScreen.routeName:
         return MaterialPageRoute(builder: (context) => const PhoneAuthScreen());
       case MatchScreen.routeName:
-        return MaterialPageRoute(builder: (context) => const MatchScreen(), maintainState: false);
+        return MaterialPageRoute(
+            builder: (context) => const MatchScreen(), maintainState: false);
       case HomeScreen.routeName:
-        return MaterialPageRoute(builder: (context) => const HomeScreen(), maintainState: false);
+        return MaterialPageRoute(
+            builder: (context) => const HomeScreen(), maintainState: false);
       case ChatScreen.routeName:
         final user = settings.arguments as UserModel;
         return MaterialPageRoute(builder: (context) => ChatScreen(user: user));
       case UserInfoScreen.routeName:
         final data = settings.arguments as Map<String, dynamic>?;
-        return MaterialPageRoute(builder: (context) => UserInfoScreen(
-          name: data?['name'] ?? "Your Name",
-          age: data?['age'] ?? "01.01.2001",
-          sex: data?['sex'] ?? "",
-          city: data?['city'] ?? "Moscow",
-          bio: data?['bio'] ?? "Hi! I am using Tinder!",
-          sexFind: data?['sexFind'] ?? "",
-          avatar: data?['avatar'] ?? "",
-          fromProfile: data?['fromProfile'] as bool,
-          
-        ), maintainState: false);
+        return MaterialPageRoute(
+            builder: (context) => UserInfoScreen(
+                  name: data?['name'] ?? "Your Name",
+                  age: data?['age'] ?? "01.01.2001",
+                  sex: data?['sex'] ?? "",
+                  city: data?['city'] ?? "Moscow",
+                  bio: data?['bio'] ?? "Hi! I am using Tinder!",
+                  sexFind: data?['sexFind'] ?? "",
+                  avatar: data?['avatar'] ?? "",
+                  fromProfile: data?['fromProfile'] as bool,
+                ),
+            maintainState: false);
       case CodeScreen.routeName:
         final verificationId = settings.arguments as String;
         return MaterialPageRoute(
