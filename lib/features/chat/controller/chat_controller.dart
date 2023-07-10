@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/models/chat_model.dart';
+import 'package:tinder_clone/common/models/message_model.dart';
 import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
 import 'package:tinder_clone/features/chat/repositories/chat_repository.dart';
 
@@ -32,5 +33,9 @@ class ChatController {
             recieverUserId: receiverUserId,
             senderUser: user!);
 
+  }
+
+  Stream<List<Message>> chatStream(String recieverUserId){
+    return chatRepository.getChatStream(recieverUserId);
   }
 }
