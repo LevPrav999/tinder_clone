@@ -77,4 +77,12 @@ class AuthController {
     UserModel? user = await authRepository.getCurrentUserInfo();
     return user;
   }
+
+  void setUserStatus(bool isOnline){
+    authRepository.setUserStatus(isOnline);
+  }
+
+  Stream<UserModel> getUserPresenceStatus({required String uid}) {
+    return authRepository.getUserPresenceStatus(uid: uid);
+  }
 }
