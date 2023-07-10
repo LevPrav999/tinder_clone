@@ -248,35 +248,44 @@ String addLeadingZero(String input) {
           Padding(
               padding:
                   const EdgeInsets.only(top: 14.0, left: 16.0, right: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
                 children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      setState(() {
-                        sex = "male";
-                      });
-                    },
-                    style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            sex == "female"
-                                ? Colors.grey
-                                : Coloors.accentColor)),
-                    child: const Text("Male"),
+                  const Text("Your sex",
+                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  const SizedBox(
+                height: 2,
+              ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            sex = "male";
+                          });
+                        },
+                        style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all(
+                                sex == "female"
+                                    ? Colors.grey
+                                    : Coloors.accentColor)),
+                        child: const Text("Male"),
+                      ),
+                      ElevatedButton(
+                          onPressed: () {
+                            setState(() {
+                              sex = "female";
+                            });
+                          },
+                          style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all(
+                                  sex == "male"
+                                      ? Colors.grey
+                                      : Coloors.accentColor)),
+                          child: const Text("Female")),
+                    ],
                   ),
-                  ElevatedButton(
-                      onPressed: () {
-                        setState(() {
-                          sex = "female";
-                        });
-                      },
-                      style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all(
-                              sex == "male"
-                                  ? Colors.grey
-                                  : Coloors.accentColor)),
-                      child: const Text("Female")),
                 ],
               )),
           Padding(
