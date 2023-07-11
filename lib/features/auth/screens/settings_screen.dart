@@ -11,6 +11,8 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
+
+      List<bool> isSelected = List.generate(14, (index) => false);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +26,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             }),
         elevation: 0.0,
         title: Text(
-          "Settings",
+          "Preferences",
           style: TextStyle(
               fontWeight: FontWeight.bold, fontSize: 20.w, color: Colors.white),
         ),
@@ -41,11 +43,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   gradient: const LinearGradient(
-                      colors: [Coloors.mintGreen, Coloors.accentColor])),
+                      colors: [Coloors.mintGreen, Coloors.skyBlue])),
               child: Stack(
                 children: [
                   Image.network(
-                    "https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/3d%20icons%2Fbattery-dynamic-color.png?alt=media&token=fec6ff58-b703-4674-9c96-4ac29198a12a",
+                    "https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/3d%20icons%2Fat-dynamic-color.png?alt=media&token=5fcbe43e-e838-4b61-a73e-70b5c7862ca5",
                     fit: BoxFit.cover,
                   ),
                   const Align(
@@ -55,19 +57,19 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                       child: Column(
                         children: [
                           Text(
-                            "Make\nYourself",
+                            "Invite\nFriends To",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 22,
+                                fontSize: 17,
                                 fontWeight: FontWeight.bold),
                           ),
                           Text(
-                            "BOOSTED",
+                            "Tinder",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                color: Coloors.sunnyYellow,
-                                fontSize: 22,
+                                color: Coloors.accentColor,
+                                fontSize: 33,
                                 fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -78,34 +80,45 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
             ),
           ),
-          SizedBox(
-            height: 30.h,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 60.0),
-            child: OutlinedButton(
-              onPressed: () {},
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      "Sign Out",
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.w300,
-                          color: Coloors.lavenderPurple),
+          Text("Choose your preferences", style: TextStyle(fontSize: 20, color: Coloors.accentColor, fontWeight: FontWeight.bold),),
+          Expanded(
+            child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2.0,
+                  mainAxisSpacing: 8.0,
+                  crossAxisSpacing: 8.0,
+                ),
+                padding: EdgeInsets.all(16.0),
+                itemCount: 14,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isSelected[index] = !isSelected[index];
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: isSelected[index] ? Colors.red : Colors.grey[200],
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Center(
+                        child: Text(
+                          "Tag ${index + 1}",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                            color:
+                                isSelected[index] ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      ),
                     ),
-                    Icon(Icons.arrow_forward, color: Coloors.lavenderPurple)
-                  ]),
-              style: ButtonStyle(
-                  side: MaterialStateProperty.all(
-                      BorderSide(color: Coloors.lavenderPurple, width: 1.4)),
-                  padding: MaterialStateProperty.all(
-                      EdgeInsets.symmetric(vertical: 20, horizontal: 50)),
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(40))))),
-            ),
-          )
+                  );
+                },
+              ),
+          ),
         ],
       )),
     );
