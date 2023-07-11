@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:tinder_clone/common/utils/coloors.dart';
 
 class DateMessageCard extends StatelessWidget {
   const DateMessageCard({Key? key, required this.date}) : super(key: key);
@@ -15,11 +16,12 @@ class DateMessageCard extends StatelessWidget {
       ),
       margin: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 255, 133, 88),
+        color: Coloors.brushPink,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Text(
         DateFormat.yMMMd().format(date),
+        style: const TextStyle(color: Colors.white),
       ),
     );
   }
