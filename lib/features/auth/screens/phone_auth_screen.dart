@@ -78,7 +78,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Theme.of(context).primaryColor),
+            icon: Icon(Icons.arrow_back, color: Coloors.primaryColor),
             onPressed: () {
               Navigator.pop(context);
             }),
