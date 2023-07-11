@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tinder_clone/common/utils/coloors.dart';
 
 class AlertChatCard extends StatelessWidget {
   const AlertChatCard({
@@ -14,7 +15,7 @@ class AlertChatCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: const Color.fromARGB(255, 239, 197, 70),
+        color: Coloors.sunnyYellow,
         borderRadius: BorderRadius.circular(10),
       ),
       child: const Text(

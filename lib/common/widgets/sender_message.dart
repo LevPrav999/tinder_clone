@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tinder_clone/common/models/message_model.dart';
 
+import '../utils/coloors.dart';
+
 class MessageCard extends StatelessWidget {
   const MessageCard({
     Key? key,
@@ -63,7 +65,7 @@ class MessageCard extends StatelessWidget {
                         ),
                         child: Text(
                           "${message.text}         ",
-                          style: const TextStyle(fontSize: 16),
+                          style: const TextStyle(fontSize: 16, color: Colors.white),
                         ),
                       ),
               ),
@@ -77,7 +79,7 @@ class MessageCard extends StatelessWidget {
                       DateFormat.Hm().format(message.timeSent),
                       style: const TextStyle(
                         fontSize: 11,
-                        color: Color.fromARGB(255, 180, 172, 172),
+                        color: Coloors.steelGray,
                       ),
                     )
             )
