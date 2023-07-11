@@ -11,13 +11,14 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-
-      List<bool> isSelected = List.generate(14, (index) => false);
+  List<String> tags = ["Anime", "Travel", "Fitness", "Movies", "Cooking", "Music", "Games", "Sports", "Art", "Psychology", "Photography", "Technology", "Fashion", "Nature", "Literature", "Design", "Food", "Health", "Marketing", "Relationshipy", "City Travel", "Dance", "Automobiles", "Entertainment", "Volunteering", "Investments", "Programming", " Interior", "Drawing", "Self-Defense", "Painting", "Gardening", "Crafts"];
+  List<bool> isSelected = List.generate(33, (index) => false);
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Coloors.secondaryHeaderColor,
+        backgroundColor: Coloors.primaryColor,
         automaticallyImplyLeading: false,
         leading: IconButton(
             icon: Icon(Icons.arrow_back, color: Colors.white),
@@ -33,64 +34,16 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         centerTitle: true,
       ),
       body: SafeArea(
-          child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(25.0),
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: 150,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  gradient: const LinearGradient(
-                      colors: [Coloors.mintGreen, Coloors.skyBlue])),
-              child: Stack(
-                children: [
-                  Image.network(
-                    "https://firebasestorage.googleapis.com/v0/b/flutterbricks-public.appspot.com/o/3d%20icons%2Fat-dynamic-color.png?alt=media&token=5fcbe43e-e838-4b61-a73e-70b5c7862ca5",
-                    fit: BoxFit.cover,
-                  ),
-                  const Align(
-                    alignment: Alignment.topRight,
-                    child: Padding(
-                      padding: EdgeInsets.all(25.0),
-                      child: Column(
-                        children: [
-                          Text(
-                            "Invite\nFriends To",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 17,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            "Tinder",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                color: Coloors.accentColor,
-                                fontSize: 33,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          Text("Choose your preferences", style: TextStyle(fontSize: 20, color: Coloors.accentColor, fontWeight: FontWeight.bold),),
-          Expanded(
+          child: Expanded(
             child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+                  crossAxisCount: 3,
                   childAspectRatio: 2.0,
                   mainAxisSpacing: 8.0,
                   crossAxisSpacing: 8.0,
                 ),
                 padding: EdgeInsets.all(16.0),
-                itemCount: 14,
+                itemCount: tags.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -100,15 +53,15 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: isSelected[index] ? Colors.red : Colors.grey[200],
+                        color: isSelected[index] ? Coloors.mintGreen : Colors.grey[200],
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Center(
                         child: Text(
-                          "Tag ${index + 1}",
+                          tags[index],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 16.0,
+                            fontSize: 13.0,
                             color:
                                 isSelected[index] ? Colors.white : Colors.black,
                           ),
@@ -118,8 +71,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   );
                 },
               ),
-          ),
-        ],
       )),
     );
   }
