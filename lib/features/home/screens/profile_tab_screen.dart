@@ -81,7 +81,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                                 borderRadius:
                                                     BorderRadius.circular(100.0)),
                                             child: Icon(
-                                              Icons.settings,
+                                              Icons.tag_rounded,
                                               size: 25.sp,
                                               color: Colors.blueGrey.shade200,
                                             ),
