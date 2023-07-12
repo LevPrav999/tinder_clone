@@ -2,9 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
+import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
 
 class TagsScreen extends ConsumerStatefulWidget {
-  const TagsScreen({super.key});
+  TagsScreen({super.key, required this.userTagsSelected});
+
+  static const routeName = '/tags-screen';
+
+  final List<dynamic> userTagsSelected;
 
   @override
   ConsumerState<TagsScreen> createState() => _TagsScreenState();
@@ -12,10 +17,21 @@ class TagsScreen extends ConsumerStatefulWidget {
 
 class _TagsScreenState extends ConsumerState<TagsScreen> {
   List<String> tags = ["Anime", "Travel", "Fitness", "Movies", "Cooking", "Music", "Games", "Sports", "Art", "Psychology", "Photography", "Technology", "Fashion", "Nature", "Literature", "Design", "Food", "Health", "Marketing", "Relationshipy", "City Travel", "Dance", "Automobiles", "Entertainment", "Volunteering", "Investments", "Programming", " Interior", "Drawing", "Self-Defense", "Painting", "Gardening", "Crafts"];
-  List<bool> isSelected = List.generate(33, (index) => false);
+  List<dynamic> selected = [];
+
+  @override
+  void initState() {
+    super.initState();
+    selected = widget.userTagsSelected;
+  }
+
+  void saveSelected(){
+    ref.read(authControllerProvider).setUserTags(selected, context);
+  }
   
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Coloors.primaryColor,
@@ -32,10 +48,16 @@ class _TagsScreenState extends ConsumerState<TagsScreen> {
               fontWeight: FontWeight.bold, fontSize: 20.w, color: Colors.white),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.check, color: Colors.white),
+            onPressed: () {
+              saveSelected();
+            })
+        ],
       ),
       body: SafeArea(
-          child: Expanded(
-            child: GridView.builder(
+          child: GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 2.0,
@@ -47,13 +69,16 @@ class _TagsScreenState extends ConsumerState<TagsScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      setState(() {
-                        isSelected[index] = !isSelected[index];
-                      });
+                      if(selected.contains(tags[index])){
+                        selected.remove(tags[index]);
+                      }else{
+                        selected.add(tags[index]);
+                      }
+                      setState(() {});
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: isSelected[index] ? Coloors.mintGreen : Colors.grey[200],
+                        color: selected.contains(tags[index]) ? Coloors.mintGreen : Colors.grey[200],
                         borderRadius: BorderRadius.circular(8.0),
                       ),
                       child: Center(
@@ -63,7 +88,7 @@ class _TagsScreenState extends ConsumerState<TagsScreen> {
                             fontWeight: FontWeight.bold,
                             fontSize: 13.0,
                             color:
-                                isSelected[index] ? Colors.white : Colors.black,
+                                selected.contains(tags[index]) ? Colors.white : Colors.black,
                           ),
                         ),
                       ),
@@ -71,7 +96,6 @@ class _TagsScreenState extends ConsumerState<TagsScreen> {
                   );
                 },
               ),
-      )),
-    );
+      ));
   }
 }
