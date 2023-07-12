@@ -24,6 +24,8 @@ final userInfoAuthProvider = FutureProvider(
   },
 );
 
+
+
 class AuthController {
   final AuthRepository authRepository;
   final ProviderRef ref;
@@ -77,7 +79,12 @@ class AuthController {
     authRepository.setUserStatus(isOnline);
   }
 
+
   Stream<UserModel> getUserPresenceStatus({required String uid}) {
     return authRepository.getUserPresenceStatus(uid: uid);
+  }
+
+  void setUserTags(List<dynamic> tags, BuildContext context){
+    return authRepository.setUserTags(tags, context);
   }
 }
