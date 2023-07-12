@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/common/utils/utils.dart';
+import 'package:tinder_clone/features/auth/screens/tags_screen.dart';
 import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
 import 'package:tinder_clone/features/home/controller/user_controller.dart';
 import 'package:tinder_clone/features/matchers/screens/match_screen.dart';
@@ -64,31 +65,36 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                   child: Row(
                                 children: <Widget>[
                                   Expanded(
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: <Widget>[
-                                        Container(
-                                          width: 40.w,
-                                          height: 35.h,
-                                          decoration: BoxDecoration(
-                                              color: Colors.blueGrey.shade50,
-                                              borderRadius:
-                                                  BorderRadius.circular(100.0)),
-                                          child: Icon(
-                                            Icons.settings,
-                                            size: 25.sp,
-                                            color: Colors.blueGrey.shade200,
-                                          ),
-                                        ),
-                                        SizedBox(height: 5.h),
-                                        Text(
-                                          "SETTINGS",
-                                          style: TextStyle(
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        Navigator.pushNamed(context, TagsScreen.routeName, arguments: data.tags);
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          Container(
+                                            width: 40.w,
+                                            height: 35.h,
+                                            decoration: BoxDecoration(
+                                                color: Colors.blueGrey.shade50,
+                                                borderRadius:
+                                                    BorderRadius.circular(100.0)),
+                                            child: Icon(
+                                              Icons.settings,
+                                              size: 25.sp,
                                               color: Colors.blueGrey.shade200,
-                                              fontWeight: FontWeight.w600),
-                                        )
-                                      ],
+                                            ),
+                                          ),
+                                          SizedBox(height: 5.h),
+                                          Text(
+                                            "TAGS",
+                                            style: TextStyle(
+                                                color: Colors.blueGrey.shade200,
+                                                fontWeight: FontWeight.w600),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Expanded(
