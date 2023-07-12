@@ -3,6 +3,7 @@ import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/common/widgets/error.dart';
 import 'package:tinder_clone/features/auth/screens/phone_auth_screen.dart';
 import 'package:tinder_clone/features/auth/screens/code_screen.dart';
+import 'package:tinder_clone/features/auth/screens/tags_screen.dart';
 import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
 import 'package:tinder_clone/features/chat/screens/chat_screen.dart';
 import 'package:tinder_clone/features/home/screens/home_screen.dart';
@@ -25,6 +26,9 @@ class Routes {
       case ChatScreen.routeName:
         final user = settings.arguments as UserModel;
         return MaterialPageRoute(builder: (context) => ChatScreen(user: user));
+      case TagsScreen.routeName:
+        final tags = settings.arguments as List<dynamic>;
+        return MaterialPageRoute(builder: (context) => TagsScreen(userTagsSelected: tags));
       case UserInfoScreen.routeName:
         final data = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
