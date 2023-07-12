@@ -14,6 +14,8 @@ class UserModel {
   final List<String> liked;
   final List<String> pending;
 
+  final List<String> tags;
+
   UserModel(
       {required this.uid,
       required this.name,
@@ -26,7 +28,9 @@ class UserModel {
       required this.isOnline,
       required this.blocked,
       required this.liked,
-      required this.pending});
+      required this.pending,
+      required this.tags
+      });
 
   Map<String, dynamic> toMap() {
     return {
@@ -42,6 +46,7 @@ class UserModel {
       'blocked': blocked,
       'liked': liked,
       'pending': pending,
+      'tags': tags
     };
   }
 
@@ -58,7 +63,8 @@ class UserModel {
         isOnline: map['isOnline'] ?? false,
         blocked: List<String>.from(map['blocked']),
         liked: List<String>.from(map['liked']),
-        pending: List<String>.from(map['pending'])
+        pending: List<String>.from(map['pending']),
+        tags: List<String>.from(map['tags'])
     );
   }
 }
