@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../utils/coloors.dart';
+
 class MatchCard extends StatefulWidget {
   final String uid;
   final String name;
@@ -8,14 +10,22 @@ class MatchCard extends StatefulWidget {
   final String age;
   final String bio;
 
-  const MatchCard({super.key, required this.uid, required this.name, required this.imageURL,
-      required this.age, required this.bio});
+  const MatchCard(
+      {super.key,
+      required this.uid,
+      required this.name,
+      required this.imageURL,
+      required this.age,
+      required this.bio});
 
   @override
   _MatchCardState createState() => _MatchCardState();
 }
 
 class _MatchCardState extends State<MatchCard> {
+
+  List<String> tags = ["Psychology", "Photography", "Technology", "Lol", "Kek", "Cheburek"];
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -49,8 +59,8 @@ class _MatchCardState extends State<MatchCard> {
             ),
           ),
           Positioned(
-            bottom: 20.h,
-            left: 20.w,
+            bottom: 15.h,
+            left: 15.w,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,6 +69,22 @@ class _MatchCardState extends State<MatchCard> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
+                    Container(
+                      width: 20.0,
+                      height: 20.0,
+                      decoration: const BoxDecoration(
+                          color: Colors.greenAccent,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Color.fromARGB(255, 133, 222, 136),
+                                offset: Offset(1.0, 2.0),
+                                blurRadius: 10.0)
+                          ]),
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
                     Text(
                       widget.name,
                       style: TextStyle(
@@ -73,7 +99,7 @@ class _MatchCardState extends State<MatchCard> {
                           fontWeight: FontWeight.w800),
                     ),
                     SizedBox(
-                      width: 20.w,
+                      width: 10.w,
                     ),
                     Text(
                       widget.age.toString(),
@@ -86,7 +112,7 @@ class _MatchCardState extends State<MatchCard> {
                           ],
                           color: Colors.white,
                           fontSize: 20.sp,
-                          fontWeight: FontWeight.w300),
+                          fontWeight: FontWeight.w400),
                     ),
                   ],
                 ),
@@ -105,6 +131,49 @@ class _MatchCardState extends State<MatchCard> {
                       ],
                       fontSize: 23.sp,
                       fontWeight: FontWeight.w400),
+                ),
+                SizedBox(
+                  height: 5.h,
+                ),
+                Row(
+                  children: [
+                    for (var i = 0;
+                        i < (tags.length > 4 ? 3 : tags.length);
+                        i++)
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Coloors.steelGray,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        padding: EdgeInsets.all(5.0),
+                        margin: EdgeInsets.all(2.0),
+                        child: Text(
+                          tags[i],
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11.w,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    if (tags.length > 4)
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Coloors.steelGray,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        padding: EdgeInsets.all(5.0),
+                        margin: EdgeInsets.all(2.0),
+                        child: Text(
+                          "${tags.length - 3}+",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13.0,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ],
             ),
