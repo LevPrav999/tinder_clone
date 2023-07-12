@@ -73,7 +73,9 @@ class ChatsTabScreen extends ConsumerWidget {
                         isOnline: true,
                         blocked: [],
                         liked: [],
-                        pending: []));
+                        pending: [],
+                        tags: []
+                        ));
               },
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
