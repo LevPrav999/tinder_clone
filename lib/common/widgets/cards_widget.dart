@@ -216,14 +216,14 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
               onUndo: (previousIndex, currentIndex, direction) {
                 if (widget.matchScreen) {
                   provider
-                      .removeFromBlocked(data.cards[currentIndex].uid);
+                      .removeFromBlocked(data.cards[currentIndex].user.uid);
                   provider
-                      .addToPending(data.cards[currentIndex].uid);
+                      .addToPending(data.cards[currentIndex].user.uid);
                 } else {
                   provider
-                      .removeFromBlocked(data.cards[currentIndex].uid);
+                      .removeFromBlocked(data.cards[currentIndex].user.uid);
                   provider
-                      .removeFromLiked(data.cards[currentIndex].uid);
+                      .removeFromLiked(data.cards[currentIndex].user.uid);
                 }
 
                 return true;
@@ -234,25 +234,25 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                 if (direction.name == "left") {
                   if (widget.matchScreen) {
                     provider
-                        .deletePendingAndBlock(data.cards[previousIndex].uid);
+                        .deletePendingAndBlock(data.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                   } else {
                     provider
-                        .addToBlocked(data.cards[previousIndex].uid);
+                        .addToBlocked(data.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                   }
                 } else if (direction.name == "right") {
                   if (widget.matchScreen) {
                     provider
-                        .deletePendingAndLike(data.cards[previousIndex].uid);
+                        .deletePendingAndLike(data.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
-                    sendTextMessage(context, data.cards[previousIndex].uid);
+                    sendTextMessage(context, data.cards[previousIndex].user.uid);
                   } else {
                     provider
-                        .addToLiked(data.cards[previousIndex].uid);
+                        .addToLiked(data.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                   }

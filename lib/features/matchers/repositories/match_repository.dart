@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
-import 'package:tinder_clone/common/utils/utils.dart';
 import 'package:tinder_clone/common/widgets/match_card.dart';
 
 final matchRepositoryProvider = Provider((ref) => MatchRepository(
@@ -30,15 +29,8 @@ class MatchRepository {
           .get();
       var data =
           UserModel.fromMap(pendingUserSnapshot.data() as Map<String, dynamic>);
-      String age = getAge(data.age['year']);
 
-      MatchCard matchCard = MatchCard(
-        uid: pendingUserSnapshot.id,
-        name: data.name,
-        imageURL: data.avatar,
-        age: age,
-        bio: data.bio,
-      );
+      MatchCard matchCard = MatchCard(user: data);
       pendingMatches.add(matchCard);
     }
 

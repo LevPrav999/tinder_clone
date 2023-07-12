@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
-import 'package:tinder_clone/common/utils/utils.dart';
 import 'package:tinder_clone/common/widgets/match_card.dart';
 
 final cardsRepositoryProvider = Provider((ref) => CardsRepository(
@@ -52,13 +51,8 @@ class CardsRepository{
         documents.removeAt(randomIndex);
         continue;
       }
-      String age = getAge(document.get('age')['year']);
       final matchCard = MatchCard(
-        uid: document.id, 
-        name: document.get('name'),
-        imageURL: document.get('avatar'),
-        age: age,
-        bio: document.get('bio'),
+        user: UserModel.fromMap(document.data())
       );
       randomDocuments.add(matchCard);
       documents.removeAt(randomIndex);
