@@ -1,30 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tinder_clone/common/utils/utils.dart';
 
+import '../models/user_model.dart';
 import '../utils/coloors.dart';
 
 class MatchCard extends StatefulWidget {
-  final String uid;
-  final String name;
-  final String imageURL;
-  final String age;
-  final String bio;
+  final UserModel user;
 
   const MatchCard(
       {super.key,
-      required this.uid,
-      required this.name,
-      required this.imageURL,
-      required this.age,
-      required this.bio});
+      required this.user});
 
   @override
   _MatchCardState createState() => _MatchCardState();
 }
 
 class _MatchCardState extends State<MatchCard> {
-
-  List<String> tags = ["Psychology", "Photography", "Technology", "Lol", "Kek", "Cheburek"];
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +47,7 @@ class _MatchCardState extends State<MatchCard> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
               child: Image(
-                  fit: BoxFit.cover, image: NetworkImage(widget.imageURL)),
+                  fit: BoxFit.cover, image: NetworkImage(widget.user.avatar)),
             ),
           ),
           Positioned(
@@ -72,12 +64,12 @@ class _MatchCardState extends State<MatchCard> {
                     Container(
                       width: 20.0,
                       height: 20.0,
-                      decoration: const BoxDecoration(
-                          color: Colors.greenAccent,
+                      decoration: BoxDecoration(
+                          color: widget.user.isOnline ? Colors.greenAccent : Coloors.steelGray,
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                                color: Color.fromARGB(255, 133, 222, 136),
+                                color: widget.user.isOnline ? Color.fromARGB(255, 133, 222, 136) : Coloors.steelGray,
                                 offset: Offset(1.0, 2.0),
                                 blurRadius: 10.0)
                           ]),
@@ -86,7 +78,7 @@ class _MatchCardState extends State<MatchCard> {
                       width: 10.w,
                     ),
                     Text(
-                      widget.name,
+                      widget.user.name,
                       style: TextStyle(
                           shadows: const [
                             Shadow(
@@ -102,7 +94,7 @@ class _MatchCardState extends State<MatchCard> {
                       width: 10.w,
                     ),
                     Text(
-                      widget.age.toString(),
+                      getAge(widget.user.age['year']),
                       style: TextStyle(
                           shadows: const [
                             Shadow(
@@ -120,7 +112,7 @@ class _MatchCardState extends State<MatchCard> {
                   height: 5.h,
                 ),
                 Text(
-                  widget.bio,
+                  widget.user.bio,
                   style: TextStyle(
                       color: Colors.white,
                       shadows: const [
@@ -132,23 +124,25 @@ class _MatchCardState extends State<MatchCard> {
                       fontSize: 23.sp,
                       fontWeight: FontWeight.w400),
                 ),
-                SizedBox(
+                widget.user.tags.isNotEmpty ? SizedBox(
                   height: 5.h,
+                ) : SizedBox(
+                  height: 0.h,
                 ),
-                Row(
+                widget.user.tags.isNotEmpty ? Row(
                   children: [
                     for (var i = 0;
-                        i < (tags.length > 4 ? 3 : tags.length);
+                        i < (widget.user.tags.length > 4 ? 3 : widget.user.tags.length);
                         i++)
                       Container(
                         decoration: BoxDecoration(
-                          color: Coloors.steelGray,
+                          color: Coloors.skyBlue,
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         padding: EdgeInsets.all(5.0),
                         margin: EdgeInsets.all(2.0),
                         child: Text(
-                          tags[i],
+                          widget.user.tags[i],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 11.w,
@@ -156,25 +150,25 @@ class _MatchCardState extends State<MatchCard> {
                           ),
                         ),
                       ),
-                    if (tags.length > 4)
+                    if (widget.user.tags.length > 4)
                       Container(
                         decoration: BoxDecoration(
-                          color: Coloors.steelGray,
+                          color: Coloors.skyBlue,
                           borderRadius: BorderRadius.circular(8.0),
                         ),
                         padding: EdgeInsets.all(5.0),
                         margin: EdgeInsets.all(2.0),
                         child: Text(
-                          "${tags.length - 3}+",
+                          "${widget.user.tags.length - 3}+",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 13.0,
+                            fontSize: 11.0,
                             color: Colors.white,
                           ),
                         ),
                       ),
                   ],
-                ),
+                ) : Container(),
               ],
             ),
           ),
