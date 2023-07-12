@@ -9,6 +9,7 @@ import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/common/repositories/common_firebase_storage_repository.dart';
 import 'package:tinder_clone/common/utils/utils.dart';
 import 'package:tinder_clone/features/auth/screens/code_screen.dart';
+import 'package:tinder_clone/features/auth/screens/tags_screen.dart';
 import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
 import 'package:tinder_clone/features/home/screens/home_screen.dart';
 
@@ -128,16 +129,18 @@ class AuthRepository {
         blocked: userSnap.exists ? userFromDb.blocked : [],
         liked: userSnap.exists ? userFromDb.liked : [],
         pending: userSnap.exists ? userFromDb.pending : [],
+        tags: userSnap.exists ? userFromDb.tags : []
       );
 
       if (userSnap.exists) {
         await firestore.collection('users').doc(uid).update(user.toMap());
+        Navigator.pushNamedAndRemoveUntil(
+          context, HomeScreen.routeName, (route) => false);
       } else {
         await firestore.collection('users').doc(uid).set(user.toMap());
+        Navigator.pushNamedAndRemoveUntil(
+          context, TagsScreen.routeName, (route) => false, arguments: []);
       }
-
-      Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.routeName, (route) => false);
     } catch (e) {
       showAlertDialog(context: context, message: e.toString());
     }
@@ -162,6 +165,14 @@ class AuthRepository {
     await firestore.collection('users').doc(auth.currentUser!.uid).update({
       'isOnline': isOnline
     });
+  }
+
+  void setUserTags(List<dynamic> tags, BuildContext context) async {
+     await firestore.collection('users').doc(auth.currentUser!.uid).update({
+      'tags': tags
+    });
+
+    Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
   }
 
   Stream<UserModel> getUserPresenceStatus({required String uid}) {
