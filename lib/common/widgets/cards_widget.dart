@@ -88,9 +88,9 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
               GestureDetector(
                   onTap: () => cardController.swipeLeft(),
                   child: Container(
-                    padding: EdgeInsets.all(15.sp),
+                    padding: EdgeInsets.all(10.sp),
                     height: 55.h,
-                    width: 55.w,
+                    width: 56.h,
                     decoration: BoxDecoration(
                         boxShadow: const [
                           BoxShadow(
@@ -109,17 +109,18 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                     child: ShaderMask(
                         blendMode: BlendMode.srcATop,
                         shaderCallback: (Rect bounds) {
-                          return const LinearGradient(
+                          return LinearGradient(
                               colors: [
                                 Coloors.accentColor,
                                 Coloors.primaryColor
                               ],
                               begin: Alignment.topRight,
                               end: Alignment.bottomLeft,
-                              stops: [0.0, 1.0]).createShader(bounds);
+                              stops: const [0.0, 1.0]).createShader(bounds);
                         },
-                        child: const Image(
-                          image: AssetImage('assets/images/closeRounded.png'),
+                        child: Icon(
+                          Icons.close_rounded,
+                          size: 40.h,
                         )),
                   )),
               GestureDetector(
@@ -163,7 +164,7 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                   child: Container(
                     padding: EdgeInsets.all(15.sp),
                     height: 55.h,
-                    width: 55.h,
+                    width: 56.h,
                     decoration: BoxDecoration(
                         boxShadow: const [
                           BoxShadow(
@@ -259,13 +260,8 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                 }
 
                 if (previousIndex == data.cards.length - 1) {
-                  if (widget.matchScreen) {
-                    ref.read(matchControllerProvider.notifier).setIndex(0);
-                    ref.read(matchControllerProvider.notifier).setCards();
-                  } else {
-                    ref.read(cardsControllerProvider.notifier).setIndex(0);
-                    ref.read(cardsControllerProvider.notifier).setCards();
-                  }
+                  provider.setIndex(0);
+                  provider.setCards();
                 }
 
                 return true;
