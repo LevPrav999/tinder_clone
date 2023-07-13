@@ -129,7 +129,8 @@ class AuthRepository {
         blocked: userSnap.exists ? userFromDb.blocked : [],
         liked: userSnap.exists ? userFromDb.liked : [],
         pending: userSnap.exists ? userFromDb.pending : [],
-        tags: userSnap.exists ? userFromDb.tags : []
+        tags: userSnap.exists ? userFromDb.tags : [],
+        isPrime: userSnap.exists ? userFromDb.isOnline : false
       );
 
       if (userSnap.exists) {
