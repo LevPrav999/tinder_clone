@@ -31,10 +31,10 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
   void sendMessage(){
     if(textEditingController.text.trim().isEmpty){
       showAlertDialog(context: context, message: "Your message is empty!");
+    }else{
+      ref.read(chatControllerProvider).sendTextMessage(context, textEditingController.text, widget.receiverUserId);
+      textEditingController.clear();
     }
-    ref.read(chatControllerProvider).sendTextMessage(context, textEditingController.text, widget.receiverUserId);
-
-    textEditingController.clear();
   }
 
   @override
