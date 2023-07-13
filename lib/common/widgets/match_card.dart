@@ -80,13 +80,13 @@ class _MatchCardState extends State<MatchCard> {
                     Text(
                       widget.user.name,
                       style: TextStyle(
-                          shadows: const [
+                          shadows: [
                             Shadow(
-                                color: Colors.black54,
-                                offset: Offset(1.0, 2.0),
+                                color: widget.user.isPrime ? Coloors.sunnyYellow : Colors.black54,
+                                offset: widget.user.isPrime ? Offset(2.0, 3.0) : Offset(1.0, 2.0),
                                 blurRadius: 10.0)
                           ],
-                          color: Colors.white,
+                          color:  Colors.white,
                           fontSize: 40.sp,
                           fontWeight: FontWeight.w800),
                     ),
@@ -96,9 +96,9 @@ class _MatchCardState extends State<MatchCard> {
                     Text(
                       getAge(widget.user.age['year']),
                       style: TextStyle(
-                          shadows: const [
+                          shadows: [
                             Shadow(
-                                color: Colors.black54,
+                                color: widget.user.isPrime ? Coloors.sunnyYellow : Colors.black54,
                                 offset: Offset(1.0, 2.0),
                                 blurRadius: 10.0)
                           ],
