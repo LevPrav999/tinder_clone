@@ -57,3 +57,12 @@ String lastSeenMessage(lastSeen) {
 
   return finalMessage;
 }
+
+List<List<String>> splitListIntoSubsets(List<String> list, int subsetSize) {
+  List<List<String>> subsets = [];
+  for (var i = 0; i < list.length; i += subsetSize) {
+    subsets.add(list.sublist(
+        i, i + subsetSize > list.length ? list.length : i + subsetSize));
+  }
+  return subsets;
+}
