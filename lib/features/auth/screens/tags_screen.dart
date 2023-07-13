@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
+import 'package:tinder_clone/features/home/controller/cards_controller.dart';
+import 'package:tinder_clone/features/matchers/controller/match_controller.dart';
 
 class TagsScreen extends ConsumerStatefulWidget {
   TagsScreen({super.key, required this.userTagsSelected});
@@ -27,6 +29,8 @@ class _TagsScreenState extends ConsumerState<TagsScreen> {
 
   void saveSelected(){
     ref.read(authControllerProvider).setUserTags(selected, context);
+    ref.read(matchControllerProvider.notifier).setCards();
+    ref.read(cardsControllerProvider.notifier).setCards();
   }
   
   @override
