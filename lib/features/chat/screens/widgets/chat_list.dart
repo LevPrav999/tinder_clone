@@ -6,7 +6,7 @@ import 'package:tinder_clone/common/models/message_model.dart';
 import 'package:tinder_clone/common/widgets/alert_chat_card.dart';
 import 'package:tinder_clone/common/widgets/date_message_card.dart';
 import 'package:tinder_clone/common/widgets/loader.dart';
-import 'package:tinder_clone/common/widgets/sender_message.dart';
+import 'package:tinder_clone/common/widgets/message.dart';
 import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 
 class ChatList extends ConsumerWidget {
