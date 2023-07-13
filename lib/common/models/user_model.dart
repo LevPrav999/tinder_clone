@@ -15,6 +15,7 @@ class UserModel {
   final List<String> pending;
 
   final List<String> tags;
+  final bool isPrime;
 
   UserModel(
       {required this.uid,
@@ -29,7 +30,8 @@ class UserModel {
       required this.blocked,
       required this.liked,
       required this.pending,
-      required this.tags
+      required this.tags,
+      required this.isPrime
       });
 
   Map<String, dynamic> toMap() {
@@ -46,7 +48,8 @@ class UserModel {
       'blocked': blocked,
       'liked': liked,
       'pending': pending,
-      'tags': tags
+      'tags': tags,
+      'isPrime': isPrime
     };
   }
 
@@ -64,7 +67,8 @@ class UserModel {
         blocked: List<String>.from(map['blocked']),
         liked: List<String>.from(map['liked']),
         pending: List<String>.from(map['pending']),
-        tags: List<String>.from(map['tags'])
+        tags: List<String>.from(map['tags']),
+        isPrime: map['isPrime'] ?? false
     );
   }
 }
