@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +16,20 @@ import 'package:tinder_clone/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  await EasyLocalization.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(ProviderScope(
+      child: EasyLocalization(
+          supportedLocales: [Locale('en'), Locale('ru')],
+          useOnlyLangCode: true,
+          path:
+              'assets/translations', // <-- change the path of the translation files
+          fallbackLocale: Locale('en'),
+          child: MyApp())));
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -32,11 +43,14 @@ class _MyAppState extends ConsumerState<MyApp> {
   UserModel? userModel;
 
   void getData(WidgetRef ref, User data) async {
-    userModel =
-        await ref.watch(authControllerProvider).getUserData(data.uid).first.onError((error, stackTrace) {
-          userModel = null;
-          return null;
-        });
+    userModel = await ref
+        .watch(authControllerProvider)
+        .getUserData(data.uid)
+        .first
+        .onError((error, stackTrace) {
+      userModel = null;
+      return null;
+    });
     ref.read(userStateProvider.notifier).update((state) => userModel);
     setState(() {});
   }
@@ -45,13 +59,16 @@ class _MyAppState extends ConsumerState<MyApp> {
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
 
+
     return ref.watch(authStateChangeProvider).when(
         data: (data) {
-          if(data != null)
-            getData(ref, data);
+          if (data != null) getData(ref, data);
           return MaterialApp(
             title: 'Flutter Demo',
             debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
             theme: ThemeData(
               useMaterial3: false,
             ),
