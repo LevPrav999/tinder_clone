@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/common/widgets/error.dart';
@@ -33,11 +34,11 @@ class Routes {
         final data = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
             builder: (context) => UserInfoScreen(
-                  name: data?['name'] ?? "Your Name",
+                  name: data?['name'] ?? "your_name".tr(),
                   age: data?['age'] ?? "01.01.2001",
                   sex: data?['sex'] ?? "",
-                  city: data?['city'] ?? "Moscow",
-                  bio: data?['bio'] ?? "Hi! I am using Tinder!",
+                  city: data?['city'] ?? "moscow".tr(),
+                  bio: data?['bio'] ?? "hi_i_am_using_tinder".tr(),
                   sexFind: data?['sexFind'] ?? "",
                   avatar: data?['avatar'] ?? "",
                   fromProfile: data?['fromProfile'] as bool,
@@ -50,7 +51,7 @@ class Routes {
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(
-                  body: ErrorScreen(error: "This page doesn't exist!S"),
+                  body: ErrorScreen(error: "This page doesn't exists!"),
                 ));
     }
   }
