@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 
@@ -18,8 +19,8 @@ class AlertChatCard extends StatelessWidget {
         color: Coloors.sunnyYellow,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: const Text(
-        'Welcome to the Tinder chat room. This chat room is intended for acquaintance between users. Messages are moderated and not encrypted. If you want to be safe, exchange contacts with the person you are chatting with.',
+      child: Text(
+        'welcome_to_chat_room'.tr(),
         textAlign: TextAlign.center,
         style: TextStyle(
           fontSize: 13,

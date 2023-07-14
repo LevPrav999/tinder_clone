@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
@@ -50,9 +51,9 @@ String lastSeenMessage(lastSeen) {
   String finalMessage = differenceDuration.inSeconds > 59
       ? differenceDuration.inMinutes > 59
           ? differenceDuration.inHours > 23
-              ? "${differenceDuration.inDays} ${differenceDuration.inDays == 1 ? 'day' : 'days'}"
-              : "${differenceDuration.inHours} ${differenceDuration.inHours == 1 ? 'hour' : 'hours'}"
-          : "${differenceDuration.inMinutes} ${differenceDuration.inMinutes == 1 ? 'minute' : 'minutes'}"
+              ? "${differenceDuration.inDays} ${differenceDuration.inDays == 1 ? 'day'.tr() : 'days'.tr()}"
+              : "${differenceDuration.inHours} ${differenceDuration.inHours == 1 ? 'hour'.tr() : 'hours'.tr()}"
+          : "${differenceDuration.inMinutes} ${differenceDuration.inMinutes == 1 ? 'minute'.tr() : 'minutes'.tr()}"
       : 'few moments';
 
   return finalMessage;

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -63,7 +64,7 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
           Padding(
             padding:
                 EdgeInsets.symmetric(horizontal: 30.w),
-            child: Text("There is no one around you...",
+            child: Text("there_is_no_one_around_you".tr(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     wordSpacing: 1.2,

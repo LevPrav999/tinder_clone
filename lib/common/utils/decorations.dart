@@ -1,8 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class Decorations{
-  static const kTextFieldDecoration = InputDecoration(
-    hintText: 'Enter Here',
+  static var kTextFieldDecoration = InputDecoration(
+    hintText: 'enter_here'.tr(),
     hintStyle: TextStyle(fontSize: 22),
     contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
     fillColor: Color.fromARGB(255, 230, 232, 243),
@@ -22,8 +23,8 @@ class Decorations{
     ),
   );
 
-  static const kTextFieldMessageDecoration = InputDecoration(
-    hintText: 'Message',
+  static var kTextFieldMessageDecoration = InputDecoration(
+    hintText: 'message'.tr(),
     hintStyle: TextStyle(fontSize: 16, color: Color(0xFF737373)),
     contentPadding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
     fillColor: Color(0xFFF1F2F6),
