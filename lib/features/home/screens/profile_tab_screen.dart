@@ -310,11 +310,6 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
   }
 }
 
-final Shader linearGradient = LinearGradient(
-    colors: [Colors.amber.shade800, Colors.amber.shade600],
-    begin: Alignment.topRight,
-    end: Alignment.bottomLeft,
-    stops: const [0.0, 1.0]).createShader(Rect.fromLTWH(0.0, 0.0, 15.w, 10.h));
 
 class MyClipper extends CustomClipper<Path> {
   @override
