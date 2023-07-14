@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,7 +41,7 @@ class ChatList extends ConsumerWidget {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 30.w),
-                            child: Text("You don't have any chats yet...",
+                            child: Text("you_dont_have_any_chats_yet".tr(),
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     wordSpacing: 1.2,

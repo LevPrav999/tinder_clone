@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,30 +41,30 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
     if (phoneNumber.isEmpty) {
       return showAlertDialog(
         context: context,
-        message: "Please enter your phone number",
+        message: "please_enter_your_phone_number".tr(),
       );
     } else if(countryCode.isEmpty){
       return showAlertDialog(
         context: context,
-        message: "Please enter your country code",
+        message: "please_enter_your_country_code".tr(),
       );
     }else if (phoneNumber.length < 9) {
       return showAlertDialog(
         context: context,
         message:
-            'The phone number you entered is too short!',
+            'phone_number_short'.tr(),
       );
     } else if (phoneNumber.length > 10) {
       return showAlertDialog(
         context: context,
         message:
-            "The phone number you entered is too long!",
+            "phone_number_long".tr(),
       );
     } else if (countryCode.length > 3) {
       return showAlertDialog(
         context: context,
         message:
-            "The country code you entered is too long!",
+            "country_code_long".tr(),
       );
     }
 
@@ -97,7 +98,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                     Align(
                       alignment: Alignment.topLeft,
                       child: Text(
-                        "My number is",
+                        "my_number_is".tr(),
                         style: TextStyle(
                             fontSize: 35.sp,
                             fontWeight: FontWeight.w600,
@@ -115,12 +116,12 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                             controller: countryCodeController,
                             keyboardType: TextInputType.number,
                             cursorColor: Coloors.primaryColor,
-                            decoration: const InputDecoration(
-                                prefixIcon: Icon(
+                            decoration: InputDecoration(
+                                prefixIcon: const Icon(
                                   Icons.add,
                                   color: Colors.black,
                                 ),
-                                helperText: 'Country code'),
+                                helperText: 'country_code'.tr()),
                           ),
                         ),
                         SizedBox(
@@ -133,7 +134,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                               keyboardType: TextInputType.number,
                               cursorColor: Coloors.primaryColor,
                               decoration:
-                                  InputDecoration(helperText: 'Phone number'),
+                                  InputDecoration(helperText: 'phone_number'.tr()),
                             )),
                       ],
                     ),
@@ -141,7 +142,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                       height: 30,
                     ),
                     Text(
-                      'When you tap "Continue", Tinder will send a text a with verification code. Message and data rates may apply.',
+                      'when_you_tap_continue'.tr(),
                       style: TextStyle(
                           fontSize: 16.sp,
                           fontWeight: FontWeight.w500,
@@ -168,7 +169,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
                         height: 60,
                         child: Center(
                           child: Text(
-                            "CONTINUE",
+                            "continue".tr(),
                             style: TextStyle(
                                 color: Colors.white,
                                 letterSpacing: 1.2,

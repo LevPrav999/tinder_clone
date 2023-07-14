@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -57,10 +58,10 @@ class LoginScreen extends StatelessWidget {
                   Expanded(
                     flex: 2,
                     child: Column(children: [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
-                          'By clicking "Log in",you agree with our Terms.\n Learn how we process your data in our Privacy  Policy and Cookies Policy',
+                          'by_clicking_log_in'.tr(),
                           textAlign: TextAlign.center,
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.w500),
@@ -81,11 +82,11 @@ class LoginScreen extends StatelessWidget {
                                   elevation: 0.0,
                                 ),
                                 onPressed: () => navigateToPhoneAuthScreen(context),
-                                child: const Row(
+                                child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      "LOG IN WITH PHONE NUMBER",
+                                      "log_in_with_phone_number".tr(),
                                       style: TextStyle(
                                           color: Colors.grey, wordSpacing: 1.2),
                                     )

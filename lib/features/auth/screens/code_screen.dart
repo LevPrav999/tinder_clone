@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
@@ -25,7 +26,7 @@ class CodeScreen extends ConsumerWidget {
             onPressed: () {
               Navigator.pop(context);
             }),
-        title: const Text("Verifying your number"),
+        title: Text("verifying_your_number".tr()),
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -33,7 +34,7 @@ class CodeScreen extends ConsumerWidget {
         child: Column(
           children: [
           const SizedBox(height: 20),
-          const Text("We have sent an SMS with a code."),
+          Text("we_have_sent_a_sms".tr()),
           SizedBox(
             width: size.width * 0.5,
             child: TextField(

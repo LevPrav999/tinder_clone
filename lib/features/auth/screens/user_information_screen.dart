@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -87,22 +88,22 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
 
   void storeUserData() async {
     if (nameController.text.replaceAll(" ", "").length < 3) {
-      showAlertDialog(context: context, message: "Your name is too short!");
+      showAlertDialog(context: context, message: "name_too_short".tr());
     } else if (ageController.text.replaceAll(" ", "").length < 10) {
-      showAlertDialog(context: context, message: "Birthday invalid format!");
+      showAlertDialog(context: context, message: "birthday_invalid_format".tr());
     } else if (!isDateValid(ageController.text)) {
-      showAlertDialog(context: context, message: "Birthday invalid format!");
+      showAlertDialog(context: context, message: "birthday_invalid_format".tr());
     } else if (cityController.text.replaceAll(" ", "").length < 3) {
       showAlertDialog(
-          context: context, message: "Your town name is too short!");
+          context: context, message: "town_name_short".tr());
     } else if (bioController.text.trim().length < 3) {
-      showAlertDialog(context: context, message: "Your bio is too short!");
+      showAlertDialog(context: context, message: "bio_short".tr());
     } else if (sex == "") {
-      showAlertDialog(context: context, message: "Your sex isn't set!");
+      showAlertDialog(context: context, message: "sex_isnt_set".tr());
     } else if (sexFind == "") {
       showAlertDialog(
           context: context,
-          message: "Sex of person you want to find isn't set!");
+          message: "sex_of_person_isnt_set".tr());
     } else {
       ref.read(authControllerProvider).saveDataToFirestore(
           nameController.text.replaceAll(" ", ""),
@@ -177,9 +178,9 @@ String addLeadingZero(String input) {
         margin: EdgeInsets.only(top: 10.h),
         color: Colors.grey.shade100,
         child: Column(children: [
-          const Text(
-            "Edit account data",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
+          Text(
+            "edit_account_data".tr(),
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22),
             textAlign: TextAlign.center,
           ),
           image == null && avatarUrl == ""
@@ -212,7 +213,7 @@ String addLeadingZero(String input) {
           Padding(
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
-              const Text("Your real name",
+              Text("your_real_name".tr(),
                   style: TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
@@ -223,14 +224,14 @@ String addLeadingZero(String input) {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 22.0, color: Colors.black),
                 decoration:
-                    Decorations.kTextFieldDecoration.copyWith(hintText: "Name"),
+                    Decorations.kTextFieldDecoration.copyWith(hintText: "name".tr()),
               ),
             ]),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
-              const Text("Your birthday | Example 31.12.2020",
+              Text("your_birthday".tr(),
                   style: TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
@@ -241,7 +242,7 @@ String addLeadingZero(String input) {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 22.0, color: Colors.black),
                 decoration: Decorations.kTextFieldDecoration
-                    .copyWith(hintText: "Birthday"),
+                    .copyWith(hintText: "birthday".tr()),
               ),
             ]),
           ),
@@ -250,7 +251,7 @@ String addLeadingZero(String input) {
                   const EdgeInsets.only(top: 14.0, left: 16.0, right: 16.0),
               child: Column(
                 children: [
-                  const Text("Your sex",
+                  Text("your_sex".tr(),
                   style: TextStyle(fontSize: 12, color: Colors.grey)),
                   const SizedBox(
                 height: 2,
@@ -270,7 +271,7 @@ String addLeadingZero(String input) {
                                 sex == "female"
                                     ? Colors.grey
                                     : Coloors.accentColor)),
-                        child: const Text("Male"),
+                        child: Text("male".tr()),
                       ),
                       ElevatedButton(
                           onPressed: () {
@@ -283,7 +284,7 @@ String addLeadingZero(String input) {
                                   sex == "male"
                                       ? Colors.grey
                                       : Coloors.accentColor)),
-                          child: const Text("Female")),
+                          child: Text("female".tr())),
                     ],
                   ),
                 ],
@@ -291,7 +292,7 @@ String addLeadingZero(String input) {
           Padding(
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
-              const Text("Your town",
+              Text("your_town".tr(),
                   style: TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
@@ -302,14 +303,14 @@ String addLeadingZero(String input) {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 22.0, color: Colors.black),
                 decoration:
-                    Decorations.kTextFieldDecoration.copyWith(hintText: "Town"),
+                    Decorations.kTextFieldDecoration.copyWith(hintText: "town".tr()),
               ),
             ]),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
-              const Text("Your bio",
+              Text("your_bio".tr(),
                   style: TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
@@ -320,14 +321,14 @@ String addLeadingZero(String input) {
                 textAlign: TextAlign.center,
                 style: const TextStyle(fontSize: 22.0, color: Colors.black),
                 decoration:
-                    Decorations.kTextFieldDecoration.copyWith(hintText: "Bio"),
+                    Decorations.kTextFieldDecoration.copyWith(hintText: "bio".tr()),
               ),
             ]),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 14.0, left: 16.0, right: 16.0),
             child: Column(children: [
-              const Text("You want to find",
+              Text("you_want_to_find".tr(),
                   style: TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
@@ -347,8 +348,8 @@ String addLeadingZero(String input) {
                             sexFind == "female"
                                 ? Colors.grey
                                 : Coloors.accentColor)),
-                    child: const Text(
-                      "Male",
+                    child: Text(
+                      "male".tr(),
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
@@ -363,7 +364,7 @@ String addLeadingZero(String input) {
                             sexFind == "male"
                                 ? Colors.grey
                                 : Coloors.accentColor)),
-                    child: const Text("Female"),
+                    child: Text("female".tr()),
                   ),
                 ],
               )

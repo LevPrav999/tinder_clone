@@ -1,4 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -88,7 +89,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                           ),
                                           SizedBox(height: 5.h),
                                           Text(
-                                            "TAGS",
+                                            "tags".tr(),
                                             style: TextStyle(
                                                 color: Colors.blueGrey.shade200,
                                                 fontWeight: FontWeight.w600),
@@ -141,7 +142,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                             ),
                                             SizedBox(height: 5.h),
                                             Text(
-                                              "SUGGESTIONS",
+                                              "suggestions".tr(),
                                               style: TextStyle(
                                                   color:
                                                       Colors.blueGrey.shade200,
@@ -212,7 +213,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                         ),
                                         SizedBox(height: 5.h),
                                         Text(
-                                          "EDIT INFO",
+                                          "edit_info".tr(),
                                           style: TextStyle(
                                               color: Colors.blueGrey.shade200,
                                               fontWeight: FontWeight.w600),
@@ -336,11 +337,11 @@ class Quotes {
 }
 
 List<Quotes> quotes = [
-  Quotes("GET TINDER GOLD", "See who likes you & more!"),
-  Quotes("Get matches faster", "Boost your profile once a month!"),
-  Quotes("I meant to swipe right", "Get unlimited Rewinds with Tinder Plus!"),
-  Quotes("Stand out with Super Likes",
-      "You're 3 times more likely to get a match!"),
-  Quotes("Increase your chances", "Get unlimited likes with tinder Plus!"),
-  Quotes("Swipe around the world!", "Passport to anywhere with Tinder Plus!"),
+  Quotes("get_tinder_gold".tr(), "see_who_likes_you_more".tr()),
+  Quotes("get_matches_faster".tr(), "boost_your_profile_once_a_month".tr()),
+  Quotes("i_meant_to_swipe_right".tr(), "get_unlimited_rewinds_with_tinder_plus".tr()),
+  Quotes("stand_out_with_super_likes".tr(),
+      "youre_3_times_more_likely_to_get_a_match".tr()),
+  Quotes("increase_your_chances".tr(), "get_unlimited_likes_with_tinder_plus".tr()),
+  Quotes("swipe_around_the_world".tr(), "passport_to_anywhere_with_tinder_plus".tr()),
 ];
