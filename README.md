@@ -29,7 +29,7 @@ In future updates, Tinder Clone plans to introduce the following features and im
 6. **Chat Interface Enhancement**: Expanding chat interface functionality with features like image sharing, voice messages, audio/video calls, and more.
 7. **Profanity Filtering**: Implementing automatic filtering of profane content in messages.
 8. **Message Encryption**: Exploring message encryption capability, considering the need for moderation and positioning the app as a dating platform rather than a fully secure messenger.
-9. **Online/Offline Status Display**: Showing online/offline status of users on their cards.
+9. ✅ **Online/Offline Status Display**: Showing online/offline status of users on their cards.
 10. **User Interface Improvements**: Continuously refining the user interface and experience based on user feedback and industry best practices.
 
 ## Technologies Used
