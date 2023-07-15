@@ -19,7 +19,8 @@ class TagsScreen extends ConsumerStatefulWidget {
 }
 
 class _TagsScreenState extends ConsumerState<TagsScreen> {
-  List<String> tags = ["Anime", "Travel", "Fitness", "Movies", "Cooking", "Music", "Games", "Sports", "Art", "Psychology", "Photography", "Technology", "Fashion", "Nature", "Literature", "Design", "Food", "Health", "Marketing", "Relationshipy", "City Travel", "Dance", "Automobiles", "Entertainment", "Volunteering", "Investments", "Programming", " Interior", "Drawing", "Self-Defense", "Painting", "Gardening", "Crafts"];
+  List<String> tags = ["Anime", "Travel", "Fitness", "Movies", "Cooking", "Music", "Games", "Sports", "Art", "Psychology", "Photography", "Technology", "Fashion", "Nature", "Literature", "Design", "Food", "Health", "Marketing", "Relationshipy", "City Travel", "Dance", "Automobiles", "Entertainment", "Volunteering", "Investments", "Programming", "Interior", "Drawing", "Self-Defense", "Painting", "Gardening", "Crafts"];
+  List<String> tags_view = ["anime".tr(), "travel".tr(), "fitness".tr(), "movies".tr(), "cooking".tr(), "music".tr(), "games".tr(), "sports".tr(), "art".tr(), "psychology".tr(), "photography".tr(), "technology".tr(), "fashion".tr(), "nature".tr(), "literature".tr(), "design".tr(), "food".tr(), "health".tr(), "marketing".tr(), "relationshipy".tr(), "city_travel".tr(), "dance".tr(), "automobiles".tr(), "entertainment".tr(), "volunteering".tr(), "investments".tr(), "programming".tr(), "interior".tr(), "drawing".tr(), "self_defense".tr(), "painting".tr(), "gardening".tr(), "crafts".tr()];
   List<dynamic> selected = [];
 
   @override
@@ -88,7 +89,7 @@ class _TagsScreenState extends ConsumerState<TagsScreen> {
                       ),
                       child: Center(
                         child: Text(
-                          tags[index],
+                          tags_view[index],
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 13.0,
