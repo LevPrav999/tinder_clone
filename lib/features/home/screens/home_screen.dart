@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,65 +64,73 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
             title: TabBar(
               indicatorColor: Colors.transparent,
               tabs: [
-                SafeArea(
-                  child: Container(
-                    padding:
-                        EdgeInsets.only(bottom: 37.w),
-                    child: Center(
-                      child: Icon(
-                        TinderIcons.iconfinder_icons_user2_1564535,
-                        color: index == 0
-                            ? Coloors.primaryColor
-                            : Colors.grey,
-                        size: 35.sp,
-                      ),
-                    ),
-                  ),
-                ),
-                SafeArea(
-                  child: Container(
-                    padding:
-                        EdgeInsets.only(bottom: 37.w),
-                    child: Center(
-                      child: Icon(
-                        TinderIcons.iconfinder_338_tinder_logo_4375488__1_,
-                        color: index == 1
-                            ? Coloors.primaryColor
-                            : Colors.grey,
-                        size: 40.sp,
-                      ),
-                    ),
-                  ),
-                ),
-                SafeArea(
-                  child: Container(
-                    padding:
-                        EdgeInsets.only(bottom: 37.w),
-                    child: Center(
-                      child: Icon(
-                        TinderIcons.iconfinder_message_01_186393,
-                        color: index == 2
-                            ? Coloors.primaryColor
-                            : Colors.grey,
-                        size: 40.sp,
-                      ),
-                    ),
-                  ),
-                ),
+                _buildTab(
+                index: 0,
+                icon: TinderIcons.iconfinder_icons_user2_1564535,
+              ),
+              _buildTab(
+                index: 1,
+                icon: TinderIcons.iconfinder_338_tinder_logo_4375488__1_,
+              ),
+              _buildTab(
+                index: 2,
+                icon: TinderIcons.iconfinder_message_01_186393,
+              ),
               ],
               onTap: (index) {
                 ref.read(homeControllerProvider.notifier).updateState(index);
               },
             ),
           ),
-          body: const TabBarView(
-            physics: NeverScrollableScrollPhysics(),
-            children: <Widget>[
-              ProfileTabScreen(),
-              CardsTabScreen(),
-              ChatsTabScreen(),
-            ],
-          )),
+          body: PageTransitionSwitcher(
+          duration: const Duration(milliseconds: 500),
+          transitionBuilder: (
+            Widget child,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) {
+            return FadeThroughTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              child: child,
+            );
+          },
+          child: _buildTabBarView(index),
+        ),
+      ),
     );
+  }
+
+  Widget _buildTabBarView(int index) {
+    switch (index) {
+      case 0:
+        return ProfileTabScreen();
+      case 1:
+        return CardsTabScreen();
+      case 2:
+        return ChatsTabScreen();
+      default:
+        return Container();
+    }
+  }
+
+  Widget _buildTab({
+    required int index,
+    required IconData icon
+  }) {
+    final isSelected = index == ref.read(homeControllerProvider);
+
+    return SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(bottom: 37.w),
+          child: Center(
+            child: Icon(
+              icon,
+              color: isSelected ? Coloors.primaryColor : Colors.grey,
+              size: isSelected ? 40.sp : 35.sp,
+            ),
+          ),
+        ),
+      );
   }
 }
