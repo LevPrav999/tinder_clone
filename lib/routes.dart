@@ -21,44 +21,44 @@ class Routes {
         return MaterialPageRoute(builder: (context) => const PhoneAuthScreen());
       case MatchScreen.routeName:
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const MatchScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeThroughTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              child: child,
-            );
-          },
-          maintainState: false
-        );
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const MatchScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeThroughTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+            maintainState: false);
       case HomeScreen.routeName:
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              const HomeScreen(),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeThroughTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              child: child,
-            );
-          },
-          maintainState: false
-        );
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const HomeScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeThroughTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+            maintainState: false);
       case ChatScreen.routeName:
         final user = settings.arguments as UserModel;
         return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              ChatScreen(user: user),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeThroughTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              child: child,
-            );
-          },
-          maintainState: false
-        );
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                ChatScreen(user: user),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return FadeThroughTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+            maintainState: false);
       case TagsScreen.routeName:
         final tags = settings.arguments as List<dynamic>;
         return PageRouteBuilder(
