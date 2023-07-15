@@ -65,15 +65,40 @@ class Routes {
           pageBuilder: (context, animation, secondaryAnimation) =>
               TagsScreen(userTagsSelected: tags),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return FadeThroughTransition(
-              animation: animation,
-              secondaryAnimation: secondaryAnimation,
-              child: child,
+            return SharedAxisTransition(
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          transitionType: SharedAxisTransitionType.vertical,
+          child: child,
             );
           },
         );
       case UserInfoScreen.routeName:
         final data = settings.arguments as Map<String, dynamic>?;
+        if(data?['fromProfile'] == true){
+          return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              UserInfoScreen(
+                  name: data?['name'] ?? "your_name".tr(),
+                  age: data?['age'] ?? "01.01.2001",
+                  sex: data?['sex'] ?? "",
+                  city: data?['city'] ?? "moscow".tr(),
+                  bio: data?['bio'] ?? "hi_i_am_using_tinder".tr(),
+                  sexFind: data?['sexFind'] ?? "",
+                  avatar: data?['avatar'] ?? "",
+                  fromProfile: data?['fromProfile'] as bool,
+                ),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return SharedAxisTransition(
+          animation: animation,
+          secondaryAnimation: secondaryAnimation,
+          transitionType: SharedAxisTransitionType.vertical,
+          child: child,
+            );
+          },
+          maintainState: false
+          );
+        }
         return MaterialPageRoute(
             builder: (context) => UserInfoScreen(
                   name: data?['name'] ?? "your_name".tr(),
