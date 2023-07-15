@@ -1,3 +1,4 @@
+import 'package:animations/animations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
@@ -19,17 +20,58 @@ class Routes {
       case PhoneAuthScreen.routeName:
         return MaterialPageRoute(builder: (context) => const PhoneAuthScreen());
       case MatchScreen.routeName:
-        return MaterialPageRoute(
-            builder: (context) => const MatchScreen(), maintainState: false);
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const MatchScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeThroughTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              child: child,
+            );
+          },
+          maintainState: false
+        );
       case HomeScreen.routeName:
-        return MaterialPageRoute(
-            builder: (context) => const HomeScreen(), maintainState: false);
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              const HomeScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeThroughTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              child: child,
+            );
+          },
+          maintainState: false
+        );
       case ChatScreen.routeName:
         final user = settings.arguments as UserModel;
-        return MaterialPageRoute(builder: (context) => ChatScreen(user: user));
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              ChatScreen(user: user),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeThroughTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              child: child,
+            );
+          },
+          maintainState: false
+        );
       case TagsScreen.routeName:
         final tags = settings.arguments as List<dynamic>;
-        return MaterialPageRoute(builder: (context) => TagsScreen(userTagsSelected: tags));
+        return PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) =>
+              TagsScreen(userTagsSelected: tags),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeThroughTransition(
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              child: child,
+            );
+          },
+        );
       case UserInfoScreen.routeName:
         final data = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
