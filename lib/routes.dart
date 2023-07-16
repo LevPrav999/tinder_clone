@@ -18,7 +18,18 @@ class Routes {
       case LoginScreen.routeName:
         return MaterialPageRoute(builder: (context) => const LoginScreen());
       case PhoneAuthScreen.routeName:
-        return MaterialPageRoute(builder: (context) => const PhoneAuthScreen());
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                const PhoneAuthScreen(),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return SharedAxisTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: SharedAxisTransitionType.horizontal,
+                child: child,
+              );
+            });
       case MatchScreen.routeName:
         return PageRouteBuilder(
             pageBuilder: (context, animation, secondaryAnimation) =>
@@ -66,38 +77,38 @@ class Routes {
               TagsScreen(userTagsSelected: tags),
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return SharedAxisTransition(
-          animation: animation,
-          secondaryAnimation: secondaryAnimation,
-          transitionType: SharedAxisTransitionType.vertical,
-          child: child,
+              animation: animation,
+              secondaryAnimation: secondaryAnimation,
+              transitionType: SharedAxisTransitionType.vertical,
+              child: child,
             );
           },
         );
       case UserInfoScreen.routeName:
         final data = settings.arguments as Map<String, dynamic>?;
-        if(data?['fromProfile'] == true){
+        if (data?['fromProfile'] == true) {
           return PageRouteBuilder(
-          pageBuilder: (context, animation, secondaryAnimation) =>
-              UserInfoScreen(
-                  name: data?['name'] ?? "your_name".tr(),
-                  age: data?['age'] ?? "01.01.2001",
-                  sex: data?['sex'] ?? "",
-                  city: data?['city'] ?? "moscow".tr(),
-                  bio: data?['bio'] ?? "hi_i_am_using_tinder".tr(),
-                  sexFind: data?['sexFind'] ?? "",
-                  avatar: data?['avatar'] ?? "",
-                  fromProfile: data?['fromProfile'] as bool,
-                ),
-          transitionsBuilder: (context, animation, secondaryAnimation, child) {
-            return SharedAxisTransition(
-          animation: animation,
-          secondaryAnimation: secondaryAnimation,
-          transitionType: SharedAxisTransitionType.vertical,
-          child: child,
-            );
-          },
-          maintainState: false
-          );
+              pageBuilder: (context, animation, secondaryAnimation) =>
+                  UserInfoScreen(
+                    name: data?['name'] ?? "your_name".tr(),
+                    age: data?['age'] ?? "01.01.2001",
+                    sex: data?['sex'] ?? "",
+                    city: data?['city'] ?? "moscow".tr(),
+                    bio: data?['bio'] ?? "hi_i_am_using_tinder".tr(),
+                    sexFind: data?['sexFind'] ?? "",
+                    avatar: data?['avatar'] ?? "",
+                    fromProfile: data?['fromProfile'] as bool,
+                  ),
+              transitionsBuilder:
+                  (context, animation, secondaryAnimation, child) {
+                return SharedAxisTransition(
+                  animation: animation,
+                  secondaryAnimation: secondaryAnimation,
+                  transitionType: SharedAxisTransitionType.vertical,
+                  child: child,
+                );
+              },
+              maintainState: false);
         }
         return MaterialPageRoute(
             builder: (context) => UserInfoScreen(
