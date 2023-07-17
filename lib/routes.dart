@@ -124,8 +124,18 @@ class Routes {
             maintainState: false);
       case CodeScreen.routeName:
         final verificationId = settings.arguments as String;
-        return MaterialPageRoute(
-            builder: (context) => CodeScreen(verificationId: verificationId));
+        return PageRouteBuilder(
+            pageBuilder: (context, animation, secondaryAnimation) =>
+                CodeScreen(verificationId: verificationId),
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return SharedAxisTransition(
+                animation: animation,
+                secondaryAnimation: secondaryAnimation,
+                transitionType: SharedAxisTransitionType.horizontal,
+                child: child,
+              );
+            });
       default:
         return MaterialPageRoute(
             builder: (context) => const Scaffold(
