@@ -41,6 +41,7 @@ class CodeScreen extends ConsumerWidget {
             width: 250.w,
             height: 200.h,
             fit: BoxFit.fill,
+            repeat: false
           ),
           const SizedBox(height: 20),
           Text("we_have_sent_a_sms".tr()),
