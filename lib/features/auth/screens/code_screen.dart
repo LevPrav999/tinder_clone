@@ -35,11 +35,11 @@ class CodeScreen extends ConsumerWidget {
       body: Center(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             Lottie.asset(
-            'assets/lottiefiles/sms-screen-05.json',
-            width: 300.w,
-            height: 300.h,
+            'assets/lottiefiles/sms.json',
+            width: 250.w,
+            height: 200.h,
             fit: BoxFit.fill,
           ),
           const SizedBox(height: 20),
