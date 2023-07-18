@@ -2,13 +2,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
+import 'package:tinder_clone/common/models/user_model.dart';
+import 'package:tinder_clone/common/repositories/common_messaging_repository.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/common/utils/decorations.dart';
 import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 
 class ChatTextField extends ConsumerStatefulWidget {
-  const ChatTextField({super.key, required this.receiverUserId});
-  final String receiverUserId;
+  const ChatTextField({super.key, required this.receiverUser});
+  final UserModel receiverUser;
 
   @override
   ConsumerState<ChatTextField> createState() => _ChatTextFieldState();
@@ -29,11 +31,12 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
     textEditingController.dispose();
   }
 
-  void sendMessage(){
+  void sendMessage() async{
     if(textEditingController.text.trim().isEmpty){
       showAlertDialog(context: context, message: "your_message_is_empty".tr());
     }else{
-      ref.read(chatControllerProvider).sendTextMessage(context, textEditingController.text, widget.receiverUserId);
+      await MessagingApi().callOnFcmApiSendPushNotifications(widget.receiverUser.fcmToken, "Новое сообщение!", textEditingController.text);
+      ref.read(chatControllerProvider).sendTextMessage(context, textEditingController.text, widget.receiverUser.uid);
       textEditingController.clear();
     }
   }
