@@ -2,6 +2,8 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
+import 'package:tinder_clone/common/states/message_state.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/common/utils/tinder_icons.dart';
 import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
@@ -53,6 +55,15 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
   Widget build(BuildContext context) {
     var index = ref.watch(homeControllerProvider);
 
+        final lastMessage = ref.watch(messageProvider);
+
+    if (lastMessage != null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        showAlertDialog(context: context, message: lastMessage.notification!.body!);
+        ref.read(messageProvider.notifier).setMessage(null);
+      });
+    }
+
     return DefaultTabController(
       length: 3,
       initialIndex: index,
@@ -77,7 +88,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
                 icon: TinderIcons.iconfinder_message_01_186393,
               ),
               ],
-              onTap: (index) {
+              onTap: (index){
                 ref.read(homeControllerProvider.notifier).updateState(index);
               },
             ),
