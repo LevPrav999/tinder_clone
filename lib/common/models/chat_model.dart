@@ -5,12 +5,16 @@ class ChatConversation {
   final DateTime timeSent;
   final String lastMessage;
 
+  final String fcmToken;
+
   ChatConversation(
       {required this.name,
       required this.profilePic,
       required this.contactId,
       required this.timeSent,
-      required this.lastMessage});
+      required this.lastMessage,
+      required this.fcmToken
+      });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -19,6 +23,7 @@ class ChatConversation {
       'contactId': contactId,
       'timeSent': timeSent.millisecondsSinceEpoch,
       'lastMessage': lastMessage,
+      'fcmToken': fcmToken
     };
   }
 
@@ -28,7 +33,8 @@ class ChatConversation {
       profilePic: map['profilePic'] as String,
       contactId: map['contactId'] as String,
       timeSent: DateTime.fromMillisecondsSinceEpoch(map['timeSent'] as int),
-      lastMessage: map['lastMessage'] as String
+      lastMessage: map['lastMessage'] as String,
+      fcmToken: map['fcmToken'] ?? ""
     );
   }
 }
