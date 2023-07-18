@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
+import 'package:tinder_clone/common/repositories/common_messaging_repository.dart';
 import 'package:tinder_clone/common/widgets/error.dart';
 import 'package:tinder_clone/common/widgets/loader.dart';
 import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
@@ -22,6 +23,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+
   runApp(ProviderScope(
       child: EasyLocalization(
           supportedLocales: [Locale('en'), Locale('ru')],
@@ -43,6 +46,12 @@ class MyApp extends ConsumerStatefulWidget {
 class _MyAppState extends ConsumerState<MyApp> {
   UserModel? userModel;
 
+  @override
+  void initState(){
+    MessagingApi().initNotifications(ref);
+    super.initState();
+  }
+
   void getData(WidgetRef ref, User data) async {
     userModel = await ref
         .watch(authControllerProvider)
@@ -59,7 +68,6 @@ class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-
 
     return ref.watch(authStateChangeProvider).when(
         data: (data) {
