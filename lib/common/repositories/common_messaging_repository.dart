@@ -8,7 +8,8 @@ import 'package:tinder_clone/common/states/message_state.dart';
 class MessagingApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
 
-  Future<void> callOnFcmApiSendPushNotifications(String fcmToken, String title, String body) async {
+  Future<void> callOnFcmApiSendPushNotifications(
+      String fcmToken, String title, String body) async {
     try {
       const String serverKey =
           'AAAANyy3jGQ:APA91bFnfcN9zcwd23izvx7RGtxF3PuMphNT5g6ANxNAuzU4FhkKP10RmkwLJqw1oeoYbCU3SQXa0hkS9V4dbHz6rNxpezFROtg4RMudqdczcyuwA2ZTSDSavwQy1UJg6Tuow9Tr33TA'; // Замените на свой FCM Server Key
@@ -19,8 +20,7 @@ class MessagingApi {
         'notification': {
           'title': title,
           'body': body,
-          'click_action':
-              'FLUTTER_NOTIFICATION_CLICK',
+          'click_action': 'FLUTTER_NOTIFICATION_CLICK',
         },
       };
 
@@ -30,18 +30,11 @@ class MessagingApi {
       };
 
       try {
-        final http.Response response = await http.post(
+        await http.post(
           Uri.parse(fcmUrl),
           headers: headers,
           body: jsonEncode(notification),
         );
-
-        if (response.statusCode == 200) {
-          print('Уведомление успешно отправлено');
-        } else {
-          print(
-              'Ошибка при отправке уведомления. Код ответа: ${response.statusCode}');
-        }
       } catch (e) {
         print('Ошибка при отправке уведомления: $e');
       }
@@ -50,17 +43,13 @@ class MessagingApi {
     }
   }
 
-  Future<void> _handleBackgroundMessage(RemoteMessage message) async {
-    print("Title: ${message.notification?.title}");
-    print("Body: ${message.notification?.body}");
-    print("Payload: ${message.data}");
-  }
+  Future<void> _handleBackgroundMessage(RemoteMessage message) async {}
 
-  Future<String?> getToken() async{
-    try{
+  Future<String?> getToken() async {
+    try {
       final fcmToken = await _firebaseMessaging.getToken();
       return fcmToken!;
-    }catch(e){
+    } catch (e) {
       return null;
     }
   }
@@ -69,9 +58,6 @@ class MessagingApi {
     try {
       await _firebaseMessaging.requestPermission();
 
-      final fcmToken = await getToken();
-      print(fcmToken);
-
       try {
         FirebaseMessaging.onBackgroundMessage(_handleBackgroundMessage);
       } catch (e) {
@@ -79,11 +65,6 @@ class MessagingApi {
       }
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-        print('Handling a foreground message: ${message.messageId}');
-        print('Message data: ${message.data}');
-        print('Message notification: ${message.notification?.title}');
-        print('Message notification: ${message.notification?.body}');
-
         final messageProviderState = ref.read(messageProvider.notifier);
         messageProviderState.setMessage(message);
       });
