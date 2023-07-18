@@ -52,6 +52,9 @@ dependencies:
   easy_localization: ^3.0.2
   animations: ^2.0.7
   lottie: ^2.4.0
+  firebase_messaging: ^14.6.5
+  http: ^1.1.0
+  flutter_local_notifications: ^15.1.0+1
 
 dev_dependencies:
   flutter_test:
