@@ -87,7 +87,7 @@ class ChatScreen extends ConsumerWidget {
         body: Stack(
           children: [
             ChatList(userId: user.uid),
-            ChatTextField(receiverUserId: user.uid,)
+            ChatTextField(receiverUser: user,)
           ],
         ));
   }
