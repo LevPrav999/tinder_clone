@@ -76,7 +76,8 @@ class ChatsTabScreen extends ConsumerWidget {
                         liked: [],
                         pending: [],
                         tags: [],
-                        isPrime: false
+                        isPrime: false,
+                        fcmToken: ""
                         ));
               },
               title: Row(
