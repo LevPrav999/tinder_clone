@@ -77,7 +77,7 @@ class ChatsTabScreen extends ConsumerWidget {
                         pending: [],
                         tags: [],
                         isPrime: false,
-                        fcmToken: ""
+                        fcmToken: lastMessageData.fcmToken
                         ));
               },
               title: Row(
