@@ -7,6 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/common/repositories/common_firebase_storage_repository.dart';
+import 'package:tinder_clone/common/repositories/common_messaging_repository.dart';
 import 'package:tinder_clone/common/utils/utils.dart';
 import 'package:tinder_clone/features/auth/screens/code_screen.dart';
 import 'package:tinder_clone/features/auth/screens/tags_screen.dart';
@@ -116,6 +117,8 @@ class AuthRepository {
       if (userSnap.exists)
         userFromDb = UserModel.fromMap(userSnap.data() as Map<String, dynamic>);
 
+      String? token = await MessagingApi().getToken();
+
       var user = UserModel(
         uid: uid,
         name: name,
@@ -130,7 +133,8 @@ class AuthRepository {
         liked: userSnap.exists ? userFromDb.liked : [],
         pending: userSnap.exists ? userFromDb.pending : [],
         tags: userSnap.exists ? userFromDb.tags : [],
-        isPrime: userSnap.exists ? userFromDb.isOnline : false
+        isPrime: userSnap.exists ? userFromDb.isOnline : false,
+        fcmToken: userSnap.exists ? userFromDb.fcmToken : token ?? ""
       );
 
       if (userSnap.exists) {
