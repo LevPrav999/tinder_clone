@@ -35,7 +35,7 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
     if(textEditingController.text.trim().isEmpty){
       showAlertDialog(context: context, message: "your_message_is_empty".tr());
     }else{
-      await MessagingApi().callOnFcmApiSendPushNotifications(widget.receiverUser.fcmToken, "Новое сообщение!", textEditingController.text);
+      await MessagingApi().callOnFcmApiSendPushNotifications(widget.receiverUser.fcmToken, "new_message".tr(), textEditingController.text);
       ref.read(chatControllerProvider).sendTextMessage(context, textEditingController.text, widget.receiverUser.uid);
       textEditingController.clear();
     }
