@@ -23,6 +23,7 @@ Tinder Clone is a mobile application that replicates the popular dating app Tind
 8. **Tinder Plus**: If you are a Plus user, your name and age will have a yellow shadow in the card.
    - Plus users' functionality will be expanded in the future.
 9. **Online/Offline Status Display**: Showing online/offline status of users on their cards.
+10. **Internal and external notifications**: If the application is open, you will be notified of new matches in the form of a dialog box. If the application is closed, you will receive notifications. 
 
 
 ## Planned Updates
