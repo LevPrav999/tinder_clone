@@ -254,13 +254,13 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                     sendTextMessage(context, data.cards[previousIndex].user.uid);
-                    await MessagingApi().callOnFcmApiSendPushNotifications(data.cards[previousIndex].user.fcmToken, "У Вас взаимный Match!", "Переходите на страницу чатов и общайтесь с новым знакомым!");
+                    await MessagingApi().callOnFcmApiSendPushNotifications(data.cards[previousIndex].user.fcmToken, "mutual_match".tr(), "mutual_match_body".tr());
                   } else {
                     provider
                         .addToLiked(data.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
-                    await MessagingApi().callOnFcmApiSendPushNotifications(data.cards[previousIndex].user.fcmToken, "У Вас новый Match!", "Переходите на страницу \"предложения\" и посмотрите кто это!");
+                    await MessagingApi().callOnFcmApiSendPushNotifications(data.cards[previousIndex].user.fcmToken, "new_match".tr(), "new_match_body".tr());
                   }
                 }
 
