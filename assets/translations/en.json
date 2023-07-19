@@ -95,5 +95,10 @@
 "self_defense": "Self-Defense",
 "painting": "Painting",
 "gardening": "Gardening",
-"crafts": "Crafts"
+"crafts": "Crafts",
+"mutual_match": "You got a mutual Match!",
+"new_match": "You got a new Match!",
+"mutual_match_body": "Go to the chat page and chat with a new acquaintance!",
+"new_match_body": "Go to the suggestions page and see who it is!",
+"new_message": "New message!"
 }
