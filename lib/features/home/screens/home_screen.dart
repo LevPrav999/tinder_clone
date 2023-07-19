@@ -59,7 +59,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
 
     if (lastMessage != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        showAlertDialog(context: context, message: "${lastMessage.notification!.title!}\n\n${lastMessage.notification!.body!}");
+        if(!(lastMessage.notification!.title!.contains("сообщение") || lastMessage.notification!.title!.contains("message"))) {
+          showAlertDialog(context: context, message: "${lastMessage.notification!.title!}\n\n${lastMessage.notification!.body!}");
+        }
         ref.read(messageProvider.notifier).setMessage(null);
       });
     }
