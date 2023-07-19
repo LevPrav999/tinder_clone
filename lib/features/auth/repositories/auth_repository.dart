@@ -60,6 +60,8 @@ class AuthRepository {
           await firestore.collection('users').doc(uid).get();
 
       if (userSnap.exists) {
+        String? token = await MessagingApi().getToken();
+        await firestore.collection('users').doc(uid).update({"fcmToken": token ?? ""});
         Navigator.pushNamedAndRemoveUntil(
             context, HomeScreen.routeName, (route) => false);
       } else {
@@ -133,7 +135,7 @@ class AuthRepository {
         liked: userSnap.exists ? userFromDb.liked : [],
         pending: userSnap.exists ? userFromDb.pending : [],
         tags: userSnap.exists ? userFromDb.tags : [],
-        isPrime: userSnap.exists ? userFromDb.isOnline : false,
+        isPrime: userSnap.exists ? userFromDb.isPrime : false,
         fcmToken: userSnap.exists ? userFromDb.fcmToken : token ?? ""
       );
 
