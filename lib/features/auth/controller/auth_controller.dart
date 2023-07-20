@@ -26,6 +26,7 @@ final userInfoAuthProvider = FutureProvider(
 
 
 
+
 class AuthController {
   final AuthRepository authRepository;
   final ProviderRef ref;
