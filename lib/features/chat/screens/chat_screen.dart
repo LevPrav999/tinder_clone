@@ -9,6 +9,8 @@ import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 import 'package:tinder_clone/features/chat/screens/widgets/chat_list.dart';
 import 'package:tinder_clone/features/chat/screens/widgets/chat_text_field.dart';
 
+import 'widgets/chat_scroll_button.dart';
+
 
 class ChatScreen extends ConsumerStatefulWidget {
   static const String routeName = '/chat-screen';
@@ -97,7 +99,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         body: Stack(
           children: [
             ChatList(userId: user.uid, messageController: messageController),
-            ChatTextField(receiverUser: user, messageController: messageController)
+            ChatTextField(receiverUser: user, messageController: messageController),
+            ChatScrollButton(messageController: messageController)
           ],
         ));
   }
