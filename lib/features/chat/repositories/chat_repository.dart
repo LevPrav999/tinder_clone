@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,7 @@ import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
 import 'package:tinder_clone/common/models/chat_model.dart';
 import 'package:tinder_clone/common/models/message_model.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
+import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 import 'package:uuid/uuid.dart';
 
 final chatRepositoryProvider = Provider((ref) => ChatRepository(
@@ -14,6 +17,8 @@ final chatRepositoryProvider = Provider((ref) => ChatRepository(
 class ChatRepository {
   final FirebaseFirestore firestore;
   final FirebaseAuth auth;
+
+  late StreamSubscription<QuerySnapshot> subscription;
 
   ChatRepository({required this.firestore, required this.auth});
 
@@ -45,8 +50,8 @@ class ChatRepository {
     });
   }
 
-  Stream<List<Message>> getChatStream(String recieverUserId){
-    return firestore
+  void getChatStream({required String recieverUserId, required WidgetRef ref}){
+    subscription = firestore
         .collection('users')
         .doc(auth.currentUser!.uid)
         .collection('chats')
@@ -54,13 +59,17 @@ class ChatRepository {
         .collection('messages')
         .orderBy('timeSent')
         .snapshots()
-        .map((event) {
-      List<Message> messages = [];
-      for (var message in event.docs) {
-        messages.add(Message.fromMap(message.data()));
-      }
-      return messages;
-    });
+        .listen((event) {
+    List<Message> messages = [];
+    for (var message in event.docs) {
+      messages.add(Message.fromMap(message.data()));
+    }
+    ref.read(userChatListStateProvider.notifier).update((state) => messages);
+  });
+  }
+
+  void closeChatStream(){
+    subscription.cancel();
   }
 
   void sendTextMessage(
