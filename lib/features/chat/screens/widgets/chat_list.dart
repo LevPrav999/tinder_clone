@@ -10,22 +10,30 @@ import 'package:tinder_clone/common/widgets/loader.dart';
 import 'package:tinder_clone/common/widgets/message.dart';
 import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 
-class ChatList extends ConsumerWidget {
+class ChatList extends ConsumerStatefulWidget {
   const ChatList({super.key, required this.userId});
   final String userId;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _ChatListState();
+}
+
+class _ChatListState extends ConsumerState<ChatList> {
+
+  @override
+  void initState() {
+    ref.read(chatControllerProvider).chatStream(widget.userId, ref);
+    super.initState();
+  }
+
+ @override
+  Widget build(BuildContext context) {
+
+    List<Message>? messages = ref.watch(userChatListStateProvider);
+
     return Padding(
       padding: const EdgeInsets.only(bottom: 83),
-      child: StreamBuilder<List<Message>>(
-                  stream: ref.watch(chatControllerProvider).chatStream(userId),
-                  builder: (context, snapshot) {
-                    if (snapshot.data == null) {
-                      return const LoaderWidget();
-                    }
-                    if (snapshot.data!.isEmpty) {
-                      return Column(
+      child: messages == null ? const LoaderWidget() : messages.isEmpty ? Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           ClipRRect(
@@ -50,35 +58,33 @@ class ChatList extends ConsumerWidget {
                                     color: Colors.grey.shade600)),
                           )
                         ],
-                      );
-                    }
-                    return ListView.builder(
-                        itemCount: snapshot.data!.length,
+                      ) : ListView.builder(
+                        itemCount: messages.length,
                         itemBuilder: (context, index) {
-                          final message = snapshot.data![index];
+                          final message = messages[index];
                           final isSender = message.senderId ==
                               FirebaseAuth.instance.currentUser!.uid;
                           final haveNip = (index == 0) ||
-                              (index == snapshot.data!.length - 1 &&
+                              (index == messages.length - 1 &&
                                   message.senderId !=
-                                      snapshot.data![index - 1].senderId) ||
+                                      messages[index - 1].senderId) ||
                               (message.senderId !=
-                                      snapshot.data![index - 1].senderId &&
+                                      messages[index - 1].senderId &&
                                   message.senderId ==
-                                      snapshot.data![index + 1].senderId) ||
+                                      messages[index + 1].senderId) ||
                               (message.senderId !=
-                                      snapshot.data![index - 1].senderId &&
+                                      messages[index - 1].senderId &&
                                   message.senderId !=
-                                      snapshot.data![index + 1].senderId);
+                                      messages[index + 1].senderId);
     
                           final isShowDateCard = (index == 0) ||
-                              ((index == snapshot.data!.length - 1) &&
+                              ((index == messages.length - 1) &&
                                   (message.timeSent.day >
-                                      snapshot.data![index - 1].timeSent.day)) ||
+                                      messages[index - 1].timeSent.day)) ||
                               (message.timeSent.day >
-                                      snapshot.data![index - 1].timeSent.day &&
+                                      messages[index - 1].timeSent.day &&
                                   message.timeSent.day <=
-                                      snapshot.data![index + 1].timeSent.day);
+                                      messages[index + 1].timeSent.day);
     
                           return Column(
                             children: [
@@ -92,8 +98,6 @@ class ChatList extends ConsumerWidget {
                               ),
                             ],
                           );
-                        });
-                  }),
-    );
-  }
+                        }));
+}
 }
