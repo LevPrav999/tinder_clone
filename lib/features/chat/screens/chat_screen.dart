@@ -5,21 +5,43 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
+import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 import 'package:tinder_clone/features/chat/screens/widgets/chat_list.dart';
 import 'package:tinder_clone/features/chat/screens/widgets/chat_text_field.dart';
 
-class ChatScreen extends ConsumerWidget {
+
+class ChatScreen extends ConsumerStatefulWidget {
   static const String routeName = '/chat-screen';
   const ChatScreen({super.key, required this.user});
   final UserModel user;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ConsumerStatefulWidget> createState() => _ChatScreenState();
+}
+
+class _ChatScreenState extends ConsumerState<ChatScreen> {
+  late final UserModel user;
+
+  @override
+  void initState() {
+    super.initState();
+    user = widget.user;
+    ref.read(authControllerProvider).getUserPresenceStatus(uid: user.uid, ref: ref);
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    bool? isOnline = ref.watch(userStatusStateProvider);
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Coloors.secondaryHeaderColor,
           leading: InkWell(
             onTap: () {
+              ref.read(authControllerProvider).stopListeningToUserOnlineStatus();
+              ref.read(chatControllerProvider).closeChatStream();
               Navigator.pop(context);
             },
             borderRadius: BorderRadius.circular(20),
@@ -58,27 +80,13 @@ class ChatScreen extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 3),
-                  StreamBuilder(
-                    stream: ref
-                        .read(authControllerProvider)
-                        .getUserPresenceStatus(uid: user.uid),
-                    builder: (_, snapshot) {
-                      if (snapshot.data == null) {
-                        return const SizedBox();
-                      }
-
-                      final singleUserModel = snapshot.data!;
-                      // final lastMessage = lastSeenMessage(singleUserModel.lastSeen);
-
-                      return Text(
-                        singleUserModel.isOnline ? 'online'.tr() : "offline".tr(),
+                  isOnline==null ? Container() : Text(
+                        isOnline ? 'online'.tr() : "offline".tr(),
                         style: const TextStyle(
                           fontSize: 12,
                           color: Colors.white,
                         ),
-                      );
-                    },
-                  ),
+                      ),
                 ],
               ),
             ),
