@@ -69,6 +69,7 @@ class AuthRepository {
             .collection('users')
             .doc(uid)
             .update({"fcmToken": token ?? ""});
+        await _updateUserDataInSubCollections(uid, token ?? "", null, null);
         Navigator.pushNamedAndRemoveUntil(
             context, HomeScreen.routeName, (route) => false);
       } else {
@@ -147,6 +148,7 @@ class AuthRepository {
 
       if (userSnap.exists) {
         await firestore.collection('users').doc(uid).update(user.toMap());
+        await _updateUserDataInSubCollections(uid, user.fcmToken, user.avatar, user.name);
         Navigator.pushNamedAndRemoveUntil(
             context, HomeScreen.routeName, (route) => false);
       } else {
@@ -157,6 +159,32 @@ class AuthRepository {
       }
     } catch (e) {
       showAlertDialog(context: context, message: e.toString());
+    }
+  }
+
+  Future<void> _updateUserDataInSubCollections(String uid, String fcmToken, String? profilePic, String? name) async{
+    final usersList = await FirebaseFirestore.instance.collection('users').get();
+    for(var user in usersList.docs){
+      final chatsList = await FirebaseFirestore.instance.collection('users').doc(user.id).collection('chats').get();
+      if(chatsList.docs.isEmpty){
+        continue;
+      }else{
+        final chatsList = FirebaseFirestore.instance.collection('users').doc(user.id).collection('chats');
+        final userDoc = await chatsList.doc(uid).get();
+        if(userDoc.exists){
+          if(profilePic == null && name == null){
+            await chatsList.doc(uid).update({
+              'fcmToken': fcmToken,
+            });
+          }else{
+            await chatsList.doc(uid).update({
+              'fcmToken': fcmToken,
+              'profilePic': profilePic,
+              'name': name
+            });
+          }
+        }
+      }
     }
   }
 
