@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
 import 'package:tinder_clone/common/models/user_model.dart';
@@ -9,8 +10,9 @@ import 'package:tinder_clone/common/utils/decorations.dart';
 import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 
 class ChatTextField extends ConsumerStatefulWidget {
-  const ChatTextField({super.key, required this.receiverUser});
+  const ChatTextField({super.key, required this.receiverUser, required this.messageController});
   final UserModel receiverUser;
+  final ScrollController messageController;
 
   @override
   ConsumerState<ChatTextField> createState() => _ChatTextFieldState();
@@ -19,10 +21,12 @@ class ChatTextField extends ConsumerStatefulWidget {
 class _ChatTextFieldState extends ConsumerState<ChatTextField> {
 
   late TextEditingController textEditingController;
+  late final ScrollController messageController;
 
   @override
   void initState() {
     super.initState();
+    messageController = widget.messageController;
     textEditingController = TextEditingController();
   }
   @override
@@ -35,6 +39,7 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
     if(textEditingController.text.trim().isEmpty){
       showAlertDialog(context: context, message: "your_message_is_empty".tr());
     }else{
+      messageController.jumpTo(messageController.position.maxScrollExtent);
       await MessagingApi().callOnFcmApiSendPushNotifications(widget.receiverUser.fcmToken, "new_message".tr(), textEditingController.text);
       ref.read(chatControllerProvider).sendTextMessage(context, textEditingController.text, widget.receiverUser.uid);
       textEditingController.clear();
