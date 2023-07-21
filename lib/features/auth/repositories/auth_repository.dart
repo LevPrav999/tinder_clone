@@ -199,7 +199,10 @@ class AuthRepository {
       if (snapshot.exists) {
         bool isOnline = snapshot.data()?['isOnline'] ?? false;
         print('User is online: $isOnline');
-        ref.read(userStatusStateProvider.notifier).update((state) => isOnline);
+        bool? oldOnlineValue = ref.read(userStatusStateProvider.notifier).state;
+        if(oldOnlineValue != isOnline){
+          ref.read(userStatusStateProvider.notifier).update((state) => isOnline);
+        }
       } else {
         print('Document does not exist');
       }
