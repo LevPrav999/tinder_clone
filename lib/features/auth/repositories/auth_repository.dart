@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -9,6 +10,7 @@ import 'package:tinder_clone/common/models/user_model.dart';
 import 'package:tinder_clone/common/repositories/common_firebase_storage_repository.dart';
 import 'package:tinder_clone/common/repositories/common_messaging_repository.dart';
 import 'package:tinder_clone/common/utils/utils.dart';
+import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
 import 'package:tinder_clone/features/auth/screens/code_screen.dart';
 import 'package:tinder_clone/features/auth/screens/tags_screen.dart';
 import 'package:tinder_clone/features/auth/screens/user_information_screen.dart';
@@ -20,6 +22,8 @@ final authRepositoryProvider = Provider((ref) => AuthRepository(
 class AuthRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
+
+  late StreamSubscription<DocumentSnapshot> subscription;
 
   AuthRepository({
     required this.auth,
@@ -61,7 +65,10 @@ class AuthRepository {
 
       if (userSnap.exists) {
         String? token = await MessagingApi().getToken();
-        await firestore.collection('users').doc(uid).update({"fcmToken": token ?? ""});
+        await firestore
+            .collection('users')
+            .doc(uid)
+            .update({"fcmToken": token ?? ""});
         Navigator.pushNamedAndRemoveUntil(
             context, HomeScreen.routeName, (route) => false);
       } else {
@@ -122,31 +129,31 @@ class AuthRepository {
       String? token = await MessagingApi().getToken();
 
       var user = UserModel(
-        uid: uid,
-        name: name,
-        avatar: photoUrl,
-        age: convertBirthday(age),
-        sex: sex,
-        city: city,
-        bio: bio,
-        sexFind: sexFind,
-        isOnline: true,
-        blocked: userSnap.exists ? userFromDb.blocked : [],
-        liked: userSnap.exists ? userFromDb.liked : [],
-        pending: userSnap.exists ? userFromDb.pending : [],
-        tags: userSnap.exists ? userFromDb.tags : [],
-        isPrime: userSnap.exists ? userFromDb.isPrime : false,
-        fcmToken: userSnap.exists ? userFromDb.fcmToken : token ?? ""
-      );
+          uid: uid,
+          name: name,
+          avatar: photoUrl,
+          age: convertBirthday(age),
+          sex: sex,
+          city: city,
+          bio: bio,
+          sexFind: sexFind,
+          isOnline: true,
+          blocked: userSnap.exists ? userFromDb.blocked : [],
+          liked: userSnap.exists ? userFromDb.liked : [],
+          pending: userSnap.exists ? userFromDb.pending : [],
+          tags: userSnap.exists ? userFromDb.tags : [],
+          isPrime: userSnap.exists ? userFromDb.isPrime : false,
+          fcmToken: userSnap.exists ? userFromDb.fcmToken : token ?? "");
 
       if (userSnap.exists) {
         await firestore.collection('users').doc(uid).update(user.toMap());
         Navigator.pushNamedAndRemoveUntil(
-          context, HomeScreen.routeName, (route) => false);
+            context, HomeScreen.routeName, (route) => false);
       } else {
         await firestore.collection('users').doc(uid).set(user.toMap());
         Navigator.pushNamedAndRemoveUntil(
-          context, TagsScreen.routeName, (route) => false, arguments: []);
+            context, TagsScreen.routeName, (route) => false,
+            arguments: []);
       }
     } catch (e) {
       showAlertDialog(context: context, message: e.toString());
@@ -168,25 +175,38 @@ class AuthRepository {
     return user;
   }
 
-  void setUserStatus(bool isOnline) async{
-    await firestore.collection('users').doc(auth.currentUser!.uid).update({
-      'isOnline': isOnline
-    });
+  void setUserStatus(bool isOnline) async {
+    await firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .update({'isOnline': isOnline});
   }
 
   void setUserTags(List<dynamic> tags, BuildContext context) async {
-     await firestore.collection('users').doc(auth.currentUser!.uid).update({
-      'tags': tags
-    });
+    await firestore
+        .collection('users')
+        .doc(auth.currentUser!.uid)
+        .update({'tags': tags});
 
-    Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
+    Navigator.pushNamedAndRemoveUntil(
+        context, HomeScreen.routeName, (route) => false);
   }
 
-  Stream<UserModel> getUserPresenceStatus({required String uid}) {
-    return firestore
-        .collection('users')
-        .doc(uid)
-        .snapshots()
-        .map((event) => UserModel.fromMap(event.data()!));
+  void getUserPresenceStatus(
+      {required String uid, required WidgetRef ref}) async {
+    subscription =
+        firestore.collection('users').doc(uid).snapshots().listen((snapshot) {
+      if (snapshot.exists) {
+        bool isOnline = snapshot.data()?['isOnline'] ?? false;
+        print('User is online: $isOnline');
+        ref.read(userStatusStateProvider.notifier).update((state) => isOnline);
+      } else {
+        print('Document does not exist');
+      }
+    });
+  }
+
+  void stopListeningToUserOnlineStatus() {
+    subscription.cancel();
   }
 }
