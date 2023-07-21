@@ -24,7 +24,7 @@ final userInfoAuthProvider = FutureProvider(
   },
 );
 
-
+final userStatusStateProvider = StateProvider<bool?>((ref) => null);
 
 
 class AuthController {
@@ -81,11 +81,15 @@ class AuthController {
   }
 
 
-  Stream<UserModel> getUserPresenceStatus({required String uid}) {
-    return authRepository.getUserPresenceStatus(uid: uid);
+  void getUserPresenceStatus({required String uid, required WidgetRef ref}) async{
+    authRepository.getUserPresenceStatus(uid: uid, ref: ref);
   }
 
   void setUserTags(List<dynamic> tags, BuildContext context){
     return authRepository.setUserTags(tags, context);
+  }
+
+  void stopListeningToUserOnlineStatus(){
+    authRepository.stopListeningToUserOnlineStatus();
   }
 }
