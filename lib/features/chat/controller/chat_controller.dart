@@ -11,6 +11,8 @@ final chatControllerProvider = Provider((ref) {
   return ChatController(chatRepository: chatRepository, ref: ref);
 });
 
+final userChatListStateProvider = StateProvider<List<Message>?>((ref) => null);
+
 class ChatController {
   final ChatRepository chatRepository;
   final ProviderRef ref;
@@ -35,7 +37,11 @@ class ChatController {
 
   }
 
-  Stream<List<Message>> chatStream(String recieverUserId){
-    return chatRepository.getChatStream(recieverUserId);
+  void chatStream(String recieverUserId, WidgetRef ref){
+   chatRepository.getChatStream(recieverUserId: recieverUserId, ref: ref);
+  }
+
+  void closeChatStream(){
+    chatRepository.closeChatStream();
   }
 }
