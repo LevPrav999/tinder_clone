@@ -21,11 +21,13 @@ class ChatScreen extends ConsumerStatefulWidget {
 
 class _ChatScreenState extends ConsumerState<ChatScreen> {
   late final UserModel user;
+  late final ScrollController messageController;
 
   @override
   void initState() {
     super.initState();
     user = widget.user;
+    messageController = ScrollController();
     ref.read(authControllerProvider).getUserPresenceStatus(uid: user.uid, ref: ref);
   }
 
@@ -94,8 +96,8 @@ class _ChatScreenState extends ConsumerState<ChatScreen> {
         ),
         body: Stack(
           children: [
-            ChatList(userId: user.uid),
-            ChatTextField(receiverUser: user,)
+            ChatList(userId: user.uid, messageController: messageController),
+            ChatTextField(receiverUser: user, messageController: messageController)
           ],
         ));
   }
