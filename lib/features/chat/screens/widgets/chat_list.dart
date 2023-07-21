@@ -11,8 +11,10 @@ import 'package:tinder_clone/common/widgets/message.dart';
 import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
 
 class ChatList extends ConsumerStatefulWidget {
-  const ChatList({super.key, required this.userId});
+  const ChatList({super.key, required this.userId, required this.messageController});
   final String userId;
+  final ScrollController messageController;
+
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _ChatListState();
@@ -20,10 +22,19 @@ class ChatList extends ConsumerStatefulWidget {
 
 class _ChatListState extends ConsumerState<ChatList> {
 
+  late final ScrollController messageController;
+
   @override
   void initState() {
+    messageController = widget.messageController;
     ref.read(chatControllerProvider).chatStream(widget.userId, ref);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    messageController.dispose();
   }
 
  @override
@@ -59,6 +70,7 @@ class _ChatListState extends ConsumerState<ChatList> {
                           )
                         ],
                       ) : ListView.builder(
+                        controller: messageController,
                         itemCount: messages.length,
                         itemBuilder: (context, index) {
                           final message = messages[index];
