@@ -64,7 +64,10 @@ class ChatRepository {
     for (var message in event.docs) {
       messages.add(Message.fromMap(message.data()));
     }
-    ref.read(userChatListStateProvider.notifier).update((state) => messages);
+    List<Message>? oldListValue = ref.read(userChatListStateProvider.notifier).state;
+    if(oldListValue == null || oldListValue.length != messages.length){
+      ref.read(userChatListStateProvider.notifier).update((state) => messages);
+    }
   });
   }
 
