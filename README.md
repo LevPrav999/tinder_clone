@@ -30,12 +30,9 @@ Tinder Clone is a mobile application that replicates the popular dating app Tind
 
 In future updates, Tinder Clone plans to introduce the following features and improvements:
 
-1. [50%] **Tinder Plus**: Introducing premium features such as bookmarking cards, viewing users who blocked or liked you, displaying "crowns" on user cards, and other enhancements.
-2. **Code and Architecture Refactoring**: Improving the codebase and app architecture to enhance maintainability and scalability.
-3. **Chat Interface Enhancement**: Expanding chat interface functionality with features like image sharing, voice messages, audio/video calls, and more.
-4. **Profanity Filtering**: Implementing automatic filtering of profane content in messages.
-5. **Message Encryption**: Exploring message encryption capability, considering the need for moderation and positioning the app as a dating platform rather than a fully secure messenger.
-6. **User Interface Improvements**: Continuously refining the user interface and experience based on user feedback and industry best practices.
+1. **Profanity Filtering**: Implementing automatic filtering of profane content in messages.
+2. **Message Encryption**: Exploring message encryption capability, considering the need for moderation and positioning the app as a dating platform rather than a fully secure messenger.
+3. **User Interface Improvements**: Continuously refining the user interface and experience based on user feedback and industry best practices.
 
 ## Technologies Used
 
