@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
+import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
-import 'package:tinder_clone/common/widgets/loader.dart';
-import 'package:tinder_clone/new/application/auth_service.dart';
 import 'package:tinder_clone/new/presentaion/controllers/code_screen_controller.dart';
 
 class CodeScreen extends ConsumerWidget {
@@ -14,7 +13,7 @@ class CodeScreen extends ConsumerWidget {
   const CodeScreen({super.key, required this.verificationId});
 
   void verifyOTP(WidgetRef ref, BuildContext context, String userOTP){
-    ref.read(authServiceProvider).verifyCode(context, verificationId, userOTP);
+    ref.read(codeScreenProvider.notifier).verifyCode(context, verificationId, userOTP);
   }
 
   @override
@@ -23,10 +22,8 @@ class CodeScreen extends ConsumerWidget {
 
     var state = ref.watch(codeScreenProvider);
 
-    if(state.isLoading){
-      return Scaffold(
-        body: LoaderWidget(),
-      );
+    if(state.hasValue && state.value != ""){
+      showAlertDialog(context: context, message: state.value!);
     }
 
     return Scaffold(
@@ -47,7 +44,7 @@ class CodeScreen extends ConsumerWidget {
         child: Column(
           children: [
             const SizedBox(height: 10),
-            Lottie.asset(
+            state.isLoading ? CircularProgressIndicator() : Lottie.asset(
             'assets/lottiefiles/sms.json',
             width: 250.w,
             height: 200.h,

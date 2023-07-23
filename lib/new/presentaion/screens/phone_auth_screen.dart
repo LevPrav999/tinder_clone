@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/new/presentaion/controllers/phone_login_controller.dart';
 
+import '../../../common/helper/show_alert_dialog.dart';
 import '../../../common/utils/coloors.dart';
 
 class PhoneAuthScreen extends ConsumerStatefulWidget {
@@ -34,13 +35,17 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
   }
 
   void sendCodeToPhone() async{
-    await ref.read(phoneLoginScreenNotifierProvider.notifier).loginWithPhoneNumber(context, countryCodeController.text, phoneNumberController.text);
+    await ref.read(phoneLoginScreenProvider.notifier).loginWithPhoneNumber(context, countryCodeController.text, phoneNumberController.text);
   }
 
   @override
   Widget build(BuildContext context) {
-    var state = ref.watch(phoneLoginScreenNotifierProvider);
+    var state = ref.watch(phoneLoginScreenProvider);
     
+    if(state.hasValue && state.value != ""){
+      showAlertDialog(context: context, message: state.value!);
+    }
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

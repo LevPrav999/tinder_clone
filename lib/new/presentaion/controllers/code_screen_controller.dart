@@ -4,12 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/new/application/auth_service.dart';
 
-final codeScreenProvider = AsyncNotifierProvider<CodeScreenNotifier, bool>(CodeScreenNotifier.new);
+import '../screens/home_screen.dart';
+import '../screens/user_info_screen.dart';
 
-class CodeScreenNotifier extends AsyncNotifier<bool> {
+final codeScreenProvider = AsyncNotifierProvider<CodeScreenNotifier, String>(CodeScreenNotifier.new);
+
+class CodeScreenNotifier extends AsyncNotifier<String> {
   @override
-  FutureOr<bool> build() {
-    return false;
+  FutureOr<String> build() {
+    return "";
   }
 
   Future<void> verifyCode(BuildContext context, String verificationId, String smsCode) async{
@@ -17,17 +20,21 @@ class CodeScreenNotifier extends AsyncNotifier<bool> {
 
     final authService = ref.read(authServiceProvider);
 
-    state = await AsyncValue.guard(authService.verifyCode(context, verificationId, smsCode) as Future<bool> Function());
+    var result = await authService.verifyCode(verificationId, smsCode);
 
-    if(state.value == true){
-            Navigator.pushNamedAndRemoveUntil(
+    result.fold((left){
+      state = AsyncValue.data(left.message);
+    }, (right){
+      if(right == true){
+        Navigator.pushNamedAndRemoveUntil(
             context, HomeScreen.routeName, (route) => false);
-    }else{
+      }else{
         Navigator.pushNamedAndRemoveUntil(
             context,
             UserInfoScreen.routeName,
             arguments: {'fromProfile': false},
             (route) => false);
-    }
+      }
+    });
   }
 }

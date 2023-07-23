@@ -3,18 +3,22 @@ import 'dart:async';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tinder_clone/common/errors/errors.dart';
 import 'package:tinder_clone/new/application/auth_service.dart';
 
-import '../../../common/helper/show_alert_dialog.dart';
+import '../screens/code_screen.dart';
+import '../screens/home_screen.dart';
 
 
-final phoneLoginScreenNotifierProvider = AsyncNotifierProvider<PhoneLoginScreenNotifier, void>(PhoneLoginScreenNotifier.new);
+final phoneLoginScreenProvider = AsyncNotifierProvider<PhoneLoginScreenNotifier, String>(PhoneLoginScreenNotifier.new);
 
 
-class PhoneLoginScreenNotifier extends AsyncNotifier<void>{
+class PhoneLoginScreenNotifier extends AsyncNotifier<String>{
 
   @override
-  FutureOr<void> build() {}
+  FutureOr<String> build() {
+    return "";
+  }
 
 
   Future<void> loginWithPhoneNumber(BuildContext context, String countryCode, String phoneNumber) async{
@@ -23,35 +27,28 @@ class PhoneLoginScreenNotifier extends AsyncNotifier<void>{
     final authService = ref.read(authServiceProvider);
 
     if (phoneNumber.isEmpty) {
-      state = await AsyncValue.guard(showAlertDialog(
-        context: context,
-        message: "please_enter_your_phone_number".tr(),
-      ));
+      state = AsyncValue.data("please_enter_your_phone_number".tr());
     } else if(countryCode.isEmpty){
-      state = await AsyncValue.guard(showAlertDialog(
-        context: context,
-        message: "please_enter_your_country_code".tr(),
-      ));
+      state = AsyncValue.data("please_enter_your_country_code".tr());
     }else if (phoneNumber.length < 9) {
-      state = await AsyncValue.guard(showAlertDialog(
-        context: context,
-        message:
-            'phone_number_short'.tr(),
-      ));
+      state = AsyncValue.data("phone_number_short".tr());
     } else if (phoneNumber.length > 10) {
-      state = await AsyncValue.guard(showAlertDialog(
-        context: context,
-        message:
-            "phone_number_long".tr(),
-      ));
+      state = AsyncValue.data("phone_number_long".tr());
     } else if (countryCode.length > 3) {
-      state = await AsyncValue.guard(showAlertDialog(
-        context: context,
-        message:
-            "country_code_long".tr(),
-      ));
+      state = AsyncValue.data("country_code_long".tr());
     }else{
-      state = await AsyncValue.guard(authService.signInWithPhone(context, '+$countryCode$phoneNumber') as Future<void> Function());
+      var result = await authService.signInWithPhone('+$countryCode$phoneNumber');
+
+      result.fold((left) {
+        if(left is NotAutomaticRetrieved){
+          Navigator.pushNamed(context, CodeScreen.routeName,
+                arguments: left.verificationId);
+        }else{
+          state = AsyncValue.data(left.message);
+        }
+      }, (right){
+        Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
+      });
     }
   }
 }
