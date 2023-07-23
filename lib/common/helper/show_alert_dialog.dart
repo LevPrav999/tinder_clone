@@ -5,7 +5,7 @@ showAlertDialog({
   required BuildContext context,
   required String message,
   String? btnText,
-}) {
+}){
   return showDialog(
     context: context,
     builder: (context) {
@@ -21,7 +21,9 @@ showAlertDialog({
         contentPadding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
         actions: [
           TextButton(
-            onPressed: () => Navigator.pop(context),
+            onPressed: () {
+              Navigator.pop(context);
+            },
             child: Text(
               btnText ?? "OK",
               style: const TextStyle(
