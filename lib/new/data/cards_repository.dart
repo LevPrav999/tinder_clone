@@ -3,8 +3,6 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
-import 'package:tinder_clone/new/data/user_repository.dart';
 
 import '../../common/utils/utils.dart';
 import '../../common/widgets/match_card.dart';
@@ -91,12 +89,9 @@ class CardsRepository {
   }
 
   Future<void> removeFromLiked(String uid, String uidToRemove) async {
-    var user = await firestore.collection('users').doc(uid).get();
-    if (UserModel.fromMap(user.data()!).liked.contains(uidToRemove)) {
-      await firestore.collection('users').doc(uid).update({
+    await firestore.collection('users').doc(uid).update({
         'liked': FieldValue.arrayRemove([uidToRemove])
       });
-    }
 
     await firestore.collection('users').doc(uidToRemove).update({
       'pending': FieldValue.arrayUnion([uid])
@@ -104,11 +99,8 @@ class CardsRepository {
   }
 
   Future<void> removeFromBlocked(String uid, String uidToRemove) async {
-    var user = await firestore.collection('users').doc(uid).get();
-    if (UserModel.fromMap(user.data()!).blocked.contains(uidToRemove)) {
-      await firestore.collection('users').doc(uid).update({
+    await firestore.collection('users').doc(uid).update({
         'blocked': FieldValue.arrayRemove([uidToRemove])
       });
-    }
   }
 }

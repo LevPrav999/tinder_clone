@@ -2,13 +2,8 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
-import 'package:tinder_clone/new/data/user_repository.dart';
-import 'package:uuid/uuid.dart';
 
-import '../../common/helper/show_alert_dialog.dart';
 import '../domain/chat_model.dart';
 import '../domain/message_model.dart';
 import '../domain/user_model.dart';
@@ -53,25 +48,15 @@ class ChatRepository {
     });
   }
 
-  Future<void> getChatStream(String uid, String recieverUserId) async{
-    subscription = firestore
+  Stream<QuerySnapshot> getChatStream(String uid, String recieverUserId){
+    return firestore
         .collection('users')
         .doc(uid)
         .collection('chats')
         .doc(recieverUserId)
         .collection('messages')
         .orderBy('timeSent')
-        .snapshots()
-        .listen((event) {
-    List<Message> messages = [];
-    for (var message in event.docs) {
-      messages.add(Message.fromMap(message.data()));
-    }
-    List<Message>? oldListValue = ref.read(userChatListStateProvider.notifier).state;
-    if(oldListValue == null || oldListValue.length != messages.length){
-      ref.read(userChatListStateProvider.notifier).update((state) => messages);
-    }
-  });
+        .snapshots();
   }
 
   void closeChatStream(){
@@ -79,7 +64,7 @@ class ChatRepository {
   }
 
   Future<void> sendTextMessage(
-      {required BuildContext context,
+      {
       required String text,
       required String recieverUserId,
       required UserModel senderUser,
@@ -87,16 +72,11 @@ class ChatRepository {
       required String messageId,
       required UserModel? receiverUserData
       }) async {
-    try {
-
-      _saveDataToContactsSubcollection(
+    _saveDataToContactsSubcollection(
           senderUser, receiverUserData!, text, timeSent);
 
       _saveMessageToMessagesSubcollection(
           receiverUserData, text, timeSent, messageId, senderUser);
-    } catch (e) {
-      showAlertDialog(context: context, message: e.toString());
-    }
   }
 
   void _saveDataToContactsSubcollection(

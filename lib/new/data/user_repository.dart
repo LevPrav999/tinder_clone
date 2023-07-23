@@ -3,13 +3,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/repositories/common_firebase_storage_repository.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
-
-import '../../common/helper/show_alert_dialog.dart';
-import '../../common/repositories/common_messaging_repository.dart';
 import '../../common/utils/utils.dart';
 import '../domain/user_model.dart';
 
@@ -26,7 +21,7 @@ class UserRepository {
 
   UserRepository({required this.auth, required this.firestore, required this.ref});
 
-  Future<void> saveUserDataToFirebase(
+  Future<bool> saveUserDataToFirebase(
       {
       required String uid,  
       required String name,
@@ -37,15 +32,11 @@ class UserRepository {
       required String sexFind,
       required File? profilePicture,
       required bool changeImage,
-      required ProviderRef ref,
-      required BuildContext context,
       required UserModel? userFromDb,
       required String photoUrl,
       required String? token
       }) async {
-    try {
-
-      var user = UserModel(
+    var user = UserModel(
           uid: uid,
           name: name,
           avatar: photoUrl,
@@ -67,20 +58,14 @@ class UserRepository {
         await firestore.collection('users').doc(uid).update(user.toMap());
         await _updateUserDataInSubCollections(
             uid, user.fcmToken, user.avatar, user.name);
-        Navigator.pushNamedAndRemoveUntil(
-            context, HomeScreen.routeName, (route) => false);
+        return true;
 
       } else {
 
         await firestore.collection('users').doc(uid).set(user.toMap());
-        Navigator.pushNamedAndRemoveUntil(
-            context, TagsScreen.routeName, (route) => false,
-            arguments: []);
+        return false;
             
       }
-    } catch (e) {
-      showAlertDialog(context: context, message: e.toString());
-    }
   }
 
   Future<String> getUserAvatar(bool changeImage, File? profilePicture, UserModel? user, String uid) async{
@@ -169,33 +154,15 @@ class UserRepository {
         .update({'isOnline': isOnline});
   }
 
-  Future<void> setUserTags(List<dynamic> tags, BuildContext context, String uid) async {
+  Future<void> setUserTags(List<dynamic> tags, String uid) async {
     await firestore
         .collection('users')
         .doc(uid)
         .update({'tags': tags});
   }
 
-  Future<void> getUserPresenceStatus(String uid) async {
-    subscription =
-        firestore.collection('users').doc(uid).snapshots().listen((snapshot) {
-      if (snapshot.exists) {
-        bool isOnline = snapshot.data()?['isOnline'] ?? false;
-
-        bool? oldOnlineValue = ref.read(userStatusStateProvider.notifier).state;
-        if (oldOnlineValue != isOnline) {
-          ref
-              .read(userStatusStateProvider.notifier)
-              .update((state) => isOnline);
-        }
-      } else {
-        print('Document does not exist');
-      }
-    });
-  }
-
-  void stopListeningToUserOnlineStatus() {
-    subscription.cancel();
+  Stream<DocumentSnapshot> getUserStatus(String uid){
+    return firestore.collection('users').doc(uid).snapshots();
   }
 
   Future<bool> isUserExists(String uid) async{
