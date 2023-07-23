@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tinder_clone/common/states/cards_state.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
-import 'package:tinder_clone/features/chat/controller/chat_controller.dart';
-import 'package:tinder_clone/features/home/controller/cards_controller.dart';
-import 'package:tinder_clone/features/matchers/controller/match_controller.dart';
+import 'package:tinder_clone/new/presentaion/controllers/match_screen_controller.dart';
+import 'package:tinder_clone/new/presentaion/controllers/tabs/cards_tab_controller.dart';
+import 'package:tinder_clone/new/presentaion/controllers/tabs/chats_tab_controller.dart';
 
+import '../../new/presentaion/states/cards_state.dart';
 import '../repositories/common_messaging_repository.dart';
 
 
@@ -31,23 +31,23 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
   }
 
   void sendTextMessage(BuildContext context, String uid) async {
-      ref.read(chatControllerProvider).sendTextMessage(context, "👋", uid);
+      ref.read(chatProvider.notifier).sendTextMessage("👋", uid);
   }
 
   @override
   Widget build(BuildContext context) {
-    late CardsState data;
+    late CardsState? data;
     late var provider;
 
     if(widget.matchScreen){
-      provider = ref.read(matchControllerProvider.notifier);
-      data = ref.watch(matchControllerProvider);
+      provider = ref.read(matchProvider.notifier);
+      data = ref.watch(matchProvider).value;
     }else{
-      provider = ref.read(cardsControllerProvider.notifier);
-      data = ref.watch(cardsControllerProvider);
+      provider = ref.read(cardsTabProvider.notifier);
+      data = ref.watch(cardsTabProvider).value;
     }
 
-    if (data.cards.isEmpty) {
+    if (data!.cards.isEmpty) {
       provider.setCards();
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -215,17 +215,17 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
               allowedSwipeDirection:
                   AllowedSwipeDirection.only(left: true, right: true),
               cardBuilder: (context, index, i, i2) {
-                return data.cards[index];
+                return data!.cards[index];
               },
               onUndo: (previousIndex, currentIndex, direction) {
                 if (widget.matchScreen) {
                   provider
-                      .removeFromBlocked(data.cards[currentIndex].user.uid);
+                      .removeFromBlocked(data!.cards[currentIndex].user.uid);
                   provider
                       .addToPending(data.cards[currentIndex].user.uid);
                 } else {
                   provider
-                      .removeFromBlocked(data.cards[currentIndex].user.uid);
+                      .removeFromBlocked(data!.cards[currentIndex].user.uid);
                   provider
                       .removeFromLiked(data.cards[currentIndex].user.uid);
                 }
@@ -238,33 +238,33 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                 if (direction.name == "left") {
                   if (widget.matchScreen) {
                     provider
-                        .deletePendingAndBlock(data.cards[previousIndex].user.uid);
+                        .deletePendingAndBlock(data!.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                   } else {
                     provider
-                        .addToBlocked(data.cards[previousIndex].user.uid);
+                        .addToBlocked(data!.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                   }
                 } else if (direction.name == "right") {
                   if (widget.matchScreen) {
                     provider
-                        .deletePendingAndLike(data.cards[previousIndex].user.uid);
+                        .deletePendingAndLike(data!.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                     sendTextMessage(context, data.cards[previousIndex].user.uid);
                     await MessagingApi().callOnFcmApiSendPushNotifications(data.cards[previousIndex].user.fcmToken, "mutual_match".tr(), "mutual_match_body".tr());
                   } else {
                     provider
-                        .addToLiked(data.cards[previousIndex].user.uid);
+                        .addToLiked(data!.cards[previousIndex].user.uid);
                     provider
                         .setIndex(currentIndex ?? data.cards.length - 1);
                     await MessagingApi().callOnFcmApiSendPushNotifications(data.cards[previousIndex].user.fcmToken, "new_match".tr(), "new_match_body".tr());
                   }
                 }
 
-                if (previousIndex == data.cards.length - 1) {
+                if (previousIndex == data!.cards.length - 1) {
                   provider.setIndex(0);
                   provider.setCards();
                 }
