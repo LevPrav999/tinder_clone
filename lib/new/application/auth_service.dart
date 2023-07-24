@@ -32,7 +32,7 @@ class AuthService {
       await authRepository.verifyCode(verificationId, smsCode);
       return Right(await _updateUserOrNextStep());
     } catch (e) {
-      return Left(ErrorLoginPhone("Error login with Phone."));
+      return Left(ErrorLoginPhone("Invalid code."));
     }
   }
 
