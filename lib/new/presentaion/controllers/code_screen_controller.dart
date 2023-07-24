@@ -23,8 +23,9 @@ class CodeScreenNotifier extends AsyncNotifier<String> {
     var result = await authService.verifyCode(verificationId, smsCode);
 
     result.fold((left){
-      state = AsyncValue.data(left.message);
+      state = AsyncValue.error(left.message, StackTrace.empty);
     }, (right){
+      state = const AsyncValue.data("");
       if(right == true){
         Navigator.pushNamedAndRemoveUntil(
             context, HomeScreen.routeName, (route) => false);
