@@ -10,7 +10,6 @@ import '../domain/user_model.dart';
 final userRepositoryProvider = Provider((ref) => UserRepository(
     auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance));
 
-
 class UserRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
@@ -20,8 +19,7 @@ class UserRepository {
   UserRepository({required this.auth, required this.firestore});
 
   Future<bool> saveUserDataToFirebase(
-      {
-      required String uid,  
+      {required String uid,
       required String name,
       required String age,
       required String sex,
@@ -32,47 +30,41 @@ class UserRepository {
       required bool changeImage,
       required UserModel? userFromDb,
       required String photoUrl,
-      required String? token
-      }) async {
+      required String? token}) async {
     var user = UserModel(
-          uid: uid,
-          name: name,
-          avatar: photoUrl,
-          age: convertBirthday(age),
-          sex: sex,
-          city: city,
-          bio: bio,
-          sexFind: sexFind,
-          isOnline: true,
-          blocked: userFromDb != null ? userFromDb.blocked : [],
-          liked: userFromDb != null ? userFromDb.liked : [],
-          pending: userFromDb != null ? userFromDb.pending : [],
-          tags: userFromDb != null ? userFromDb.tags : [],
-          isPrime: userFromDb != null ? userFromDb.isPrime : false,
-          fcmToken: userFromDb != null ? userFromDb.fcmToken : token ?? "");
+        uid: uid,
+        name: name,
+        avatar: photoUrl,
+        age: convertBirthday(age),
+        sex: sex,
+        city: city,
+        bio: bio,
+        sexFind: sexFind,
+        isOnline: true,
+        blocked: userFromDb != null ? userFromDb.blocked : [],
+        liked: userFromDb != null ? userFromDb.liked : [],
+        pending: userFromDb != null ? userFromDb.pending : [],
+        tags: userFromDb != null ? userFromDb.tags : [],
+        isPrime: userFromDb != null ? userFromDb.isPrime : false,
+        fcmToken: userFromDb != null ? userFromDb.fcmToken : token ?? "");
 
-      if (userFromDb != null) {
-
-        await firestore.collection('users').doc(uid).update(user.toMap());
-        await _updateUserDataInSubCollections(
-            uid, user.fcmToken, user.avatar, user.name);
-        return true;
-
-      } else {
-
-        await firestore.collection('users').doc(uid).set(user.toMap());
-        return false;
-            
-      }
+    if (userFromDb != null) {
+      await firestore.collection('users').doc(uid).update(user.toMap());
+      await _updateUserDataInSubCollections(
+          uid, user.fcmToken, user.avatar, user.name);
+      return true;
+    } else {
+      await firestore.collection('users').doc(uid).set(user.toMap());
+      return false;
+    }
   }
 
-
-  Future<void> updateUserFcmToken(String uid, String? token) async{
-      await firestore
-            .collection('users')
-            .doc(uid)
-            .update({"fcmToken": token ?? ""});
-        await _updateUserDataInSubCollections(uid, token ?? "", null, null);
+  Future<void> updateUserFcmToken(String uid, String? token) async {
+    await firestore
+        .collection('users')
+        .doc(uid)
+        .update({"fcmToken": token ?? ""});
+    await _updateUserDataInSubCollections(uid, token ?? "", null, null);
   }
 
   Future<void> _updateUserDataInSubCollections(
@@ -114,8 +106,7 @@ class UserRepository {
 
   Future<UserModel?> getUserInfo(String? id) async {
     UserModel? user;
-    final userInfo =
-        await firestore.collection('users').doc(id).get();
+    final userInfo = await firestore.collection('users').doc(id).get();
 
     if (userInfo.data() == null) return user;
     user = UserModel.fromMap(userInfo.data()!);
@@ -123,26 +114,20 @@ class UserRepository {
   }
 
   Future<void> setUserStatus(bool isOnline, String uid) async {
-    await firestore
-        .collection('users')
-        .doc(uid)
-        .update({'isOnline': isOnline});
+    await firestore.collection('users').doc(uid).update({'isOnline': isOnline});
   }
 
   Future<void> setUserTags(List<dynamic> tags, String uid) async {
-    await firestore
-        .collection('users')
-        .doc(uid)
-        .update({'tags': tags});
+    await firestore.collection('users').doc(uid).update({'tags': tags});
   }
 
-  Stream<DocumentSnapshot> getUserStatus(String uid){
+  Stream<DocumentSnapshot> getUserStatus(String uid) {
     return firestore.collection('users').doc(uid).snapshots();
   }
 
-  Future<bool> isUserExists(String uid) async{
+  Future<bool> isUserExists(String uid) async {
     DocumentSnapshot userSnap =
-          await firestore.collection('users').doc(uid).get();
+        await firestore.collection('users').doc(uid).get();
     return userSnap.exists;
   }
 }

@@ -16,7 +16,6 @@ class MatchService {
   final Ref ref;
   final MatchRepository matchRepository;
 
-
   Future<List<MatchCard>> getMatchers() async {
     String uid = ref.read(authRepositoryProvider).authUserUid!;
     UserModel? user = await ref.read(userRepositoryProvider).getUserInfo(uid);

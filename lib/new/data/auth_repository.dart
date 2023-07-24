@@ -26,17 +26,18 @@ class AuthRepository {
   Future<void> signInWithPhone(String phoneNumber) async {
     var completer = Completer<AuthCredential>();
     await auth.verifyPhoneNumber(
-          phoneNumber: phoneNumber,
-          verificationCompleted: (PhoneAuthCredential credential) async {
-            completer.complete(credential);
-          },
-          verificationFailed: (e) {
-            completer.completeError(e);
-          },
-          codeSent: (String verificationId, int? resendingToken) async {
-            completer.completeError(NotAutomaticRetrieved(verificationId, "Code sent"));
-          },
-          codeAutoRetrievalTimeout: (String verificationId) {});
+        phoneNumber: phoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) async {
+          completer.complete(credential);
+        },
+        verificationFailed: (e) {
+          completer.completeError(e);
+        },
+        codeSent: (String verificationId, int? resendingToken) async {
+          completer.completeError(
+              NotAutomaticRetrieved(verificationId, "Code sent"));
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {});
 
     var credential = await completer.future;
     await auth.signInWithCredential(credential);
@@ -44,12 +45,11 @@ class AuthRepository {
 
   Future<void> verifyCode(String verificationId, String smsCode) async {
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-          verificationId: verificationId, smsCode: smsCode);
-      await auth.signInWithCredential(credential);
+        verificationId: verificationId, smsCode: smsCode);
+    await auth.signInWithCredential(credential);
   }
 
   Stream<User?> get authStateChange => auth.authStateChanges();
 
   String? get authUserUid => auth.currentUser?.uid;
-
 }

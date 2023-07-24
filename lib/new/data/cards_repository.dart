@@ -18,7 +18,6 @@ class CardsRepository {
   CardsRepository({required this.auth, required this.firestore});
 
   Future<List<MatchCard>> getCards(String uid, UserModel? user) async {
-
     final minBirthDate =
         DateTime(user!.age['year'] - 1, user.age['month'], user.age['day']);
     final maxBirthDate =
@@ -90,8 +89,8 @@ class CardsRepository {
 
   Future<void> removeFromLiked(String uid, String uidToRemove) async {
     await firestore.collection('users').doc(uid).update({
-        'liked': FieldValue.arrayRemove([uidToRemove])
-      });
+      'liked': FieldValue.arrayRemove([uidToRemove])
+    });
 
     await firestore.collection('users').doc(uidToRemove).update({
       'pending': FieldValue.arrayUnion([uid])
@@ -100,7 +99,7 @@ class CardsRepository {
 
   Future<void> removeFromBlocked(String uid, String uidToRemove) async {
     await firestore.collection('users').doc(uid).update({
-        'blocked': FieldValue.arrayRemove([uidToRemove])
-      });
+      'blocked': FieldValue.arrayRemove([uidToRemove])
+    });
   }
 }

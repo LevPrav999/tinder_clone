@@ -11,7 +11,7 @@ final cardsServiceProvider = Provider<CardsService>((ref) {
   return CardsService(ref, cardsRepository);
 });
 
-class CardsService{
+class CardsService {
   CardsService(this.ref, this.cardsRepository);
   final Ref ref;
   final CardsRepository cardsRepository;
@@ -41,7 +41,7 @@ class CardsService{
   }
 
   Future<void> removeFromBlocked(String uidToRemove) async {
-        String uid = ref.read(authRepositoryProvider).authUserUid!;
+    String uid = ref.read(authRepositoryProvider).authUserUid!;
     await cardsRepository.removeFromBlocked(uid, uidToRemove);
   }
 }

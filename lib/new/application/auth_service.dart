@@ -11,42 +11,42 @@ final authServiceProvider = Provider<AuthService>((ref) {
   return AuthService(ref, authRepository);
 });
 
-class AuthService{
+class AuthService {
   AuthService(this.ref, this.authRepository);
   final Ref ref;
   final AuthRepository authRepository;
 
-
-  Future<Either<Failture, void>> signInWithPhone(String phoneNumber) async{
-    try{
+  Future<Either<Failture, void>> signInWithPhone(String phoneNumber) async {
+    try {
       return Right(await authRepository.signInWithPhone(phoneNumber));
-    } on NotAutomaticRetrieved catch (e){
+    } on NotAutomaticRetrieved catch (e) {
       return Left(e);
-    } catch (e){
+    } catch (e) {
       return Left(ErrorLoginPhone("Error login with Phone."));
     }
   }
 
-  Future<Either<Failture, bool>> verifyCode(String verificationId, String smsCode) async{
-    try{
+  Future<Either<Failture, bool>> verifyCode(
+      String verificationId, String smsCode) async {
+    try {
       await authRepository.verifyCode(verificationId, smsCode);
       return Right(await _updateUserOrNextStep());
-    }catch (e){
+    } catch (e) {
       return Left(ErrorLoginPhone("Error login with Phone."));
     }
   }
 
-
-  Future<bool> _updateUserOrNextStep() async{
+  Future<bool> _updateUserOrNextStep() async {
     String uid = authRepository.authUserUid!;
-    bool isUserExists = await ref.read(userRepositoryProvider).isUserExists(uid);
+    bool isUserExists =
+        await ref.read(userRepositoryProvider).isUserExists(uid);
 
-    if(isUserExists){
+    if (isUserExists) {
       String? token = await MessagingApi().getToken();
       await ref.read(userRepositoryProvider).updateUserFcmToken(uid, token);
 
       return true;
-    }else{
+    } else {
       return false;
     }
   }

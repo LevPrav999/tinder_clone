@@ -55,8 +55,7 @@ class ChatService {
   }
 
   Future<Either<Failture, void>> sendTextMessage(
-      {
-      required String text,
+      {required String text,
       required String recieverUserId,
       required UserModel senderUser}) async {
     try {

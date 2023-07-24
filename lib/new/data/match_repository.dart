@@ -11,8 +11,7 @@ class MatchRepository {
 
   MatchRepository({required this.auth, required this.firestore});
 
-
-  Future<void> deletePendingUserAndBlock(String uid, String uidUser) async{
+  Future<void> deletePendingUserAndBlock(String uid, String uidUser) async {
     await firestore.collection('users').doc(uid).update({
       'pending': FieldValue.arrayRemove([uidUser])
     });
@@ -22,7 +21,7 @@ class MatchRepository {
     });
   }
 
-  Future<void> deletePendingUserAndLike(String uid, String uidUser) async{
+  Future<void> deletePendingUserAndLike(String uid, String uidUser) async {
     await firestore.collection('users').doc(uid).update({
       'pending': FieldValue.arrayRemove([uidUser])
     });
@@ -33,14 +32,14 @@ class MatchRepository {
   }
 
   Future<void> removeFromBlocked(String uid, String uidToRemove) async {
-     await firestore.collection('users').doc(uid).update({
-        'blocked': FieldValue.arrayRemove([uidToRemove])
-      });
+    await firestore.collection('users').doc(uid).update({
+      'blocked': FieldValue.arrayRemove([uidToRemove])
+    });
   }
 
   Future<void> addToPending(String uid, String uidToAdd) async {
     await firestore.collection('users').doc(uid).update({
-        'pending': FieldValue.arrayUnion([uidToAdd])
-      });
+      'pending': FieldValue.arrayUnion([uidToAdd])
+    });
   }
 }

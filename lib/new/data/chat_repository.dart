@@ -19,7 +19,6 @@ class ChatRepository {
 
   ChatRepository({required this.firestore, required this.auth});
 
-
   Stream<List<ChatConversation>> getAllLastMessageList(String uid) {
     return firestore
         .collection('users')
@@ -30,24 +29,24 @@ class ChatRepository {
       List<ChatConversation> contacts = [];
       for (var document in event.docs) {
         final lastMessage = ChatConversation.fromMap(document.data());
-        final userData = await firestore.collection('users').doc(lastMessage.contactId).get();
+        final userData = await firestore
+            .collection('users')
+            .doc(lastMessage.contactId)
+            .get();
         final user = UserModel.fromMap(userData.data()!);
-        contacts.add(
-          ChatConversation(
+        contacts.add(ChatConversation(
             name: user.name,
             profilePic: user.avatar,
             contactId: lastMessage.contactId,
             timeSent: lastMessage.timeSent,
             lastMessage: lastMessage.lastMessage,
-            fcmToken: lastMessage.fcmToken
-          )
-        );
+            fcmToken: lastMessage.fcmToken));
       }
       return contacts;
     });
   }
 
-  Stream<QuerySnapshot> getChatStream(String uid, String recieverUserId){
+  Stream<QuerySnapshot> getChatStream(String uid, String recieverUserId) {
     return firestore
         .collection('users')
         .doc(uid)
@@ -58,24 +57,22 @@ class ChatRepository {
         .snapshots();
   }
 
-  void closeChatStream(){
+  void closeChatStream() {
     subscription.cancel();
   }
 
   Future<void> sendTextMessage(
-      {
-      required String text,
+      {required String text,
       required String recieverUserId,
       required UserModel senderUser,
       required DateTime timeSent,
       required String messageId,
-      required UserModel? receiverUserData
-      }) async {
+      required UserModel? receiverUserData}) async {
     _saveDataToContactsSubcollection(
-          senderUser, receiverUserData!, text, timeSent);
+        senderUser, receiverUserData!, text, timeSent);
 
-      _saveMessageToMessagesSubcollection(
-          receiverUserData, text, timeSent, messageId, senderUser);
+    _saveMessageToMessagesSubcollection(
+        receiverUserData, text, timeSent, messageId, senderUser);
   }
 
   void _saveDataToContactsSubcollection(
@@ -90,8 +87,7 @@ class ChatRepository {
         contactId: senderUserData.uid,
         timeSent: timeSent,
         lastMessage: text,
-        fcmToken: senderUserData.fcmToken
-        );
+        fcmToken: senderUserData.fcmToken);
 
     await firestore
         .collection('users')
@@ -108,8 +104,7 @@ class ChatRepository {
         contactId: recieverUserData.uid,
         timeSent: timeSent,
         lastMessage: text,
-        fcmToken: recieverUserData.fcmToken
-        );
+        fcmToken: recieverUserData.fcmToken);
 
     await firestore
         .collection('users')
