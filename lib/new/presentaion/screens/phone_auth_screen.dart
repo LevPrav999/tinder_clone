@@ -42,9 +42,15 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
   Widget build(BuildContext context) {
     var state = ref.watch(phoneLoginScreenProvider);
     
-    if(state.hasValue && state.value != ""){
-      showAlertDialog(context: context, message: state.value!);
-    }
+    ref.listen<AsyncValue>(
+      phoneLoginScreenProvider,
+      (_, state) {
+        if (!state.isRefreshing && state.hasError && !state.isLoading) {
+          showAlertDialog(context: context, message: state.error.toString());
+        }
+      },
+    );
+    
 
     return Scaffold(
       backgroundColor: Colors.white,
