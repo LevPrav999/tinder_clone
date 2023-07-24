@@ -2,11 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tinder_clone/common/helper/extensions.dart';
 import 'package:tinder_clone/new/presentaion/controllers/match_screen_controller.dart';
 import 'package:tinder_clone/new/presentaion/controllers/tabs/cards_tab_controller.dart';
 import 'package:tinder_clone/new/presentaion/controllers/tags_screen_controller.dart';
 
+import '../../../common/helper/show_alert_dialog.dart';
 import '../../../common/utils/coloors.dart';
 
 class TagsScreen extends ConsumerStatefulWidget {
@@ -43,7 +43,11 @@ class _TagsScreenState extends ConsumerState<TagsScreen> {
     var state = ref.watch(tagsProvider);
     ref.listen<AsyncValue>(
       tagsProvider,
-      (_, state) => state.showDialogOnError(context)
+      (_, state) {
+        if (!state.isRefreshing && state.hasError && !state.isLoading) {
+          showAlertDialog(context: context, message: state.error.toString());
+        }
+      },
     );
 
     return Scaffold(
