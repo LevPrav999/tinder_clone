@@ -61,7 +61,7 @@ class _CodeScreenState extends ConsumerState<CodeScreen> {
         child: Column(
           children: [
             const SizedBox(height: 10),
-            state.isLoading ? CircularProgressIndicator() : Lottie.asset(
+            state.isLoading ? const CircularProgressIndicator() : Lottie.asset(
             'assets/lottiefiles/sms.json',
             width: 250.w,
             height: 200.h,

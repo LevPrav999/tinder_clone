@@ -20,35 +20,6 @@ class UserInfoScreenNotifier extends AsyncNotifier<String> {
     return "";
   }
 
-  bool _isDateValid(String dateStr) {
-    final parts = dateStr.split('.');
-
-    if (parts.length != 3) {
-      return false;
-    }
-
-    final day = int.tryParse(parts[0]);
-    final month = int.tryParse(parts[1]);
-    final year = int.tryParse(parts[2]);
-
-    if (day == null || month == null || year == null) {
-      return false;
-    }
-
-    if (day <= 0 || day > 31 || month <= 0 || month > 12) {
-      return false;
-    }
-
-    final currentDate = DateTime.now();
-    final inputDate = DateTime(year, month, day);
-
-    if (inputDate.isAfter(currentDate)) {
-      return false;
-    }
-
-    return true;
-  }
-
 
   Future<void> storeUserData(File? image, String name, String age, String sex, String city, String bio, String sexFind, bool fromProfile, BuildContext context) async {
     state = const AsyncLoading();
@@ -96,4 +67,33 @@ class UserInfoScreenNotifier extends AsyncNotifier<String> {
     this.subscription = subscription;
   }
 
+
+    bool _isDateValid(String dateStr) {
+    final parts = dateStr.split('.');
+
+    if (parts.length != 3) {
+      return false;
+    }
+
+    final day = int.tryParse(parts[0]);
+    final month = int.tryParse(parts[1]);
+    final year = int.tryParse(parts[2]);
+
+    if (day == null || month == null || year == null) {
+      return false;
+    }
+
+    if (day <= 0 || day > 31 || month <= 0 || month > 12) {
+      return false;
+    }
+
+    final currentDate = DateTime.now();
+    final inputDate = DateTime(year, month, day);
+
+    if (inputDate.isAfter(currentDate)) {
+      return false;
+    }
+
+    return true;
+  }
 }

@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:tinder_clone/common/widgets/error.dart';
 
+import 'common/widgets/error.dart';
 import 'new/domain/user_model.dart';
 import 'new/presentaion/screens/chat_screen.dart';
 import 'new/presentaion/screens/code_screen.dart';

@@ -177,7 +177,7 @@ String addLeadingZero(String input) {
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
               Text("your_real_name".tr(),
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
               ),
@@ -195,7 +195,7 @@ String addLeadingZero(String input) {
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
               Text("your_birthday".tr(),
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
               ),
@@ -215,7 +215,7 @@ String addLeadingZero(String input) {
               child: Column(
                 children: [
                   Text("your_sex".tr(),
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey)),
                   const SizedBox(
                 height: 2,
               ),
@@ -256,7 +256,7 @@ String addLeadingZero(String input) {
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
               Text("your_town".tr(),
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
               ),
@@ -274,7 +274,7 @@ String addLeadingZero(String input) {
             padding: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
             child: Column(children: [
               Text("your_bio".tr(),
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
               ),
@@ -292,7 +292,7 @@ String addLeadingZero(String input) {
             padding: const EdgeInsets.only(top: 14.0, left: 16.0, right: 16.0),
             child: Column(children: [
               Text("you_want_to_find".tr(),
-                  style: TextStyle(fontSize: 12, color: Colors.grey)),
+                  style: const TextStyle(fontSize: 12, color: Colors.grey)),
               const SizedBox(
                 height: 2,
               ),
@@ -313,7 +313,7 @@ String addLeadingZero(String input) {
                                 : Coloors.accentColor)),
                     child: Text(
                       "male".tr(),
-                      style: TextStyle(color: Colors.white),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                   ElevatedButton(

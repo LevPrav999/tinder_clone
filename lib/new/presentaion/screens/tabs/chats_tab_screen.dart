@@ -36,7 +36,7 @@ class ChatsTabScreen extends ConsumerWidget {
                     width: 300.w,
                     height: 150.h,
                     fit: BoxFit.cover,
-                    image: AssetImage('assets/images/sorry.png')),
+                    image: const AssetImage('assets/images/sorry.png')),
               ),
               SizedBox(
                 height: 20.h,

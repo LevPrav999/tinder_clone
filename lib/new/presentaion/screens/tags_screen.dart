@@ -55,7 +55,7 @@ class _TagsScreenState extends ConsumerState<TagsScreen>{
         backgroundColor: Coloors.primaryColor,
         automaticallyImplyLeading: false,
         leading: IconButton(
-            icon: Icon(Icons.arrow_back, color: Colors.white),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -67,8 +67,8 @@ class _TagsScreenState extends ConsumerState<TagsScreen>{
         ),
         centerTitle: true,
         actions: [
-          state.isLoading ? CircularProgressIndicator() : IconButton(
-            icon: Icon(Icons.check, color: Colors.white),
+          state.isLoading ? const CircularProgressIndicator() : IconButton(
+            icon: const Icon(Icons.check, color: Colors.white),
             onPressed: () {
               saveSelected();
             })
@@ -76,13 +76,13 @@ class _TagsScreenState extends ConsumerState<TagsScreen>{
       ),
       body: SafeArea(
           child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   childAspectRatio: 2.0,
                   mainAxisSpacing: 8.0,
                   crossAxisSpacing: 8.0,
                 ),
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 itemCount: tags.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(

@@ -40,13 +40,17 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
     if (textEditingController.text.trim().isEmpty) {
       showAlertDialog(context: context, message: "your_message_is_empty".tr());
     } else {
+
       messageController.jumpTo(messageController.position.maxScrollExtent);
+
       await MessagingApi().callOnFcmApiSendPushNotifications(
           widget.receiverUser.fcmToken,
           "new_message".tr(),
           textEditingController.text);
+
       ref.read(chatProvider.notifier).sendTextMessage(
           textEditingController.text, widget.receiverUser.uid);
+
       textEditingController.clear();
     }
   }
@@ -64,11 +68,11 @@ class _ChatTextFieldState extends ConsumerState<ChatTextField> {
                 controller: textEditingController,
                 decoration: Decorations.kTextFieldMessageDecoration
                     .copyWith(hintText: "message".tr()),
-                style: TextStyle(color: Colors.black, fontSize: 16),
+                style: const TextStyle(color: Colors.black, fontSize: 16),
               ),
               IconButton(
                 color: Coloors.primaryColor,
-                icon: Icon(Icons.send),
+                icon: const Icon(Icons.send),
                 onPressed: () => sendMessage(),
               ),
             ],

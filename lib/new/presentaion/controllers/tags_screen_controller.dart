@@ -29,7 +29,7 @@ class TagsScreenNotifier extends AutoDisposeAsyncNotifier<String> {
       ref.read(matchProvider.notifier).setCards();
       ref.read(cardsTabProvider.notifier).setCards();
 
-      state = const AsyncValue.data(""); // Сбрасываем состояние загрузки
+      state = const AsyncValue.data("");
       subscription!.close();
       Navigator.pushNamed(context, HomeScreen.routeName);
     });

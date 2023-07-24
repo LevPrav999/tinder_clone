@@ -59,11 +59,11 @@ class LoginScreen extends StatelessWidget {
                     flex: 2,
                     child: Column(children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
                         child: Text(
                           'by_clicking_log_in'.tr(),
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white, fontWeight: FontWeight.w500),
                         ),
                       ),
@@ -87,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                                   children: [
                                     Text(
                                       "log_in_with_phone_number".tr(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Colors.grey, wordSpacing: 1.2),
                                     )
                                   ],

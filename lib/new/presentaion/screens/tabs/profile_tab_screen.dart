@@ -158,7 +158,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                           width: 15.w,
                                           height: 15.h,
                                           decoration: BoxDecoration(
-                                              boxShadow: [
+                                              boxShadow: const [
                                                 BoxShadow(
                                                   color: Colors.grey,
                                                   offset: Offset(2.0, 3.0),
@@ -262,7 +262,7 @@ class _ProfileTabScreenState extends ConsumerState<ProfileTabScreen> {
                                   border: Border.all(
                                       color: Coloors.primaryColor,
                                       width: 2),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                         color: Colors.grey,
                                         offset: Offset(0.0, 5.0),

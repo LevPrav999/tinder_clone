@@ -38,7 +38,7 @@ class UserService {
 
       UserModel? userFromDb = await userRepository.getUserInfo(uid);
       String photoUrl =
-          await getUserAvatar(changeImage, profilePicture, userFromDb, uid);
+          await _getUserAvatar(changeImage, profilePicture, userFromDb, uid);
       String? token = await MessagingApi().getToken();
 
       return Right(await userRepository.saveUserDataToFirebase(
@@ -59,30 +59,6 @@ class UserService {
     }
   }
 
-  Future<String> getUserAvatar(bool changeImage, File? profilePicture,
-      UserModel? user, String uid) async {
-    String photoUrl = "";
-
-    if (changeImage == true) {
-      if (profilePicture != null) {
-        photoUrl = await ref
-            .read(commonFirebaseStorageRepositoryProvider)
-            .storeFileToFirebase('profilePictures/$uid', profilePicture);
-      }
-    } else if (user != null) {
-      photoUrl = user.avatar;
-    } else {
-      photoUrl =
-          "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png";
-
-      if (profilePicture != null) {
-        photoUrl = await ref
-            .read(commonFirebaseStorageRepositoryProvider)
-            .storeFileToFirebase('profilePictures/$uid', profilePicture);
-      }
-    }
-    return photoUrl;
-  }
 
   Future<void> updateUserFcmToken(String uid, String? token) async {
     await userRepository.updateUserFcmToken(uid, token);
@@ -138,5 +114,31 @@ class UserService {
 
   Future<bool> isUserExists(String uid) async {
     return await userRepository.isUserExists(uid);
+  }
+
+
+  Future<String> _getUserAvatar(bool changeImage, File? profilePicture,
+      UserModel? user, String uid) async {
+    String photoUrl = "";
+
+    if (changeImage == true) {
+      if (profilePicture != null) {
+        photoUrl = await ref
+            .read(commonFirebaseStorageRepositoryProvider)
+            .storeFileToFirebase('profilePictures/$uid', profilePicture);
+      }
+    } else if (user != null) {
+      photoUrl = user.avatar;
+    } else {
+      photoUrl =
+          "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png";
+
+      if (profilePicture != null) {
+        photoUrl = await ref
+            .read(commonFirebaseStorageRepositoryProvider)
+            .storeFileToFirebase('profilePictures/$uid', profilePicture);
+      }
+    }
+    return photoUrl;
   }
 }
