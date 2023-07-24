@@ -4,16 +4,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tinder_clone/common/models/user_model.dart';
-import 'package:tinder_clone/common/repositories/common_messaging_repository.dart';
-import 'package:tinder_clone/common/widgets/error.dart';
-import 'package:tinder_clone/common/widgets/loader.dart';
-import 'package:tinder_clone/features/auth/controller/auth_controller.dart';
-import 'package:tinder_clone/features/home/controller/user_controller.dart';
-import 'package:tinder_clone/features/home/screens/home_screen.dart';
-import 'package:tinder_clone/features/login/screens/login_screen.dart';
-import 'package:tinder_clone/firebase_options.dart';
-import 'package:tinder_clone/routes.dart';
+import 'package:tinder_clone/new/application/user_service.dart';
+import 'package:tinder_clone/new/data/auth_repository.dart';
+import 'package:tinder_clone/new/presentaion/states/user_state.dart';
+
+import 'common/repositories/common_messaging_repository.dart';
+import 'common/widgets/error.dart';
+import 'common/widgets/loader.dart';
+import 'firebase_options.dart';
+import 'new/domain/user_model.dart';
+import 'new/presentaion/screens/home_screen.dart';
+import 'new/presentaion/screens/login_screen.dart';
+import 'routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,13 +29,13 @@ void main() async {
 
   runApp(ProviderScope(
       child: EasyLocalization(
-          supportedLocales: [Locale('en'), Locale('ru')],
+          supportedLocales: const [Locale('en'), Locale('ru')],
           useOnlyLangCode: true,
           saveLocale: false,
           path:
               'assets/translations',
-          fallbackLocale: Locale('en'),
-          child: MyApp())));
+          fallbackLocale: const Locale('en'),
+          child: const MyApp())));
 }
 
 class MyApp extends ConsumerStatefulWidget {
@@ -54,7 +56,7 @@ class _MyAppState extends ConsumerState<MyApp> {
 
   void getData(WidgetRef ref, User data) async {
     userModel = await ref
-        .watch(authControllerProvider)
+        .watch(userServiceProvider)
         .getUserData(data.uid)
         .first
         .onError((error, stackTrace) {

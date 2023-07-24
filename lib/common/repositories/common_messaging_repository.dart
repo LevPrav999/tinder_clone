@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/common/states/message_state.dart';
+import 'package:tinder_clone/new/presentaion/states/message_state.dart';
 
 class MessagingApi {
   final _firebaseMessaging = FirebaseMessaging.instance;
