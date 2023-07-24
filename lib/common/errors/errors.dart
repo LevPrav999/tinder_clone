@@ -23,3 +23,9 @@ class FirestoreError implements Failture{
 
   FirestoreError(this.message);
 }
+
+class TagsUnselected implements Failture{
+  final String message;
+
+  TagsUnselected(this.message);
+}
