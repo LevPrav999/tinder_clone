@@ -4,22 +4,20 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/common/repositories/common_firebase_storage_repository.dart';
 import '../../common/utils/utils.dart';
 import '../domain/user_model.dart';
 
 final userRepositoryProvider = Provider((ref) => UserRepository(
-    auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance, ref: ref));
+    auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance));
 
 
 class UserRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
-  final Ref ref;
 
   late StreamSubscription<DocumentSnapshot> subscription;
 
-  UserRepository({required this.auth, required this.firestore, required this.ref});
+  UserRepository({required this.auth, required this.firestore});
 
   Future<bool> saveUserDataToFirebase(
       {
@@ -68,29 +66,6 @@ class UserRepository {
       }
   }
 
-  Future<String> getUserAvatar(bool changeImage, File? profilePicture, UserModel? user, String uid) async{
-    String photoUrl = "";
-
-      if (changeImage == true) {
-        if (profilePicture != null) {
-          photoUrl = await ref
-              .read(commonFirebaseStorageRepositoryProvider)
-              .storeFileToFirebase('profilePictures/$uid', profilePicture);
-        }
-      } else if (user != null) {
-          photoUrl = user.avatar;
-      } else {
-        photoUrl =
-            "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png";
-
-        if (profilePicture != null) {
-          photoUrl = await ref
-              .read(commonFirebaseStorageRepositoryProvider)
-              .storeFileToFirebase('profilePictures/$uid', profilePicture);
-        }
-      }
-      return photoUrl;
-  }
 
   Future<void> updateUserFcmToken(String uid, String? token) async{
       await firestore
