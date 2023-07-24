@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/errors/errors.dart';
@@ -55,7 +56,7 @@ class UserService {
           photoUrl: photoUrl,
           token: token));
     } catch (e) {
-      return Left(FirestoreError("Error while add/update user."));
+      return Left(FirestoreError("user_add_update_error".tr()));
     }
   }
 
@@ -81,13 +82,13 @@ class UserService {
   Future<Either<Failture, void>> setUserTags(List<dynamic> tags) async {
     try {
       if(tags.isEmpty){
-        return Left(TagsUnselected("Select at least one preference."));
+        return Left(TagsUnselected("no_tags_error".tr()));
       }
       String uid = ref.read(authRepositoryProvider).authUserUid!;
       var result = await userRepository.setUserTags(tags, uid);
       return Right(result);
     } catch (e) {
-      return Left(FirestoreError("Error while updating tags."));
+      return Left(FirestoreError("updating_tags_error".tr()));
     }
   }
 

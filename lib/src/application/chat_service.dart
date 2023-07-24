@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/src/data/auth_repository.dart';
@@ -72,7 +73,7 @@ class ChatService {
           messageId: messageId,
           receiverUserData: receiverUserData));
     } catch (e) {
-      return Left(FirestoreError("Error while sending message!"));
+      return Left(FirestoreError("sending_message_error".tr()));
     }
   }
 }

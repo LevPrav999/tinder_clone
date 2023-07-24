@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/errors/errors.dart';
@@ -22,7 +23,7 @@ class AuthService {
     } on NotAutomaticRetrieved catch (e) {
       return Left(e);
     } catch (e) {
-      return Left(ErrorLoginPhone("Error login with Phone."));
+      return Left(ErrorLoginPhone("phone_login_error".tr()));
     }
   }
 
@@ -32,7 +33,7 @@ class AuthService {
       await authRepository.verifyCode(verificationId, smsCode);
       return Right(await _updateUserOrNextStep());
     } catch (e) {
-      return Left(ErrorLoginPhone("Invalid code."));
+      return Left(ErrorLoginPhone("invalid_code".tr()));
     }
   }
 
