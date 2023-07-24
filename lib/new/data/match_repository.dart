@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
 import 'package:tinder_clone/new/data/user_repository.dart';
 
 import '../../common/widgets/match_card.dart';
@@ -34,7 +33,6 @@ class MatchRepository {
   }
 
   Future<void> deletePendingUserAndBlock(String uid, String uidUser) async{
-     String uid = ref.read(authRepositoryProvider).authUserUid!;
     await firestore.collection('users').doc(uid).update({
       'pending': FieldValue.arrayRemove([uidUser])
     });
@@ -45,7 +43,6 @@ class MatchRepository {
   }
 
   Future<void> deletePendingUserAndLike(String uid, String uidUser) async{
-     String uid = ref.read(authRepositoryProvider).authUserUid!;
     await firestore.collection('users').doc(uid).update({
       'pending': FieldValue.arrayRemove([uidUser])
     });
@@ -56,16 +53,12 @@ class MatchRepository {
   }
 
   Future<void> removeFromBlocked(String uid, String uidToRemove) async {
-     String uid = ref.read(authRepositoryProvider).authUserUid!;
-
      await firestore.collection('users').doc(uid).update({
         'blocked': FieldValue.arrayRemove([uidToRemove])
       });
   }
 
   Future<void> addToPending(String uid, String uidToAdd) async {
-     String uid = ref.read(authRepositoryProvider).authUserUid!;
-
     await firestore.collection('users').doc(uid).update({
         'pending': FieldValue.arrayUnion([uidToAdd])
       });
