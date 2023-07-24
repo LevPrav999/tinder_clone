@@ -50,19 +50,19 @@ class UserInfoScreenNotifier extends AsyncNotifier<String> {
   Future<void> storeUserData(File? image, String name, String age, String sex, String city, String bio, String sexFind, bool fromProfile, BuildContext context) async {
     state = const AsyncLoading();
     if (name.replaceAll(" ", "").length < 3) {
-      state = AsyncValue.data("name_too_short".tr());
+      state = AsyncValue.error("name_too_short".tr(), StackTrace.empty);
     } else if (age.replaceAll(" ", "").length < 10) {
-      state = AsyncValue.data("birthday_invalid_format".tr());
+      state = AsyncValue.error("birthday_invalid_format".tr(), StackTrace.empty);
     } else if (!_isDateValid(age)) {
-      state = AsyncValue.data("birthday_invalid_format".tr());
+      state = AsyncValue.error("birthday_invalid_format".tr(), StackTrace.empty);
     } else if (city.replaceAll(" ", "").length < 3) {
-      state = AsyncValue.data("town_name_short".tr());
+      state = AsyncValue.error("town_name_short".tr(), StackTrace.empty);
     } else if (bio.trim().length < 3) {
-      state = AsyncValue.data("bio_short".tr());
+      state = AsyncValue.error("bio_short".tr(), StackTrace.empty);
     } else if (sex == "") {
-      state = AsyncValue.data("sex_isnt_set".tr());
+      state = AsyncValue.error("sex_isnt_set".tr(), StackTrace.empty);
     } else if (sexFind == "") {
-      state = AsyncValue.data("sex_of_person_isnt_set".tr());
+      state = AsyncValue.error("sex_of_person_isnt_set".tr(), StackTrace.empty);
     } else {
       var result = await ref.read(userServiceProvider).saveUserData(
           name.replaceAll(" ", ""),
@@ -75,13 +75,14 @@ class UserInfoScreenNotifier extends AsyncNotifier<String> {
           image != null && fromProfile == true);
 
       result.fold((left) {
-        state = AsyncValue.data(left.message);
+        state = AsyncValue.error(left.message, StackTrace.empty);
       }, (right) {
         state = const AsyncData("");
         if(right == true){
           Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
         }else{
-          Navigator.pushNamedAndRemoveUntil(context, TagsScreen.routeName, (route) => false);
+          Navigator.pushNamedAndRemoveUntil(context, TagsScreen.routeName, (route) => false,
+            arguments: []);
         }
       });
     }
