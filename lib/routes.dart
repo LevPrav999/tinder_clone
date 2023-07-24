@@ -3,15 +3,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'common/widgets/error.dart';
-import 'new/domain/user_model.dart';
-import 'new/presentaion/screens/chat_screen.dart';
-import 'new/presentaion/screens/code_screen.dart';
-import 'new/presentaion/screens/home_screen.dart';
-import 'new/presentaion/screens/login_screen.dart';
-import 'new/presentaion/screens/match_screen.dart';
-import 'new/presentaion/screens/phone_auth_screen.dart';
-import 'new/presentaion/screens/tags_screen.dart';
-import 'new/presentaion/screens/user_info_screen.dart';
+import 'src/domain/user_model.dart';
+import 'src/presentaion/screens/chat_screen.dart';
+import 'src/presentaion/screens/code_screen.dart';
+import 'src/presentaion/screens/home_screen.dart';
+import 'src/presentaion/screens/login_screen.dart';
+import 'src/presentaion/screens/match_screen.dart';
+import 'src/presentaion/screens/phone_auth_screen.dart';
+import 'src/presentaion/screens/tags_screen.dart';
+import 'src/presentaion/screens/user_info_screen.dart';
 
 class Routes {
   static Route<dynamic> generateRoute(RouteSettings settings) {

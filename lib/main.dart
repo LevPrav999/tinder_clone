@@ -4,17 +4,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tinder_clone/new/application/user_service.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
-import 'package:tinder_clone/new/presentaion/states/user_state.dart';
+import 'package:tinder_clone/src/application/user_service.dart';
+import 'package:tinder_clone/src/data/auth_repository.dart';
+import 'package:tinder_clone/src/presentaion/states/user_state.dart';
 
 import 'common/repositories/common_messaging_repository.dart';
 import 'common/widgets/error.dart';
 import 'common/widgets/loader.dart';
 import 'firebase_options.dart';
-import 'new/domain/user_model.dart';
-import 'new/presentaion/screens/home_screen.dart';
-import 'new/presentaion/screens/login_screen.dart';
+import 'src/domain/user_model.dart';
+import 'src/presentaion/screens/home_screen.dart';
+import 'src/presentaion/screens/login_screen.dart';
 import 'routes.dart';
 
 void main() async {

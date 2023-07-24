@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/common/utils/utils.dart';
 
-import '../../new/domain/user_model.dart';
+import '../../src/domain/user_model.dart';
 import '../utils/coloors.dart';
 
 class MatchCard extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:custom_clippers/custom_clippers.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../../new/domain/message_model.dart';
+import '../../src/domain/message_model.dart';
 import '../utils/coloors.dart';
 
 class MessageCard extends StatelessWidget {
