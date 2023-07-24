@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/errors/errors.dart';
+import 'package:tinder_clone/common/repositories/common_firebase_storage_repository.dart';
 import 'package:tinder_clone/new/data/auth_repository.dart';
 import 'package:tinder_clone/new/data/user_repository.dart';
 import 'package:tinder_clone/new/presentaion/states/user_state.dart';
@@ -37,7 +38,7 @@ class UserService{
       String uid = ref.read(authRepositoryProvider).authUserUid!;
 
       UserModel? userFromDb = await userRepository.getUserInfo(uid);
-      String photoUrl = await userRepository.getUserAvatar(changeImage, profilePicture, userFromDb, uid);
+      String photoUrl = await getUserAvatar(changeImage, profilePicture, userFromDb, uid);
       String? token = await MessagingApi().getToken();
 
       return Right(await userRepository.saveUserDataToFirebase(uid: uid, name: name, age: age, sex: sex, city: city, bio: bio, sexFind: sexFind, profilePicture: profilePicture, changeImage: changeImage, userFromDb: userFromDb, photoUrl: photoUrl, token: token));
@@ -46,6 +47,30 @@ class UserService{
       return Left(FirestoreError("Error while add/update user."));
     }
       
+  }
+
+  Future<String> getUserAvatar(bool changeImage, File? profilePicture, UserModel? user, String uid) async{
+    String photoUrl = "";
+
+      if (changeImage == true) {
+        if (profilePicture != null) {
+          photoUrl = await ref
+              .read(commonFirebaseStorageRepositoryProvider)
+              .storeFileToFirebase('profilePictures/$uid', profilePicture);
+        }
+      } else if (user != null) {
+          photoUrl = user.avatar;
+      } else {
+        photoUrl =
+            "https://www.pngall.com/wp-content/uploads/5/Profile-Avatar-PNG.png";
+
+        if (profilePicture != null) {
+          photoUrl = await ref
+              .read(commonFirebaseStorageRepositoryProvider)
+              .storeFileToFirebase('profilePictures/$uid', profilePicture);
+        }
+      }
+      return photoUrl;
   }
 
   Future<void> updateUserFcmToken(String uid, String? token) async{
