@@ -28,7 +28,7 @@ class ChatsTabNotifier extends AsyncNotifier<String> {
             senderUser: user!);
 
     result.fold((left) {
-      state = AsyncValue.data(left.message);
+      state = AsyncValue.error(left.message, StackTrace.empty);
     }, (right) => null);
 
   }
