@@ -124,9 +124,14 @@ String addLeadingZero(String input) {
 
     var state = ref.watch(userInfoScreenProvider);
 
-    if(state.hasValue && state.value != ""){
-      showAlertDialog(context: context, message: state.value!);
-    }
+    ref.listen<AsyncValue>(
+      userInfoScreenProvider,
+      (_, state) {
+        if (!state.isRefreshing && state.hasError && !state.isLoading) {
+          showAlertDialog(context: context, message: state.error.toString());
+        }
+      },
+    );
 
     return Scaffold(
         body: SafeArea(
