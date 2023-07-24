@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/application/auth_service.dart';
+import 'package:tinder_clone/src/application/auth_service.dart';
 
 import '../screens/home_screen.dart';
 import '../screens/user_info_screen.dart';

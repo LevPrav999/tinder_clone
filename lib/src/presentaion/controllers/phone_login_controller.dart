@@ -4,7 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/errors/errors.dart';
-import 'package:tinder_clone/new/application/auth_service.dart';
+import 'package:tinder_clone/src/application/auth_service.dart';
 
 import '../screens/code_screen.dart';
 import '../screens/home_screen.dart';

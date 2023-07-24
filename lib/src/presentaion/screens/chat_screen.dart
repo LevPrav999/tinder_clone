@@ -2,9 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/application/chat_service.dart';
-import 'package:tinder_clone/new/application/user_service.dart';
-import 'package:tinder_clone/new/presentaion/states/user_state.dart';
+import 'package:tinder_clone/src/application/chat_service.dart';
+import 'package:tinder_clone/src/application/user_service.dart';
+import 'package:tinder_clone/src/presentaion/states/user_state.dart';
 
 import '../../../common/utils/coloors.dart';
 import '../../domain/user_model.dart';

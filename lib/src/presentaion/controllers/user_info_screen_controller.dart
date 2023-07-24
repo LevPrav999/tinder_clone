@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/application/user_service.dart';
+import 'package:tinder_clone/src/application/user_service.dart';
 
 import '../screens/home_screen.dart';
 import '../screens/tags_screen.dart';

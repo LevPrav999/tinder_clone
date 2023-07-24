@@ -3,7 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tinder_clone/new/presentaion/states/user_state.dart';
+import 'package:tinder_clone/src/presentaion/states/user_state.dart';
 
 import '../../../../common/utils/coloors.dart';
 import '../../../../common/utils/utils.dart';

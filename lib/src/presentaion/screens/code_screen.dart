@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tinder_clone/common/helper/extensions.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
-import 'package:tinder_clone/new/presentaion/controllers/code_screen_controller.dart';
+import 'package:tinder_clone/src/presentaion/controllers/code_screen_controller.dart';
 
 class CodeScreen extends ConsumerStatefulWidget {
 

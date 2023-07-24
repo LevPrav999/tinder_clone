@@ -2,10 +2,10 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
-import 'package:tinder_clone/new/data/user_repository.dart';
-import 'package:tinder_clone/new/presentaion/controllers/home_screen_controller.dart';
-import 'package:tinder_clone/new/presentaion/states/message_state.dart';
+import 'package:tinder_clone/src/data/auth_repository.dart';
+import 'package:tinder_clone/src/data/user_repository.dart';
+import 'package:tinder_clone/src/presentaion/controllers/home_screen_controller.dart';
+import 'package:tinder_clone/src/presentaion/states/message_state.dart';
 
 import '../../../common/helper/show_alert_dialog.dart';
 import '../../../common/utils/coloors.dart';

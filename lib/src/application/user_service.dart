@@ -6,9 +6,9 @@ import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tinder_clone/common/errors/errors.dart';
 import 'package:tinder_clone/common/repositories/common_firebase_storage_repository.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
-import 'package:tinder_clone/new/data/user_repository.dart';
-import 'package:tinder_clone/new/presentaion/states/user_state.dart';
+import 'package:tinder_clone/src/data/auth_repository.dart';
+import 'package:tinder_clone/src/data/user_repository.dart';
+import 'package:tinder_clone/src/presentaion/states/user_state.dart';
 import '../../common/repositories/common_messaging_repository.dart';
 import '../domain/user_model.dart';
 

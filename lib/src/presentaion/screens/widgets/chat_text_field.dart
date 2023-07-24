@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/presentaion/controllers/tabs/chats_tab_controller.dart';
+import 'package:tinder_clone/src/presentaion/controllers/tabs/chats_tab_controller.dart';
 
 import '../../../../common/helper/show_alert_dialog.dart';
 import '../../../../common/repositories/common_messaging_repository.dart';

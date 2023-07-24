@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/application/user_service.dart';
-import 'package:tinder_clone/new/presentaion/controllers/match_screen_controller.dart';
-import 'package:tinder_clone/new/presentaion/controllers/tabs/cards_tab_controller.dart';
+import 'package:tinder_clone/src/application/user_service.dart';
+import 'package:tinder_clone/src/presentaion/controllers/match_screen_controller.dart';
+import 'package:tinder_clone/src/presentaion/controllers/tabs/cards_tab_controller.dart';
 
 import '../screens/home_screen.dart';
 

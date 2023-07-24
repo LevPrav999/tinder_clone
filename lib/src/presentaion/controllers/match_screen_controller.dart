@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/application/match_service.dart';
+import 'package:tinder_clone/src/application/match_service.dart';
 
 import '../states/cards_state.dart';
 

@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:either_dart/either.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
-import 'package:tinder_clone/new/data/chat_repository.dart';
-import 'package:tinder_clone/new/data/user_repository.dart';
-import 'package:tinder_clone/new/presentaion/states/chat_state.dart';
+import 'package:tinder_clone/src/data/auth_repository.dart';
+import 'package:tinder_clone/src/data/chat_repository.dart';
+import 'package:tinder_clone/src/data/user_repository.dart';
+import 'package:tinder_clone/src/presentaion/states/chat_state.dart';
 import 'package:uuid/uuid.dart';
 
 import '../../common/errors/errors.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/data/auth_repository.dart';
-import 'package:tinder_clone/new/data/cards_repository.dart';
-import 'package:tinder_clone/new/data/user_repository.dart';
+import 'package:tinder_clone/src/data/auth_repository.dart';
+import 'package:tinder_clone/src/data/cards_repository.dart';
+import 'package:tinder_clone/src/data/user_repository.dart';
 
 import '../../common/widgets/match_card.dart';
 import '../domain/user_model.dart';
