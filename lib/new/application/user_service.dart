@@ -104,10 +104,14 @@ class UserService {
 
   Future<Either<Failture, void>> setUserTags(List<dynamic> tags) async {
     try {
+      if(tags.isEmpty){
+        return Left(TagsUnselected("Select at least one preference."));
+      }
       String uid = ref.read(authRepositoryProvider).authUserUid!;
-      return Right(await userRepository.setUserTags(tags, uid));
+      var result = await userRepository.setUserTags(tags, uid);
+      return Right(result);
     } catch (e) {
-      return Left(FirestoreError("Error while updating tags"));
+      return Left(FirestoreError("Error while updating tags."));
     }
   }
 
