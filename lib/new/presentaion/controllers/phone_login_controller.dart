@@ -44,9 +44,10 @@ class PhoneLoginScreenNotifier extends AsyncNotifier<String>{
           Navigator.pushNamed(context, CodeScreen.routeName,
                 arguments: left.verificationId);
         }else{
-          state = AsyncValue.data(left.message);
+          state = AsyncValue.error(left.message, StackTrace.empty);
         }
       }, (right){
+        state = const AsyncValue.data("");
         Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
       });
     }
