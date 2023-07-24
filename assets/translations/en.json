@@ -100,5 +100,11 @@
 "new_match": "You got a new Match!",
 "mutual_match_body": "Go to the chat page and chat with a new acquaintance!",
 "new_match_body": "Go to the suggestions page and see who it is!",
-"new_message": "New message!"
+"new_message": "New message!",
+"phone_login_error": "Error login with Phone.",
+"invalid_code": "Invalid code.",
+"sending_message_error": "Error while sending message!",
+"user_add_update_error": "Error while add/update user.",
+"no_tags_error": "Select at least one preference.",
+"updating_tags_error": "Error while updating tags."
 }
