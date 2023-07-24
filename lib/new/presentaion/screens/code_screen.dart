@@ -3,33 +3,45 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:tinder_clone/common/helper/show_alert_dialog.dart';
+import 'package:tinder_clone/common/helper/extensions.dart';
 import 'package:tinder_clone/common/utils/coloors.dart';
 import 'package:tinder_clone/new/presentaion/controllers/code_screen_controller.dart';
 
-class CodeScreen extends ConsumerWidget {
+class CodeScreen extends ConsumerStatefulWidget {
+
   static const String routeName = '/code-screen';
   final String verificationId;
   const CodeScreen({super.key, required this.verificationId});
 
+  @override
+  ConsumerState<CodeScreen> createState() => _CodeScreenState();
+}
+
+class _CodeScreenState extends ConsumerState<CodeScreen> {
+
+  late ProviderSubscription subscription;
+
+  @override
+  void initState() {
+    super.initState();
+
+    subscription = ref.listenManual<AsyncValue>(
+      codeScreenProvider,
+      (_, state) => state.showDialogOnError(context)
+    );
+
+    ref.read(codeScreenProvider.notifier).setSub(subscription);
+  }
+
   void verifyOTP(WidgetRef ref, BuildContext context, String userOTP){
-    ref.read(codeScreenProvider.notifier).verifyCode(context, verificationId, userOTP);
+    ref.read(codeScreenProvider.notifier).verifyCode(context, widget.verificationId, userOTP);
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
     var state = ref.watch(codeScreenProvider);
-
-    ref.listen<AsyncValue>(
-      codeScreenProvider,
-      (_, state) {
-        if (!state.isRefreshing && state.hasError && !state.isLoading) {
-          showAlertDialog(context: context, message: state.error.toString());
-        }
-      },
-    );
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -81,5 +93,3 @@ class CodeScreen extends ConsumerWidget {
     );
   }
 }
-
-

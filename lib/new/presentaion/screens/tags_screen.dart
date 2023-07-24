@@ -2,12 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tinder_clone/new/presentaion/controllers/match_screen_controller.dart';
-import 'package:tinder_clone/new/presentaion/controllers/tabs/cards_tab_controller.dart';
+import 'package:tinder_clone/common/helper/extensions.dart';
 import 'package:tinder_clone/new/presentaion/controllers/tags_screen_controller.dart';
 
-import '../../../common/helper/show_alert_dialog.dart';
 import '../../../common/utils/coloors.dart';
+
 
 class TagsScreen extends ConsumerStatefulWidget {
   TagsScreen({super.key, required this.userTagsSelected});
@@ -20,35 +19,36 @@ class TagsScreen extends ConsumerStatefulWidget {
   ConsumerState<TagsScreen> createState() => _TagsScreenState();
 }
 
-class _TagsScreenState extends ConsumerState<TagsScreen> {
+class _TagsScreenState extends ConsumerState<TagsScreen>{
   List<String> tags = ["Anime", "Travel", "Fitness", "Movies", "Cooking", "Music", "Games", "Sports", "Art", "Psychology", "Photography", "Technology", "Fashion", "Nature", "Literature", "Design", "Food", "Health", "Marketing", "Relationshipy", "City Travel", "Dance", "Automobiles", "Entertainment", "Volunteering", "Investments", "Programming", "Interior", "Drawing", "Self-Defense", "Painting", "Gardening", "Crafts"];
   List<String> tagsView = ["anime".tr(), "travel".tr(), "fitness".tr(), "movies".tr(), "cooking".tr(), "music".tr(), "games".tr(), "sports".tr(), "art".tr(), "psychology".tr(), "photography".tr(), "technology".tr(), "fashion".tr(), "nature".tr(), "literature".tr(), "design".tr(), "food".tr(), "health".tr(), "marketing".tr(), "relationshipy".tr(), "city_travel".tr(), "dance".tr(), "automobiles".tr(), "entertainment".tr(), "volunteering".tr(), "investments".tr(), "programming".tr(), "interior".tr(), "drawing".tr(), "self_defense".tr(), "painting".tr(), "gardening".tr(), "crafts".tr()];
   List<dynamic> selected = [];
+
+  late ProviderSubscription subscription;
 
   @override
   void initState() {
     super.initState();
     selected = widget.userTagsSelected;
+
+    subscription = ref.listenManual<AsyncValue>(
+      tagsProvider,
+      (_, state) => state.showDialogOnError(context)
+    );
+
+    ref.read(tagsProvider.notifier).setSub(subscription);
+
   }
 
   void saveSelected() async{
     await ref.read(tagsProvider.notifier).uploadTags(selected, context);
-    ref.read(matchProvider.notifier).setCards();
-    ref.read(cardsTabProvider.notifier).setCards();
   }
+
   
   @override
   Widget build(BuildContext context) {
 
     var state = ref.watch(tagsProvider);
-    ref.listen<AsyncValue>(
-      tagsProvider,
-      (_, state) {
-        if (!state.isRefreshing && state.hasError && !state.isLoading) {
-          showAlertDialog(context: context, message: state.error.toString());
-        }
-      },
-    );
 
     return Scaffold(
       appBar: AppBar(

@@ -4,9 +4,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tinder_clone/common/helper/extensions.dart';
 import 'package:tinder_clone/new/presentaion/controllers/user_info_screen_controller.dart';
 
-import '../../../common/helper/show_alert_dialog.dart';
 import '../../../common/utils/coloors.dart';
 import '../../../common/utils/decorations.dart';
 import '../../../common/utils/utils.dart';
@@ -51,6 +51,8 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
   File? image;
 
   late String avatarUrl;
+
+  late ProviderSubscription subscription;
 
   void selectImage() async {
     image = await pickImageFromGallery(context);
@@ -108,6 +110,13 @@ String addLeadingZero(String input) {
     avatarUrl = widget.avatar;
 
     super.initState();
+
+    subscription = ref.listenManual<AsyncValue>(
+      userInfoScreenProvider,
+      (_, state) => state.showDialogOnError(context)
+    );
+
+    ref.read(userInfoScreenProvider.notifier).setSub(subscription);
   }
 
   @override
@@ -123,15 +132,6 @@ String addLeadingZero(String input) {
   Widget build(BuildContext context) {
 
     var state = ref.watch(userInfoScreenProvider);
-
-    ref.listen<AsyncValue>(
-      userInfoScreenProvider,
-      (_, state) {
-        if (!state.isRefreshing && state.hasError && !state.isLoading) {
-          showAlertDialog(context: context, message: state.error.toString());
-        }
-      },
-    );
 
     return Scaffold(
         body: SafeArea(

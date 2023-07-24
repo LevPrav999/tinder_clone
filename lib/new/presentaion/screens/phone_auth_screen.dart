@@ -2,9 +2,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:tinder_clone/common/helper/extensions.dart';
 import 'package:tinder_clone/new/presentaion/controllers/phone_login_controller.dart';
 
-import '../../../common/helper/show_alert_dialog.dart';
 import '../../../common/utils/coloors.dart';
 
 class PhoneAuthScreen extends ConsumerStatefulWidget {
@@ -20,11 +20,20 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
   late TextEditingController countryCodeController;
   late TextEditingController phoneNumberController;
 
+  late ProviderSubscription subscription;
+
   @override
   void initState(){
     countryCodeController = TextEditingController();
     phoneNumberController = TextEditingController();
     super.initState();
+
+    subscription = ref.listenManual<AsyncValue>(
+      phoneLoginScreenProvider,
+      (_, state) => state.showDialogOnError(context)
+    );
+
+    ref.read(phoneLoginScreenProvider.notifier).setSub(subscription);
   }
 
   @override
@@ -41,15 +50,6 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
   @override
   Widget build(BuildContext context) {
     var state = ref.watch(phoneLoginScreenProvider);
-    
-    ref.listen<AsyncValue>(
-      phoneLoginScreenProvider,
-      (_, state) {
-        if (!state.isRefreshing && state.hasError && !state.isLoading) {
-          showAlertDialog(context: context, message: state.error.toString());
-        }
-      },
-    );
     
 
     return Scaffold(
