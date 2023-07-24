@@ -10,6 +10,9 @@ import '../screens/user_info_screen.dart';
 final codeScreenProvider = AsyncNotifierProvider<CodeScreenNotifier, String>(CodeScreenNotifier.new);
 
 class CodeScreenNotifier extends AsyncNotifier<String> {
+
+  ProviderSubscription? subscription = null;
+
   @override
   FutureOr<String> build() {
     return "";
@@ -26,6 +29,7 @@ class CodeScreenNotifier extends AsyncNotifier<String> {
       state = AsyncValue.error(left.message, StackTrace.empty);
     }, (right){
       state = const AsyncValue.data("");
+      subscription!.close();
       if(right == true){
         Navigator.pushNamedAndRemoveUntil(
             context, HomeScreen.routeName, (route) => false);
@@ -37,5 +41,9 @@ class CodeScreenNotifier extends AsyncNotifier<String> {
             (route) => false);
       }
     });
+  }
+
+  void setSub(ProviderSubscription subscription){
+    this.subscription = subscription;
   }
 }

@@ -12,6 +12,9 @@ import '../screens/tags_screen.dart';
 final userInfoScreenProvider = AsyncNotifierProvider<UserInfoScreenNotifier, String>(UserInfoScreenNotifier.new);
 
 class UserInfoScreenNotifier extends AsyncNotifier<String> {
+
+  ProviderSubscription? subscription = null;
+
   @override
   FutureOr<String> build() {
     return "";
@@ -78,6 +81,7 @@ class UserInfoScreenNotifier extends AsyncNotifier<String> {
         state = AsyncValue.error(left.message, StackTrace.empty);
       }, (right) {
         state = const AsyncData("");
+        subscription!.close();
         if(right == true){
           Navigator.pushNamedAndRemoveUntil(context, HomeScreen.routeName, (route) => false);
         }else{
@@ -86,6 +90,10 @@ class UserInfoScreenNotifier extends AsyncNotifier<String> {
         }
       });
     }
+  }
+
+  void setSub(ProviderSubscription subscription){
+    this.subscription = subscription;
   }
 
 }
