@@ -19,9 +19,9 @@ class TagsScreenNotifier extends AsyncNotifier<String> {
     var result = await ref.read(userServiceProvider).setUserTags(tags);
 
     result.fold((left){
-      state = AsyncValue.data(left.message);
+      state = AsyncValue.error(left.message, StackTrace.empty);
     }, (right){
-      state = AsyncValue.data("");
+      state = const AsyncValue.data("");
       Navigator.pushNamed(context, HomeScreen.routeName);
     });
   }
