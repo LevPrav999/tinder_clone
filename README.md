@@ -24,6 +24,7 @@ Tinder Clone is a mobile application that replicates the popular dating app Tind
    - Plus users' functionality will be expanded in the future.
 9. **Online/Offline Status Display**: Showing online/offline status of users on their cards.
 10. **Internal and external notifications**: If the application is open, you will be notified of new matches in the form of a dialog box. If the application is closed, you will receive notifications. 
+11. **Loading status and error handling**: You will see a spinning indicator during the loading, as well as an error message if something goes wrong.
 
 
 ## Planned Updates
