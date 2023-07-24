@@ -16,11 +16,23 @@ class MatchService {
   final Ref ref;
   final MatchRepository matchRepository;
 
+
   Future<List<MatchCard>> getMatchers() async {
     String uid = ref.read(authRepositoryProvider).authUserUid!;
     UserModel? user = await ref.read(userRepositoryProvider).getUserInfo(uid);
 
-    return await matchRepository.getMatchers(uid, user);
+    List<MatchCard> pendingMatches = [];
+    List<dynamic> pendingData = user!.pending;
+
+    for (String pendingUserId in pendingData) {
+      UserModel? data =
+          await ref.read(userRepositoryProvider).getUserInfo(pendingUserId);
+
+      MatchCard matchCard = MatchCard(user: data!);
+      pendingMatches.add(matchCard);
+    }
+
+    return pendingMatches;
   }
 
   Future<void> deletePendingUserAndBlock(String uidUser) async {
