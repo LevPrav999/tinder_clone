@@ -1,36 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tinder_clone/new/data/user_repository.dart';
-
-import '../../common/widgets/match_card.dart';
-import '../domain/user_model.dart';
 
 final matchRepositoryProvider = Provider((ref) => MatchRepository(
-    auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance, ref: ref));
+    auth: FirebaseAuth.instance, firestore: FirebaseFirestore.instance));
 
 class MatchRepository {
   final FirebaseAuth auth;
   final FirebaseFirestore firestore;
-  final Ref ref;
 
-  MatchRepository({required this.auth, required this.firestore, required this.ref});
+  MatchRepository({required this.auth, required this.firestore});
 
-  Future<List<MatchCard>> getMatchers(String uid, UserModel? user) async {
-    List<MatchCard> pendingMatches = [];
-
-    List<dynamic> pendingData = user!.pending;
-
-    for (String pendingUserId in pendingData) {
-      UserModel? data =
-          await ref.read(userRepositoryProvider).getUserInfo(pendingUserId);
-
-      MatchCard matchCard = MatchCard(user: data!);
-      pendingMatches.add(matchCard);
-    }
-
-    return pendingMatches;
-  }
 
   Future<void> deletePendingUserAndBlock(String uid, String uidUser) async{
     await firestore.collection('users').doc(uid).update({
