@@ -9,16 +9,15 @@ import '../domain/message_model.dart';
 import '../domain/user_model.dart';
 
 final chatRepositoryProvider = Provider((ref) => ChatRepository(
-    firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance, ref: ref));
+    firestore: FirebaseFirestore.instance, auth: FirebaseAuth.instance));
 
 class ChatRepository {
   final FirebaseFirestore firestore;
   final FirebaseAuth auth;
-  final Ref ref;
 
   late StreamSubscription<QuerySnapshot> subscription;
 
-  ChatRepository({required this.firestore, required this.auth, required this.ref});
+  ChatRepository({required this.firestore, required this.auth});
 
 
   Stream<List<ChatConversation>> getAllLastMessageList(String uid) {
