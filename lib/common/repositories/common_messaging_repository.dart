@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tinder_clone/secret.dart';
 import 'package:tinder_clone/src/presentaion/states/message_state.dart';
 
 class MessagingApi {
@@ -13,8 +14,7 @@ class MessagingApi {
     try {
 
       // non-commercial !!!
-      const String serverKey =
-          'AAAANyy3jGQ:APA91bFnfcN9zcwd23izvx7RGtxF3PuMphNT5g6ANxNAuzU4FhkKP10RmkwLJqw1oeoYbCU3SQXa0hkS9V4dbHz6rNxpezFROtg4RMudqdczcyuwA2ZTSDSavwQy1UJg6Tuow9Tr33TA'; // Замените на свой FCM Server Key
+      const String serverKey = Secrets.serverKey;
       const String fcmUrl = 'https://fcm.googleapis.com/fcm/send';
 
       final Map<String, dynamic> notification = {
