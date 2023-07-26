@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tinder_clone/src/data/auth_repository.dart';
 import 'package:tinder_clone/src/data/user_repository.dart';
+import 'package:tinder_clone/src/presentaion/controllers/connection_controller.dart';
 import 'package:tinder_clone/src/presentaion/controllers/home_screen_controller.dart';
 import 'package:tinder_clone/src/presentaion/states/message_state.dart';
 
@@ -60,6 +61,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
   @override
   Widget build(BuildContext context) {
     var index = ref.watch(homeControllerProvider);
+    var connectivityStatusProvider = ref.watch(connectivityStatusProviders);
 
     final lastMessage = ref.watch(messageProvider);
 
@@ -71,6 +73,39 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
         ref.read(messageProvider.notifier).setMessage(null);
       });
     }
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if(connectivityStatusProvider == ConnectivityStatus.isDisonnected ||  connectivityStatusProvider == ConnectivityStatus.notDetermined){
+        ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "No internet connection!",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+            ),
+          ),
+          backgroundColor: Colors.red,
+          duration: Duration(days: 1),
+        ),
+      );
+      }else{
+        ScaffoldMessenger.of(context).clearSnackBars();
+        ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "Internet connection restored",
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20.0,
+            ),
+          ),
+          backgroundColor: Colors.green,
+          duration: Duration(seconds: 2),
+        ),
+      );
+      }
+      });
 
     return DefaultTabController(
       length: 3,
