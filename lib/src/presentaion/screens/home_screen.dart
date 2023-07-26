@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -77,31 +78,31 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(connectivityStatusProvider == ConnectivityStatus.isDisonnected ||  connectivityStatusProvider == ConnectivityStatus.notDetermined){
         ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            "No internet connection!",
-            style: TextStyle(
+            "internet_bad".tr(),
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20.0,
             ),
           ),
           backgroundColor: Colors.red,
-          duration: Duration(days: 1),
+          duration: const Duration(days: 1),
         ),
       );
       }else{
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            "Internet connection restored",
-            style: TextStyle(
+            "internet_good".tr(),
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 20.0,
             ),
           ),
           backgroundColor: Colors.green,
-          duration: Duration(seconds: 2),
+          duration: const Duration(seconds: 2),
         ),
       );
       }
