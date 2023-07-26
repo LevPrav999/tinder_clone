@@ -106,5 +106,7 @@
 "sending_message_error": "Error while sending message!",
 "user_add_update_error": "Error while add/update user.",
 "no_tags_error": "Select at least one preference.",
-"updating_tags_error": "Error while updating tags."
+"updating_tags_error": "Error while updating tags.",
+"internet_bad": "No internet connection!",
+"internet_good": "Internet connection restored"
 }
