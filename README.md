@@ -57,3 +57,5 @@ In future updates, Tinder Clone plans to introduce the following features and im
 - **firebase_messaging**: Used to implement a notification system in the app using Firebase Cloud Messaging (FCM).
 - **http**: Used for making HTTP requests to a server.
 - **flutter_local_notifications**: Used for displaying local notifications on the device.
+- **either_dart**: Utility that allows a functions to return two types of data.
+- **connectivity_plus**: Allows you to learn about changes in the status of your Internet connection.
