@@ -69,8 +69,8 @@ class _MatchCardState extends State<MatchCard> {
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                                color: widget.user.isOnline ? Color.fromARGB(255, 133, 222, 136) : Coloors.steelGray,
-                                offset: Offset(1.0, 2.0),
+                                color: widget.user.isOnline ? const Color.fromARGB(255, 133, 222, 136) : Coloors.steelGray,
+                                offset: const Offset(1.0, 2.0),
                                 blurRadius: 10.0)
                           ]),
                     ),
@@ -83,7 +83,7 @@ class _MatchCardState extends State<MatchCard> {
                           shadows: [
                             Shadow(
                                 color: widget.user.isPrime ? Coloors.sunnyYellow : Colors.black54,
-                                offset: widget.user.isPrime ? Offset(2.0, 3.0) : Offset(1.0, 2.0),
+                                offset: widget.user.isPrime ? const Offset(2.0, 3.0) : const Offset(1.0, 2.0),
                                 blurRadius: 10.0)
                           ],
                           color:  Colors.white,
@@ -99,7 +99,7 @@ class _MatchCardState extends State<MatchCard> {
                           shadows: [
                             Shadow(
                                 color: widget.user.isPrime ? Coloors.sunnyYellow : Colors.black54,
-                                offset: Offset(1.0, 2.0),
+                                offset: const Offset(1.0, 2.0),
                                 blurRadius: 10.0)
                           ],
                           color: Colors.white,
@@ -139,8 +139,8 @@ class _MatchCardState extends State<MatchCard> {
                           color: Coloors.skyBlue,
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        padding: EdgeInsets.all(5.0),
-                        margin: EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.all(5.0),
+                        margin: const EdgeInsets.all(2.0),
                         child: Text(
                           widget.user.tags[i],
                           style: TextStyle(
@@ -156,11 +156,11 @@ class _MatchCardState extends State<MatchCard> {
                           color: Coloors.skyBlue,
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        padding: EdgeInsets.all(5.0),
-                        margin: EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.all(5.0),
+                        margin: const EdgeInsets.all(2.0),
                         child: Text(
                           "${widget.user.tags.length - 3}+",
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 11.0,
                             color: Colors.white,
