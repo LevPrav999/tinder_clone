@@ -15,7 +15,7 @@ final phoneLoginScreenProvider = AsyncNotifierProvider<PhoneLoginScreenNotifier,
 
 class PhoneLoginScreenNotifier extends AsyncNotifier<String>{
 
-  ProviderSubscription? subscription = null;
+  ProviderSubscription? subscription;
 
   @override
   FutureOr<String> build() {
