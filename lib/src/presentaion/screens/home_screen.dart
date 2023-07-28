@@ -8,6 +8,7 @@ import 'package:tinder_clone/src/data/user_repository.dart';
 import 'package:tinder_clone/src/presentaion/controllers/connection_controller.dart';
 import 'package:tinder_clone/src/presentaion/controllers/home_screen_controller.dart';
 import 'package:tinder_clone/src/presentaion/states/message_state.dart';
+import 'package:tinder_clone/src/presentaion/states/user_state.dart';
 
 import '../../../common/helper/show_alert_dialog.dart';
 import '../../../common/utils/coloors.dart';
@@ -74,9 +75,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
         ref.read(messageProvider.notifier).setMessage(null);
       });
     }
-
+    
+    // баг: показывается при переходе на другие экраны
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if(connectivityStatusProvider == ConnectivityStatus.isDisonnected ||  connectivityStatusProvider == ConnectivityStatus.notDetermined){
+      if(ref.read(connectionStateProvider) == true && (connectivityStatusProvider == ConnectivityStatus.isDisonnected ||  connectivityStatusProvider == ConnectivityStatus.notDetermined)){
         ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -90,7 +92,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
           duration: const Duration(days: 1),
         ),
       );
-      }else{
+      }else if(ref.read(connectionStateProvider) == true && connectivityStatusProvider == ConnectivityStatus.isConnected){
+        ref.read(connectionStateProvider.notifier).update((state) => false);
         ScaffoldMessenger.of(context).clearSnackBars();
         ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -105,6 +108,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
           duration: const Duration(seconds: 2),
         ),
       );
+
       }
       });
 
