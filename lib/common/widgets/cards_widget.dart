@@ -82,7 +82,7 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
     children: <Widget>[
       Positioned(
         bottom: -13.0,
-        child: Container(
+        child: SizedBox(
           height: 110.w,
           width: MediaQuery.of(context).size.width,
           child: Row(
@@ -112,14 +112,14 @@ class _CardsWidgetState extends ConsumerState<CardsWidget> {
                     child: ShaderMask(
                         blendMode: BlendMode.srcATop,
                         shaderCallback: (Rect bounds) {
-                          return LinearGradient(
+                          return const LinearGradient(
                               colors: [
                                 Coloors.accentColor,
                                 Coloors.primaryColor
                               ],
                               begin: Alignment.topRight,
                               end: Alignment.bottomLeft,
-                              stops: const [0.0, 1.0]).createShader(bounds);
+                              stops: [0.0, 1.0]).createShader(bounds);
                         },
                         child: Icon(
                           Icons.close_rounded,
