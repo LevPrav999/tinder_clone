@@ -22,7 +22,7 @@ class AlertChatCard extends StatelessWidget {
       child: Text(
         'welcome_to_chat_room'.tr(),
         textAlign: TextAlign.center,
-        style: TextStyle(
+        style: const TextStyle(
           fontSize: 13,
           color: Colors.white,
         ),
