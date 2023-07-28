@@ -76,7 +76,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with WidgetsBindingObse
       });
     }
     
-    // баг: показывается при переходе на другие экраны
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(ref.read(connectionStateProvider) == true && (connectivityStatusProvider == ConnectivityStatus.isDisonnected ||  connectivityStatusProvider == ConnectivityStatus.notDetermined)){
         ScaffoldMessenger.of(context).showSnackBar(
