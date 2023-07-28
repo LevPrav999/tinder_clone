@@ -4,7 +4,6 @@ abstract class Failture implements Exception{
   
 }
 
-
 class NotAutomaticRetrieved implements Failture{
   final String verificationId;
   @override
