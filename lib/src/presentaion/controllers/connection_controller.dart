@@ -1,18 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:tinder_clone/src/presentaion/states/user_state.dart';
 
-enum ConnectivityStatus { notDetermined, isConnected, isDisonnected }
+enum ConnectivityStatus { notDetermined, isConnected, isDisonnected}
 
 
 final connectivityStatusProviders = StateNotifierProvider((ref) {
-  return ConnectivityStatusNotifier();
+  return ConnectivityStatusNotifier(ref: ref);
 });
 
-class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
+class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus?> {
   ConnectivityStatus? lastResult;
   ConnectivityStatus? newState;
 
-  ConnectivityStatusNotifier() : super(ConnectivityStatus.isConnected) {
+  Ref ref;
+
+  ConnectivityStatusNotifier({required this.ref}) : super(ConnectivityStatus.isConnected) {
     if (state == ConnectivityStatus.isConnected) {
       lastResult = ConnectivityStatus.isConnected;
     } else {
@@ -29,6 +32,9 @@ class ConnectivityStatusNotifier extends StateNotifier<ConnectivityStatus> {
 
 
       if (newState != lastResult) {
+        if(lastResult != ConnectivityStatus.notDetermined){
+          ref.read(connectionStateProvider.notifier).update((state) => true);
+        }
         state = newState!;
         lastResult = newState;
       }
