@@ -9,7 +9,7 @@ import '../../../common/utils/coloors.dart';
 
 
 class TagsScreen extends ConsumerStatefulWidget {
-  TagsScreen({super.key, required this.userTagsSelected});
+  const TagsScreen({super.key, required this.userTagsSelected});
 
   static const routeName = '/tags-screen';
 
