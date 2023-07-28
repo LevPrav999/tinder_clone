@@ -11,7 +11,7 @@ import '../screens/home_screen.dart';
 final tagsProvider = AutoDisposeAsyncNotifierProvider<TagsScreenNotifier, String>(TagsScreenNotifier.new);
  
 class TagsScreenNotifier extends AutoDisposeAsyncNotifier<String> {
-  ProviderSubscription? subscription = null;
+  ProviderSubscription? subscription;
 
   @override
   FutureOr<String> build() {
