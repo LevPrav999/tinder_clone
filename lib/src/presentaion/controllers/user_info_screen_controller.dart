@@ -13,7 +13,7 @@ final userInfoScreenProvider = AsyncNotifierProvider<UserInfoScreenNotifier, Str
 
 class UserInfoScreenNotifier extends AsyncNotifier<String> {
 
-  ProviderSubscription? subscription = null;
+  ProviderSubscription? subscription;
 
   @override
   FutureOr<String> build() {
