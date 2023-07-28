@@ -11,7 +11,7 @@ final codeScreenProvider = AsyncNotifierProvider<CodeScreenNotifier, String>(Cod
 
 class CodeScreenNotifier extends AsyncNotifier<String> {
 
-  ProviderSubscription? subscription = null;
+  ProviderSubscription? subscription;
 
   @override
   FutureOr<String> build() {
